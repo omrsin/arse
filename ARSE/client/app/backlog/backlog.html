@@ -6,6 +6,7 @@
 	</div>
 </nav>
 <div class="container-fluid">
+
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="backlog-container">
@@ -18,27 +19,22 @@
 					</div>
 					<div style="padding:0" class="panel-body">
 						<table class="table table-striped">
-							<tr>
+							
+							
+							<tbody>
+								<tr>
 								<th>Item ID</th>
 								<th>Description</th>
-								<th><a href="" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></th>
-							</tr>
-							<tr>
-								<td>
-									1
-								</td>
-								<td>
-									test
-								</td>
-								<td>
-									<ul class="pull-right bpi-actions">
-										<li><a href="" class="btn btn-danger">Delete</a></li>
-										<li><a href="" class="btn btn-primary">Edit</a></li>
-									</ul>
-								
-								</td>
+								<th><a ng-click="addPbiItem()" href="" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></th>
 							</tr>
 							
+							<tr pbi-item></tr>
+							<tr pbi-item></tr>
+							
+							</tbody>
+							
+						
+								
 						</table>
 					</div>
 				</div>
