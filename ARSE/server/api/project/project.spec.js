@@ -43,6 +43,17 @@ describe('Project API:', function() {
           done();
         });
     });
+
+    it('should not accept empty body', function(done) {
+      request(app)
+        .post('/api/projects')
+        .set('Content-Type', 'application/json')
+        .expect(500)
+        .end(function(err, res) {
+          if (err) return done(err);
+          done();
+        });
+    });
   });
 
 });

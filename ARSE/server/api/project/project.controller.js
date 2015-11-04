@@ -22,8 +22,10 @@ exports.show = function(req, res) {
 
 // Creates a new project in the DB.
 exports.create = function(req, res) {
+  if(!req.body.name || !req.body.description) {
+    return res.status(500).send("Please specify name and description");
+  }
   Project.create(req.body, function(err, project) {
-    console.log("Body:" + JSON.stringify(req.body));
 
     if(err) { return handleError(res, err); }
     return res.status(201).json(project);

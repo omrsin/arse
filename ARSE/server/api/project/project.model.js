@@ -4,8 +4,8 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var ProjectSchema = new Schema({
-  name: String,
-  description: String,
+  name: {type: String, required: true},
+  description: {type: String, required: true},
 });
 
 module.exports = mongoose.model('Project', ProjectSchema);
