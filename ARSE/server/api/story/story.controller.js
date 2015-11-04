@@ -13,11 +13,14 @@ exports.index = function(req, res) {
 
 // Get a single story
 exports.show = function(req, res) {
-  Story.findById(req.params.id, function (err, story) {
-    if(err) { return handleError(res, err); }
-    if(!story) { return res.status(404).send('Not Found'); }
-    return res.json(story);
-  });
+  Story.findOne({'_id': req.params.id})
+    .populate('project')
+    .exec(function(err, story){
+      if(err) { return handleError(res, err); }
+      if(!story) { return res.status(404).send('Not Found'); }
+
+      return res.json(story);
+    });
 };
 
 // Creates a new story in the DB.
