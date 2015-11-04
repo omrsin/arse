@@ -1,6 +1,9 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('BacklogCtrl', function ($scope) {
-    $scope.message = 'Hello';
-  });
+  .controller('BacklogCtrl', ['$scope', 'Story', function($scope, Story){
+    $scope.data = {};
+    $scope.showStories = function(){
+      $scope.data = Story.get();
+    };
+  }]);
