@@ -18,7 +18,11 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+<<<<<<< HEAD
   require('../api/story/story.socket').register(socket);
+=======
+  require('../api/project/project.socket').register(socket);
+>>>>>>> 651efb0c83ebd8f6a83084eea14d29966a806d5e
   require('../api/thing/thing.socket').register(socket);
 
 }

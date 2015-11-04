@@ -1,0 +1,9 @@
+<div class="col-md-12">
+This is the project view.
+</div>
+
+<form ng-controller="ProjectCtrl" ng-submit="insertProject()">
+	Type the name: <input ng-model="name" type="string" name="name">
+	Set some description: <textarea ng-model="description" name="description"></textarea>
+	<input type="submit" id="submit">
+</form>
