@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./pbi.controller');
+var controller = require('./story.controller');
 
 var router = express.Router();
 

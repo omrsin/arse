@@ -18,7 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
-  require('../api/pbi/pbi.socket').register(socket);
+  require('../api/story/story.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
 
 }
