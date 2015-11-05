@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Story = require('./story.model');
+var Project = require('../project/project.model');
 
 // Get list of storys
 exports.index = function(req, res) {
@@ -26,8 +27,16 @@ exports.show = function(req, res) {
 // Creates a new story in the DB.
 exports.create = function(req, res) {
   Story.create(req.body, function(err, story) {
+    //TODO:: remember to pass project id in project field of story
     if(err) { return handleError(res, err); }
-    return res.status(201).json(story);
+    Project.findById(req.body.project,function (err2, project){
+      if(err2) { return handleError(res, err2); }
+      project.stories.push(story);
+      project.save(function (err3){
+       if(err3) { return handleError(res,err3);}
+      });
+    });
+    return res.status(201).json(story); 
   });
 };
 
