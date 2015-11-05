@@ -9,6 +9,8 @@ angular.module('arseApp')
       console.log($scope.points);
       console.log($scope.summary);
       $scope.story = new Story({name:$scope.name, project:"563a2b49fbc778f12656a4cf", description: $scope.description, points: $scope.points, summary: $scope.summary})
-      $scope.story.$save();
+      $scope.story.$save(function (res) {
+        console.log(res);
+      });
     }
   }]);
