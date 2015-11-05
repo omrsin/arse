@@ -1,6 +1,11 @@
 'use strict';
 
 var proxyquire = require('proxyquire').noPreserveCache();
+var chai = require("chai");
+var sinon = require("sinon");
+var sinonChai = require("sinon-chai");
+chai.should();
+chai.use(sinonChai);
 
 var thingCtrlStub = {
   index: 'thingCtrl.index',
