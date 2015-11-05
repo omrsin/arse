@@ -5,13 +5,20 @@ angular.module('arseApp')
     $scope.message = 'Hello';
 
     $scope.insertProject = function () {
-    	if($scope.name && $scope.description){
-    		console.log($scope.name);
+        $scope.isCreated = false;
+        $scope.creationFailed = "";
 
+    	if($scope.name && $scope.description){
     		var newProject = new Project({name: $scope.name, description: $scope.description});
-			newProject.$save();
-     	} else {
-     		//TODO error message
+			newProject.$save(
+                // success
+                function(res) {
+                    $scope.isCreated = true;
+                },
+                // failure
+                function(res) {
+                    $scope.creationFailed = res.data;
+                });
      	}
     }
   }]);
