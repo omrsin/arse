@@ -1,10 +1,12 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('BacklogCtrl', ['$scope', 'Story', function($scope, Story){
+  .controller('BacklogCtrl', ['$scope', 'Project',  function($scope, Project){
     $scope.data = {};
-    $scope.showStories = function(){
-      $scope.data = Story.get();
-    };
+    $scope.stories = [];
+    $scope.project_id = "563a2b327947c0cd2c3d7c2b";
+    Project.get({id: $scope.project_id},function(project){
+      $scope.stories = project.stories;
+    });
   }]);
 

@@ -25,14 +25,14 @@
 							<tr>
 								<th>Story Name</th>
 								<th>Description</th>
-								<th><a href="/pbi" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></th>
+								<th><a href="/pbi/{{project_id}}" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></th>
 							</tr>
-							<tr>
+							<tr ng-repeat="item in stories">
 								<td>
-									1
+									{{item.name}}
 								</td>
 								<td>
-									test
+									{{item.description}}
 								</td>
 								<td>
 									<ul class="pull-right bpi-actions">
