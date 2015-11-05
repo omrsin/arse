@@ -4,11 +4,18 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var StorySchema = new Schema({
-  name: String,
-  description: String,
+  name: { 
+    type: String,
+    required: true
+    },
+  description: { 
+    type: String,
+    required: true
+    },
   project: {
     type: Schema.Types.ObjectId,
-    ref: 'Project'
+    ref: 'Project',
+    required: true
   },
   story_points: Number,
   summary: String,
