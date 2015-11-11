@@ -1,36 +1,36 @@
 <div class="container-fluid">
-
+<!-- TODO remove in line styles! -->
 	<div class="row">
-		<div class="col-sm-12">
-			<div class="backlog-container">
-				<div class="panel panel-default">
-					<div style="border-bottom:0" class="panel-heading">
-						<div class="panel-title">
-							Project
-						</div>
-						<div class="">
-
-						</div>
+		<div class="col-lg-1" />
+		<div class="col-sm-12 col-lg-10">
+			<div class="panel panel-default">
+				<div  class="panel-heading">
+					<div class="panel-title">
+						Project
+					</div>
+					<div class="">
 
 					</div>
-					<div data-as-sortable data-ng-model="stories"" style="padding:0" class="panel-body">
-						
-						<div class="container-fluid">
-						<div style="margin-bottom: 5px" class="row">
-							<div class="col-xs-4">Story Name</div>
-							<div class="col-xs-4">Description</div>
-							<div class="col-xs-4"><a ng-href="/pbi/{{project_id}}" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></div>
-						</div>
-						<div class="row story-row" ng-repeat="item in stories" data-as-sortable-item data-as-sortable-item-handle>
 
-							<story item="item" ></story>
-							
-						</div>
-						</div>
+				</div>
+				<div data-as-sortable data-ng-model="stories" style="padding:0" class="panel-body">
+					
+					<div class="container-fluid">
+					<div style="margin-bottom: 5px" class="row">
+						<div class="col-xs-4">Story Name</div>
+						<div class="col-xs-4">Description</div>
+						<div class="col-xs-4"><a ng-href="/pbi/{{project_id}}" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></div>
+					</div>
+					<div class="row story-row" ng-repeat="item in stories" data-as-sortable-item data-as-sortable-item-handle >
+
+						<story item="item" ></story>
+						
+					</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<div class="col-lg-1" />
 	</div>
 
 </div>
