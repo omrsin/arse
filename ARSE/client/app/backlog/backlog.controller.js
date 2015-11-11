@@ -1,32 +1,52 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('BacklogCtrl', ['$scope', 'Project', '$http', function ($scope, Project, $http) {
+  .controller('BacklogCtrl', ['$scope', 'Project', '$http', '$uibModal', '$rootScope', function ($scope, Project, $http, $uibModal, $rootScope) {
     $scope.data = {};
     $scope.stories = [];
-    $scope.project_id = "56407df1696d89ff090d9de7";
+    $scope.project_id = "563a16a77dfdb43e4d53efa7";
     Project.get({ id: $scope.project_id }, function (project) {
       $scope.stories = project.backlog;
     });
-    
-//     $scope.addStory = function () {
-//       
-//       var modalInstance = $uibModal.open( {
-//         animation: true,
-//         templateUrl: 'backlog.html',
-//         controller: 'BacklogCtrl'
-// 
-//       });
-//       
-//     }
 
     $scope.$on('updateView', function () {
-
       Project.get({ id: $scope.project_id }, function (project) {
         $scope.stories = project.backlog;
-
       });
+    });
 
-    })
-  }]);
+    // TODO This is called twice atm
+    $rootScope.$on('storyUpdated', function (event, story) {
+      //angular.foreach()
+      // This is not printed NOOOOOO!
+      $scope.story = story;
+      console.log("broadcast: " + JSON.stringify(story));
+    });
 
+}]);
+
+angular.module('arseApp').controller('EditModalInstanceCtrl', 
+  ['$scope', '$uibModalInstance', 'story', 'Story', '$rootScope', function($scope, $uibModalInstance, story, Story, $rootScope){
+  $scope.editStory = {};
+  //var editStory = {};
+  angular.copy(story, $scope.editStory);
+
+  $scope.updateStory = function(){
+    
+    console.log("edit2: " + JSON.stringify($scope.editStory));
+
+    Story.update($scope.editStory, function(res){
+      console.log("res: " + JSON.stringify(res));
+      // Broadcast
+      $rootScope.$emit("storyUpdated", res);
+    });
+
+    $uibModalInstance.close();
+  };
+
+
+  $scope.close = function(){
+    $uibModalInstance.dismiss('cancel');
+  };  
+
+}]);

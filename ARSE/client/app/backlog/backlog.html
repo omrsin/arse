@@ -1,5 +1,6 @@
 <div class="container-fluid">
 <!-- TODO remove in line styles! -->
+
 	<div class="row">
 		<div class="col-lg-1" />
 		<div class="col-sm-12 col-lg-10">
@@ -16,13 +17,8 @@
 				<div data-as-sortable data-ng-model="stories" style="padding:0" class="panel-body">
 					
 					<div class="container-fluid">
-					<div style="margin-bottom: 5px" class="row">
-						<div class="col-xs-4">Story Name</div>
-						<div class="col-xs-4">Description</div>
-						<div class="col-xs-4"><a ng-href="/pbi/{{project_id}}" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></div>
-					</div>
-					<div style="padding:0" class="panel-body">
-						
+
+					<div data-as-sortable data-ng-model="stories" style="padding:0" class="panel-body">
 						<div class="container-fluid">
 							<div style="margin-bottom: 5px" class="row">
 								<div class="col-xs-4">Story Name</div>
@@ -45,5 +41,41 @@
 		</div>
 		<div class="col-lg-1" />
 	</div>
+
+
+	<div ng-controller="BacklogCtrl">
+    <script type="text/ng-template" id="editStoryModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Edit Story</h3>
+        </div>
+        <div class="modal-body">
+            <form name="form">
+							<div class="form-group">
+								<label for="">Name</label>
+								<input class="form-control" type="text" name="name" ng-model="editStory.name" required="">
+							</div>
+							<div class="form-group">
+								<label for="">Description</label>
+								<input class="form-control" type="text" name="description" ng-model="editStory.description" required="">
+							</div>
+							<div class="form-group">
+								<label for="">Story Points</label>
+								<input class="form-control" type="text" name="points" ng-model="editStory.points" required="">
+							</div>
+							<div class="form-group">
+								<label for="">Summary</label>
+								<input class="form-control" type="text" name="summary" ng-model="editStory.summary" required="">
+							</div>
+							
+							
+			</form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="updateStory()">Update</button>
+            <button class="btn btn-warning" type="button" ng-click="close()">Cancel</button>
+        </div>
+    </script>
+    </div>
+</div>
 
 </div>

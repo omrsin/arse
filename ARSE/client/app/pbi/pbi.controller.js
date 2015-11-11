@@ -13,5 +13,5 @@ angular.module('arseApp')
         console.log("Added this now");
         $location.path('/backlog');
       });
-    }
+    };
   }]);
