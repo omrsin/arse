@@ -9,7 +9,7 @@
       </button>
       <a href="/" class="navbar-brand">ARSE</a>
     </div>
-    <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
+    <div uib-collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav">
         <li ng-repeat="item in menu" ui-sref-active="active">
             <a ui-sref="{{item.state}}">{{item.title}}</a>
