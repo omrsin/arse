@@ -3,7 +3,8 @@
 var express = require('express');
 var controller = require('./story.controller');
 
-var router = express.Router();
+//mergeParams to true to access the field of parents
+var router = express.Router({mergeParams: true});
 
 router.get('/', controller.index);
 router.get('/:id', controller.show);

@@ -12,7 +12,7 @@ module.exports = function(app) {
   // Insert routes below
 
   // story routes
-  app.use('/api/stories', require('./api/story'));
+  app.use('/api/projects/:project_id/stories', require('./api/story'));
 
 
 
