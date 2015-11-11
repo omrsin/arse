@@ -12,5 +12,7 @@ router.post('/', controller.create);
 router.put('/:id', controller.update);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);
+// get update view
+router.get('/:id/edit', controller.edit);
 
 module.exports = router;

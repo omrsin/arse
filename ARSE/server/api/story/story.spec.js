@@ -52,6 +52,20 @@ describe('Story API', function () {
       });
     });
   });
+
+  describe('GET /api/projects/project_id', function(){
+    it('should respond with a JSON array', function(done){
+      request(app)
+      .get('/api/projects/563a16a77dfdb43e4d53efa7')
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res){
+        if(err) return done(err);
+        res.body.should.be.instanceof(Array);
+        done();
+      });
+    });
+  });
   
   
 

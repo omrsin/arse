@@ -12,6 +12,17 @@ exports.index = function(req, res) {
   });
 };
 
+exports.edit = function(req, res){
+  Story.findOne({'_id': req.params.id}, function(err, story){
+    if(err)
+      return handleError(res, err);
+    //TODO: change error handling for story not found at client
+    if(!story)
+      return res.status(404).send('Not Found');
+    return res.json(story);
+  });
+};
+
 // Get a single story
 exports.show = function(req, res) {
   Story.findOne({'_id': req.params.id},function(err, story){

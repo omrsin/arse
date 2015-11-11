@@ -16,7 +16,7 @@ var StorySchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Project'
   },
-  story_points: Number,
+  points: Number,
   summary: String,
   created_at: Date,
   updated_at: Date
