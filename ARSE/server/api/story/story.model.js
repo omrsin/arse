@@ -14,8 +14,7 @@ var StorySchema = new Schema({
     },
   project: {
     type: Schema.Types.ObjectId,
-    ref: 'Project',
-    required: true
+    ref: 'Project'
   },
   story_points: Number,
   summary: String,
