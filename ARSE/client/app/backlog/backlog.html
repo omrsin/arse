@@ -40,7 +40,7 @@
 						<div style="margin-bottom: 5px" class="row">
 							<div class="col-xs-4">Story Name</div>
 							<div class="col-xs-4">Description</div>
-							<div class="col-xs-4"><a href="/pbi/{{project_id}}" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></div>
+							<div class="col-xs-4"><a ng-click="addStory()" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></div>
 						</div>
 						<div class="row story-row" ng-repeat="item in stories" data-as-sortable-item data-as-sortable-item-handle>
 
