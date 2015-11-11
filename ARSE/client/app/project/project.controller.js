@@ -8,15 +8,9 @@ angular.module('arseApp')
     Project.query( function (projects) {
       $scope.projects = projects;
     });
-
-    $scope.insertProject = function () {
-      if ($scope.name && $scope.description) {
-        console.log($scope.name);
-
-        var newProject = new Project({ name: $scope.name, description: $scope.description });
-        newProject.$save();
-     	} else {
-        //TODO error message
-     	}
+    
+    $scope.newProject = function () {
+      console.log("Add Project");
     }
+
   }]);

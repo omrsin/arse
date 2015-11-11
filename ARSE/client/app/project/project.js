@@ -3,8 +3,8 @@
 angular.module('arseApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('project', {
-        url: '/project',
+      .state('projects', {
+        url: '/projects',
         templateUrl: 'app/project/project.html',
         controller: 'ProjectCtrl'
       });
