@@ -14,33 +14,12 @@
 
 					</div>
 					<div data-as-sortable data-ng-model="stories"" style="padding:0" class="panel-body">
-						<!--<table data-as-sortable data-ng-model="stories" class="table table-striped">
-							<tr>
-								<th>Story Name</th>
-								<th>Description</th>
-								<th><a href="/pbi/{{project_id}}" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></th>
-							</tr>
-							<tr data-as-sortable-item ng-repeat="item in stories">
-								<td data-as-sortable-item-handle>
-									{{item.name}}
-								</td>
-								<td>
-									{{item.description}}
-								</td>
-								<td>
-									<ul class="pull-right bpi-actions">
-										<li><a ng-click="deleteItem(item)" class="btn btn-danger">Delete</a></li>
-										<li><a href="" class="btn btn-primary">Edit</a></li>
-									</ul>
-
-								</td>
-							</tr>
-						</table>-->
+						
 						<div class="container-fluid">
 						<div style="margin-bottom: 5px" class="row">
 							<div class="col-xs-4">Story Name</div>
 							<div class="col-xs-4">Description</div>
-							<div class="col-xs-4"><a ng-click="addStory()" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></div>
+							<div class="col-xs-4"><a ng-href="/pbi/{{project_id}}" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></div>
 						</div>
 						<div class="row story-row" ng-repeat="item in stories" data-as-sortable-item data-as-sortable-item-handle>
 

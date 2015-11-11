@@ -31,7 +31,7 @@ exports.create = function(req, res) {
     if(err) { return handleError(res, err); }
     Project.findById(req.body.project,function (err2, project){
       if(err2) { return handleError(res, err2); }
-      project.stories.push(story);
+      project.backlog.push(story);
       project.save(function (err3){
        if(err3) { return handleError(res,err3);}
       });

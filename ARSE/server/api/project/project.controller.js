@@ -19,7 +19,7 @@ exports.show = function(req, res) {
   //   return res.json(project);
   // });
   
-  Project.findOne({_id: req.params.id}).populate('stories').exec(function (err, project){
+  Project.findOne({_id: req.params.id}).populate('backlog').exec(function (err, project){
     if(err) { return handleError(res, err); }
     if(!project) { return res.status(404).send('Not Found'); }
     return res.json(project);

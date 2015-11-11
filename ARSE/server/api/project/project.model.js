@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 var ProjectSchema = new Schema({
   name: {type: String, required: true},
   description: {type: String, required: true},
-  stories: [{
+  backlog: [{
     type: Schema.Types.ObjectId,
     ref: 'Story'
   }]
