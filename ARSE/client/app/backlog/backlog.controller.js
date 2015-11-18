@@ -11,7 +11,10 @@ angular.module('arseApp')
     });
 
     $scope.addStory = function () {
-      Modal.open({}, 'app/pbi/pbi.html', 'PbiCtrl', $scope.project_id);
+      Modal.open({}, 'app/pbi/pbi.html', 'PbiCtrl', $scope.project_id).result.then(function (res) {
+        $scope.stories.push(res);
+        console.log(res);
+      });
     };
 
     $scope.$on('updateView', function () {
@@ -19,6 +22,15 @@ angular.module('arseApp')
         $scope.stories = project.backlog;
       });
     });
+
+
+    $scope.dragControlListeners = {
+      accept: function (sourceItemHandleScope, destSortableScope) {return true},//override to determine drag is allowed or not. default is true.
+      itemMoved: function (event) {},
+      orderChanged: function(event) {
+        console.log("Order changed!!");
+      },
+   };
 
     // TODO This is called twice atm
     //$rootScope.$on('storyUpdated', function (event, story) {

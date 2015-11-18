@@ -17,6 +17,7 @@ var StorySchema = new Schema({
     ref: 'Project'
   },
   points: Number,
+  orderId: Number,
   summary: String,
   created_at: Date,
   updated_at: Date
