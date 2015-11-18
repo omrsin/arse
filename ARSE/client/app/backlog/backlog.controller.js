@@ -4,9 +4,10 @@ angular.module('arseApp')
   .controller('BacklogCtrl', ['$scope', 'Project', '$http', '$stateParams', 'Modal', 'Story', function ($scope, Project, $http, $stateParams, Modal, Story) {
     $scope.data = {};
     $scope.stories = [];
-    console.log(JSON.stringify($stateParams));
     Project.get({ id: $stateParams.project_id }, function (project) {
+      //TODO remove the stories after merging with the other features
       $scope.stories = project.backlog;
+      $scope.project = project;
     });
 
 
