@@ -18,7 +18,12 @@ angular.module('arseApp')
     $scope.new = function () {
       console.log("New");
       $scope.project_id = "Bitch";
-      $scope.modal = Modal.open({}, 'app/project/new.html', 'ProjectModalCtrl', $scope.project_id);      
+      $scope.modal = Modal.open({}, 'app/project/new.html', 'ProjectModalCtrl', {}).result.then(function (project) {        
+        project.$save(function (res) {
+          console.log(res);
+          $scope.$emit('updateView');
+        });        
+      });
     };
 
     $scope.show = function(project){
@@ -29,11 +34,8 @@ angular.module('arseApp')
 
     $scope.create = function () {      
       if ($scope.name && $scope.description) {
-        var newProject = new Project({ name: $scope.name, description: $scope.description });
-        newProject.$save(function (res) {
-          console.log(res);
-          $uibModalInstance.close();
-        });
+        var project = new Project({ name: $scope.name, description: $scope.description });
+        $uibModalInstance.close(project);
       } else {
         //TODO error message
       }
