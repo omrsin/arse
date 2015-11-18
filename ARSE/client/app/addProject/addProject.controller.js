@@ -11,7 +11,7 @@ angular.module('arseApp')
         var newProject = new Project({ name: $scope.name, description: $scope.description });
         newProject.$save(function (res) {
           console.log(res);
-          $location.path("/project")
+          $location.path("/projects")
 
         });
      	} else {
