@@ -11,14 +11,15 @@ angular.module('arseApp')
     });
 
     $scope.addStory = function () {
-      Modal.open({}, 'app/pbi/pbi.html', 'PbiCtrl', $scope.project_id).result.then(function (res) {
+      Modal.open({}, 'app/pbi/pbi.html', 'PbiCtrl', $scope.stories.length).result.then(function (res) {
         $scope.stories.push(res);
-        console.log(res);
+
+        console.log($scope.stories.length);
       });
     };
 
     $scope.$on('updateView', function () {
-      Project.get({ id: $scope.project_id }, function (project) {
+      Project.get({ id: $stateParams.project_id  }, function (project) {
         $scope.stories = project.backlog;
       });
     });
@@ -28,7 +29,7 @@ angular.module('arseApp')
       accept: function (sourceItemHandleScope, destSortableScope) {return true},//override to determine drag is allowed or not. default is true.
       itemMoved: function (event) {},
       orderChanged: function(event) {
-        console.log("Order changed!!");
+        $scope.$broadcast('orderChanged');
       },
    };
 

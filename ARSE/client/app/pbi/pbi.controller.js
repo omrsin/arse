@@ -1,14 +1,15 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('PbiCtrl', ['$scope', 'Story', '$location', '$stateParams', '$uibModalInstance', function($scope, Story, $location, $stateParams, $uibModalInstance) {
+  .controller('PbiCtrl', ['$scope', 'Story', '$location', '$stateParams', '$uibModalInstance', 'items',  function($scope, Story, $location, $stateParams, $uibModalInstance, items) {
     $scope.message = 'Hello';
-    console.log($scope);
+    var orderId = items;
+    console.log('The order ID is currently: ' +orderId);
     $scope.createStory = function(form) {
 
-      $scope.story = new Story({name:$scope.name, project:$stateParams.project_id, description: $scope.description, points: $scope.points, summary: $scope.summary})
+      $scope.story = new Story({name:$scope.name, project:$stateParams.project_id, description: $scope.description, points: $scope.points, summary: $scope.summary, orderId: orderId})
       $scope.story.$save(function (res){
-        console.log("Added this now");
+        console.log(res);
         $uibModalInstance.close(res);
       });
     };
