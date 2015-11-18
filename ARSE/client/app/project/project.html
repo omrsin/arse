@@ -18,8 +18,8 @@
       <div class="container-fluid projects-container">
           <ul>
 								<li ng-repeat="item in projects">
-									<div class="row p-item">
-										<project item="item" ></project>	
+									<div class="row p-item" ng-click="showProject(item)">                    
+                      <project item="item" ></project>                    
 									</div>
 								</li>	
 						</ul>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('ProjectCtrl', ['$scope', 'Project', function ($scope, Project) {
+  .controller('ProjectCtrl', ['$scope', 'Project', '$state', function ($scope, Project, $state) {
 
     $scope.projects = [];
 
@@ -15,10 +15,14 @@ angular.module('arseApp')
         $scope.projects = projects;
       });
 
-    })
+    });
 
     $scope.newProject = function () {
       console.log("Add Project");
-    }
+    };
+
+    $scope.showProject = function(project){
+      $state.go("backlog", { project_id: project._id })
+    };
 
   }]);
