@@ -4,7 +4,7 @@ angular.module('arseApp')
   .controller('BacklogCtrl', ['$scope', 'Project', '$http', '$uibModal', '$rootScope', function ($scope, Project, $http, $uibModal, $rootScope) {
     $scope.data = {};
     $scope.stories = [];
-    $scope.project_id = "563a16a77dfdb43e4d53efa7";
+    $scope.project_id = "564c45cee63398eb102348b5";
     Project.get({ id: $scope.project_id }, function (project) {
       $scope.stories = project.backlog;
     });

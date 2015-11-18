@@ -10,7 +10,8 @@ module.factory('Story', function($resource){
     id: '@_id'
   });*/
 	return $resource('/api/projects/:project_id/stories/:story_id', {
-		project_id: '563a16a77dfdb43e4d53efa7',
+		//project_id: '564c45cee63398eb102348b5',
+		project_id: '@project',
 		story_id: '@_id'
 	}, {
 		'update': {method: 'PUT'}
