@@ -2,8 +2,9 @@
 <div class="col-xs-4">{{item.description}}</div>
 <div class="col-xs-4">
 	<ul class="pull-right bpi-actions">
-    <li><div ng-show="isRefreshing">Updating...</div></li>
+    <li><div class="spinner" ng-show="isRefreshing">Updating...</div></li>
+    <li></li>
 		<li><a ng-click="deleteItem(item)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a></li>
-		<li><a ng-click="callOpenModal(item)" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a></li>
+		<li><a ng-click="callOpenModal(item)" class="btn btn-primary"><div ng-show="hasUpdateFailed"><img src="assets/images/ajax-loader.gif" /></div><span ng-show="!hasUpdateFailed" class="glyphicon glyphicon-edit"></span></a></li>
 	</ul>
 </div>

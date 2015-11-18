@@ -7,9 +7,10 @@ angular.module('arseApp')
       restrict: 'E',
       link: function (scope, element, attrs) {
         scope.item = angular.fromJson(attrs.storyItem);
-        console.log(scope.item);
         // Don't show the isRefreshing icon by default
         scope.isRefreshing = false;
+        scope.errorMessage = "";
+        scope.hasUpdateFailed = false;
 
         scope.deleteItem = function (item) {
           console.log('Deleting Item');
@@ -23,8 +24,26 @@ angular.module('arseApp')
           scope.editStory(item);
         }
 
+        
+        scope.$on('storyUpdating', function (event, story) {
+          if(scope.item._id == story._id) {
+            scope.isRefreshing = true;
+          }
+        });
+
         scope.$on('storyUpdated', function (event, story) {
-          console.log("inside the event");
+          if(scope.item._id == story._id) {
+            scope.isRefreshing = false;
+            scope.item = story;
+          }
+        });
+
+        scope.$on('storyUpdateFailed', function (event, id, err) {
+          if(scope.item._id == id) {
+            scope.isRefreshing = false;
+            scope.hasUpdateFailed = true;
+            scope.errorMessage = err.data;
+          }
         });
 
       }

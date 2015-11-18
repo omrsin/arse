@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('BacklogCtrl', ['$scope', 'Project', '$http', 'Modal', function ($scope, Project, $http, Modal) {
+  .controller('BacklogCtrl', ['$scope', 'Project', '$http', 'Modal', 'Story', function ($scope, Project, $http, Modal, Story) {
     $scope.data = {};
     $scope.stories = [];
     $scope.project_id = "563a329c1c4584de0ac59349";
@@ -11,22 +11,21 @@ angular.module('arseApp')
 
 
     $scope.editStory = function(item) {
-          console.log("edit1" + JSON.stringify(item));
           var modalScope = $scope.$new();
           //angular.extend(modalScope, scope);
-          console.log("modal scope:");
-          console.log(modalScope);
-          Modal.open($scope, 'editStoryModalContent.html', 'EditModalInstanceCtrl', item).result.then(function (res) {
+          Modal.open($scope, 'editStoryModalContent.html', 'EditModalInstanceCtrl', {story: item}).result.then(function (res) {
 
-            console.log(res);
+            // Show the updating icon
+            $scope.$broadcast("storyUpdating", res);
+            // Actually trigger the update on the server
+
             Story.update(res, function(httpRes){
-               console.log("res: " + JSON.stringify(httpRes));
-              // Broadcast
-              //$rootScope.$broadcast("storyUpdated", res);
-
-              console.log($scope);
-              $scope.$broadcast("storyUpdated", res);
-
+              // Update the table and remove updating icon
+              // It is important to pass the local res, instead of the HTTP res, since
+              // http resturn a resource object whith circular dependencies that cannot be serialized.
+              $scope.$broadcast("storyUpdated", res);              
+            }, function(err) {
+              $scope.$broadcast("storyUpdateFailed", res._id, err);
             });
 
           });
@@ -42,24 +41,6 @@ angular.module('arseApp')
       });
     });
 
-    // TODO This is called twice atm
-    $scope.$on('storyUpdated', function (event, story) {
-      var story_index = -1;
-      $scope.stories.forEach(function(element, index){
-        if(element._id === story._id){
-          story_index = index;
-        }
-      });
-      // Update the story in the view
-      $scope.stories[story_index] = story;
-      // Set isRefreshing
-      //$scope.$broadcast("storyUpdated", story);
-
-
-      $scope.story = story;
-      console.log("broadcast: " + JSON.stringify(story));
-    });
-
 }]);
 
 // TODO remove unnecessary injections
@@ -68,11 +49,9 @@ angular.module('arseApp').controller('EditModalInstanceCtrl',
 
 
   $scope.editStory = {};
-  //var editStory = {};
-  angular.copy(items, $scope.editStory);
-  //TODO Use items.story instead
+  angular.copy(items.story, $scope.editStory);
+  
   $scope.updateStory = function(){
-    console.log("edit2: " + JSON.stringify($scope.editStory));
     $uibModalInstance.close($scope.editStory);
   };
 
