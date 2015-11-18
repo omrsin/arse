@@ -12,9 +12,18 @@ angular.module('arseApp')
         scope.errorMessage = "";
         scope.hasUpdateFailed = false;
 
+
+        scope.$on('orderChanged', function () {
+          scope.item.orderId = scope.item.$index;
+          $http.put('/api/projects/'+scope.item.project +'/stories/'+ scope.item._id, scope.item).then(function (res) {
+            console.log(res)
+          
+        });
+        });
+
         scope.deleteItem = function (item) {
           console.log('Deleting Item');
-          $http.delete('/api/stories/' + item._id).then(function () {
+          $http.delete('/api/projects/'+scope.item.project +'/stories/'+ scope.item._id).then(function () {
               scope.$emit('updateView');
           });
         };

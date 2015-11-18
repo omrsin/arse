@@ -1,5 +1,4 @@
 <div class="container-fluid">
-
 	<!-- TODO remove in line styles! -->
 	<div class="row">
 		<div class="col-lg-1 hidden-sm hidden-md hidden-xs"></div>
@@ -14,7 +13,7 @@
 					</div>
 
 				</div>
-				<div data-as-sortable data-ng-model="stories" style="padding:0" class="panel-body">
+				<div style="padding:0" class="panel-body">
 
 					<div class="container-fluid">
 						<div style="padding:0" class="panel-body">
@@ -25,7 +24,7 @@
 									<div class="col-xs-4"><a ng-click="addStory()" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></div>
 								</div>
 
-								<ul data-as-sortable data-ng-model="stories">
+								<ul data-as-sortable="dragControlListeners" data-ng-model="stories">
 									<li ng-repeat="item in stories" data-as-sortable-item>
 										<div class="row" data-as-sortable-item-handle>
 											<story  story-item="{{item}}"></story>

@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('BacklogCtrl', ['$scope', 'Project', '$http', 'Modal', 'Story', function ($scope, Project, $http, Modal, Story) {
+  .controller('BacklogCtrl', ['$scope', 'Project', '$http', '$stateParams', 'Modal', 'Story', function ($scope, Project, $http, $stateParams, Modal, Story) {
     $scope.data = {};
     $scope.stories = [];
-    $scope.project_id = "563a329c1c4584de0ac59349";
-    Project.get({ id: $scope.project_id }, function (project) {
+    console.log(JSON.stringify($stateParams));
+    Project.get({ id: $stateParams.project_id }, function (project) {
       $scope.stories = project.backlog;
     });
 
@@ -32,14 +32,26 @@ angular.module('arseApp')
         };
 
     $scope.addStory = function () {
-      Modal.open({}, 'app/pbi/pbi.html', 'PbiCtrl', $scope.project_id);
+      Modal.open({}, 'app/pbi/pbi.html', 'PbiCtrl', $scope.stories.length).result.then(function (res) {
+        $scope.stories.push(res);
+
+        console.log($scope.stories.length);
+      });
     };
 
     $scope.$on('updateView', function () {
-      Project.get({ id: $scope.project_id }, function (project) {
+      Project.get({ id: $stateParams.project_id  }, function (project) {
         $scope.stories = project.backlog;
       });
     });
+
+    $scope.dragControlListeners = {
+      accept: function (sourceItemHandleScope, destSortableScope) {return true},//override to determine drag is allowed or not. default is true.
+      itemMoved: function (event) {},
+      orderChanged: function(event) {
+        $scope.$broadcast('orderChanged');
+      },
+   };
 
 }]);
 
@@ -54,9 +66,7 @@ angular.module('arseApp').controller('EditModalInstanceCtrl',
     $uibModalInstance.close($scope.editStory);
   };
 
-
-  $scope.close = function(){
+   $scope.close = function(){
     $uibModalInstance.dismiss('cancel');
   };  
-
 }]);
