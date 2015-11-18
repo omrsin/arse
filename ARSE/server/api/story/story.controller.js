@@ -38,14 +38,23 @@ exports.create = function(req, res) {
   Story.create(req.body, function(err, story) {
     //TODO:: remember to pass project id in project field of story
     if(err) { return handleError(res, err); }
-    Project.findById(req.params.project_id, function (project_find_error, project) {
-      if(project_find_error) { return handleError(res, project_find_error); }
-      project.backlog.push(story);
-      project.save(function (error_on_save) {
-        if(error_on_save) { return handleError(res,error_on_save); }
-      });
-    });
-    return res.status(201).json(story);
+    Project.findById(req.params.project_id, 
+      function (project_find_error, project) {
+        if(project_find_error) { 
+          return handleError(res, project_find_error); 
+        }
+        if(!project) {
+          return res.status(404).send("Project not found");
+        }
+        project.backlog.push(story);
+        project.save(function (error_on_save) {
+          if(error_on_save) { 
+            return handleError(res,error_on_save); 
+          }
+          return res.status(201).json(story);
+        });
+      }
+    );
   });
 };
 
