@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('PbiCtrl', ['$scope', 'Story', '$location', '$stateParams', '$uibModalInstance', function($scope, Story, $location, $stateParams, $uibModalInstance, items) {
+  .controller('PbiCtrl', ['$scope', 'Story', '$location', '$stateParams', '$uibModalInstance', function($scope, Story, $location, $stateParams, $uibModalInstance) {
     $scope.message = 'Hello';
     console.log($scope);
     $scope.createStory = function(form) {
