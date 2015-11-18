@@ -9,9 +9,9 @@ angular.module('arseApp')
       $scope.stories = project.backlog;
     });
 
-     $scope.addStory = function () {
-       Modal.open({},'app/pbi/pbi.html', 'PbiCtrl', $scope.project_id);
-     };
+    $scope.addStory = function () {
+      Modal.open({}, 'app/pbi/pbi.html', 'PbiCtrl', $scope.project_id);
+    };
 
     $scope.$on('updateView', function () {
 

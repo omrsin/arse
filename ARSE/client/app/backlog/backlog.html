@@ -1,10 +1,10 @@
 <div class="container-fluid">
-<!-- TODO remove in line styles! -->
+	<!-- TODO remove in line styles! -->
 	<div class="row">
-		<div class="col-lg-1" />
+		<div class="col-lg-1 hidden-sm hidden-md hidden-xs"></div>
 		<div class="col-sm-12 col-lg-10">
 			<div class="panel panel-default">
-				<div  class="panel-heading">
+				<div class="panel-heading">
 					<div class="panel-title">
 						Project
 					</div>
@@ -27,17 +27,16 @@
 								<ul data-as-sortable data-ng-model="stories">
 									<li ng-repeat="item in stories" data-as-sortable-item>
 										<div class="row" data-as-sortable-item-handle>
-											<story item="item" ></story>
+											<story item="item"></story>
 										</div>
 									</li>
 								</ul>
 
 							</div>
 						</div>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-lg-1" />
-	</div>
+			<div class="col-lg-1 hidden-sm hidden-md hidden-xs"></div>
 
-</div>
+	</div>
