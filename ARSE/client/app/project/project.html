@@ -1,38 +1,29 @@
 
 <div class="row">
-  <div class="col-lg-1" />
-  <div class="col-sm-12 col-lg-10">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-          <div class="panel-title">
-            Create a project
-          </div>
-      </div>
-      <div class="panel-body">
-        <form novalidate name="createProjectForm" ng-controller="ProjectCtrl" ng-submit="insertProject()">
-          <div class="form-group">
-            <label for="projectName">Name</label>
-            <input name="name" ng-model="name" type="text" class="form-control" id="projectName" placeholder="Name" required="true">
-            <div ng-show="createProjectForm.$submitted || createProjectForm.name.$touched">
-              <div ng-show="createProjectForm.name.$error.required" class="alert alert-warning" role="alert">Enter a name.</div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="projectDescription">Description</label>
-            <textarea name="description" ng-model="description" class="form-control" id="projectDescription" placeholder="Description" required="true" />
-            <div ng-show="createProjectForm.$submitted || createProjectForm.description.$touched">
-              <div ng-show="createProjectForm.description.$error.required" class="alert alert-warning" role="alert">Enter a description.</div>
-            </div>
-          </div>
-          <button class="btn btn-success pull-right" type="submit" class="btn btn-default">
-            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-            Create Project
-          </button>
-          <div ng-show="isCreated" class="alert alert-success" role="alert">Success</div>
-          <div ng-show="creationFailed" class="alert alert-danger" role="alert">{{ creationFailed }}</div>
-        </form>
+  <div class="col-sm-12">
+    <div class="project-page-header">
+      <h1>Projects</h1>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-xs-6 col-sm-10"></div>
+      <div class="col-xs-6 col-sm-2">
+        <a href="/add-project" class="btn btn-primary pull-right margin-right-10">New Project</a>
       </div>
     </div>
-    <div class="col-lg-1" />
+    <div class="row">
+      <div class="container-fluid projects-container">
+          <ul>
+								<li ng-repeat="item in projects">
+									<div class="row p-item">
+										<project item="item" ></project>	
+									</div>
+								</li>	
+						</ul>
+      </div>
+    </div>
   </div>
 </div>

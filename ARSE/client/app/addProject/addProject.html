@@ -1,0 +1,13 @@
+<div class="col-md-12">
+  <form ng-submit="insertProject()">
+    <div class="form-group">
+      <label for="projectName">Name</label>
+      <input ng-model="name" type="text" class="form-control" id="projectName" placeholder="Name">
+    </div>
+    <div class="form-group">
+      <label for="projectDescription">Description</label>
+      <textarea ng-model="description" class="form-control" id="projectDescription" placeholder="Description" />
+    </div>
+    <button type="submit" class="btn btn-default">Create!</button>
+  </form>
+</div>

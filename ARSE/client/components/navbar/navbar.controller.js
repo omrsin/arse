@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('NavbarCtrl', function ($scope) {
+  .controller('NavbarCtrl', ['$scope', 'Modal', function ($scope, Modal) {
     $scope.menu = [{
       'title': 'Home',
       'state': 'main'
@@ -12,4 +12,4 @@ angular.module('arseApp')
     }];
 
     $scope.isCollapsed = true;
-  });
+  }]);

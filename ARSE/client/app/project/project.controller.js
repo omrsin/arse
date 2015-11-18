@@ -1,24 +1,24 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('ProjectCtrl',[ '$scope', 'Project',  function ($scope, Project) {
-    $scope.message = 'Hello';
+  .controller('ProjectCtrl', ['$scope', 'Project', function ($scope, Project) {
 
-    $scope.insertProject = function () {
-        $scope.isCreated = false;
-        $scope.creationFailed = "";
+    $scope.projects = [];
 
-    	if($scope.name && $scope.description){
-    		var newProject = new Project({name: $scope.name, description: $scope.description});
-			newProject.$save(
-                // success
-                function(res) {
-                    $scope.isCreated = true;
-                },
-                // failure
-                function(res) {
-                    $scope.creationFailed = res.data;
-                });
-     	}
+    Project.query(function (projects) {
+      $scope.projects = projects;
+    });
+
+    $scope.$on('updateView', function () {
+
+      Project.query(function (projects) {
+        $scope.projects = projects;
+      });
+
+    })
+
+    $scope.newProject = function () {
+      console.log("Add Project");
     }
+
   }]);
