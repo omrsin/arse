@@ -43,9 +43,8 @@ angular.module('arseApp')
 
 }]);
 
-// TODO remove unnecessary injections
 angular.module('arseApp').controller('EditModalInstanceCtrl', 
-  ['$scope', '$uibModalInstance', 'items', 'Story', '$rootScope', function($scope, $uibModalInstance, items, Story, $rootScope){
+  ['$scope', '$uibModalInstance', 'items', function($scope, $uibModalInstance, items){
 
 
   $scope.editStory = {};
