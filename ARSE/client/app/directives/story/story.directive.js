@@ -17,8 +17,7 @@ angular.module('arseApp')
           scope.item.orderId = scope.item.$index;
           $http.put('/api/projects/'+scope.item.project +'/stories/'+ scope.item._id, scope.item).then(function (res) {
             console.log(res)
-          
-        });
+          });
         });
 
         scope.deleteItem = function (item) {

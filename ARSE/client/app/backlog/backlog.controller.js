@@ -13,7 +13,7 @@ angular.module('arseApp')
     $scope.editStory = function(item) {
           var modalScope = $scope.$new();
           //angular.extend(modalScope, scope);
-          Modal.open({}, 'app/backlog/storyForm.html', 'EditModalInstanceCtrl', {story: item}).result.then(function (res) {
+          Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', {story: item}).result.then(function (res) {
 
             // Show the updating icon
             $scope.$broadcast("storyUpdating", res);
@@ -32,10 +32,13 @@ angular.module('arseApp')
         };
 
     $scope.addStory = function () {
-      Modal.open({}, 'app/pbi/pbi.html', 'PbiCtrl', $scope.stories.length).result.then(function (res) {
-        $scope.stories.push(res);
-
-        console.log($scope.stories.length);
+      Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', {projectId: $stateParams.project_id, orderId: $scope.stories.length})
+      .result.then(function (res) {
+        //TODO handle network latencies and errors pleaseee
+        res.$save(function (httpRes){
+          console.log(httpRes);
+          $scope.stories.push(httpRes);
+        });
       });
     };
 
@@ -55,18 +58,31 @@ angular.module('arseApp')
 
 }]);
 
-angular.module('arseApp').controller('EditModalInstanceCtrl', 
-  ['$scope', '$uibModalInstance', 'items', function($scope, $uibModalInstance, items){
+angular.module('arseApp').controller('StoryFormCtrl', 
+  ['$scope', '$uibModalInstance', 'items', 'Story', function($scope, $uibModalInstance, items, Story){
 
+  $scope.story = {};
 
-  $scope.editStory = {};
-  angular.copy(items.story, $scope.editStory);
-  
+  if(items.story){
+    $scope.create = false;
+    angular.copy(items.story, $scope.story);
+    $scope.title = "Edit Story";
+  }else{
+    $scope.create = true;
+    $scope.title = "Create Story";
+  }
+
   $scope.updateStory = function(){
-    $uibModalInstance.close($scope.editStory);
+    $uibModalInstance.close($scope.story);
   };
 
-   $scope.close = function(){
+  $scope.createStory = function() {
+    $scope.story = new Story({name:$scope.story.name, project:items.projectId, 
+      description: $scope.story.description, points: $scope.story.points, summary: $scope.story.summary, orderId: items.orderId});
+    $uibModalInstance.close($scope.story);
+  };
+
+  $scope.close = function(){
     $uibModalInstance.dismiss('cancel');
   };  
 }]);
