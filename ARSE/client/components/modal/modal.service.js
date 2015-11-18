@@ -8,23 +8,31 @@ angular.module('arseApp')
      * @param  {String} modalClass - (optional) class(es) to be applied to the modal
      * @return {Object}            - the instance $modal.open() returns
      */
-    function openModal(scope, modalClass) {
+    function openModal(scope, templateUrl, controller, items) {
       var modalScope = $rootScope.$new();
       scope = scope || {};
-      modalClass = modalClass || 'modal-default';
+
 
       angular.extend(modalScope, scope);
 
       return $modal.open({
-        templateUrl: 'components/modal/modal.html',
-        windowClass: modalClass,
-        scope: modalScope
+        templateUrl: templateUrl,
+        windowClass: 'modal-default',
+        scope: modalScope,
+        controller: controller,
+        resolve: {
+          items: function () {
+            return items
+          }
+        }
       });
     }
 
     // Public API here
     return {
-
+      open: function(scope, templateUrl, controller, items){
+        return openModal(scope, templateUrl, controller, items);
+      },
       /* Confirmation modals */
       confirm: {
 

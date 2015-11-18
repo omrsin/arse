@@ -3,7 +3,6 @@
 angular.module('arseApp')
   .controller('ProjectCtrl',[ '$scope', 'Project',  function ($scope, Project) {
     $scope.message = 'Hello';
-
     $scope.insertProject = function () {
         $scope.isCreated = false;
         $scope.creationFailed = "";
