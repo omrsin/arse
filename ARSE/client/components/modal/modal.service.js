@@ -12,8 +12,8 @@ angular.module('arseApp')
       var modalScope = $rootScope.$new();
       scope = scope || {};
 
-
-      angular.extend(modalScope, scope);
+      console.log(items);
+      //angular.extend(modalScope, scope);
 
       return $uibModal.open({
         templateUrl: templateUrl,
@@ -22,7 +22,7 @@ angular.module('arseApp')
         controller: controller,
         resolve: {
           items: function () {
-            return items
+            return items;
           }
         }
       });

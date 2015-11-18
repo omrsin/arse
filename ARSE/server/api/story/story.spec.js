@@ -20,6 +20,7 @@ describe('Story API', function () {
     });
   });
 
+// FIXME remove hardcoded id!!!
   describe('POST /api/stories', function () {
     it('should respont with an object that represents a story and it should', function (done) {
       request(app)
