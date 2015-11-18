@@ -6,7 +6,9 @@ angular.module('arseApp')
     $scope.stories = [];
     $scope.project_id = "564363fd8e2091333754b608";
     Project.get({ id: $scope.project_id }, function (project) {
+      //TODO remove the stories after merging with the other features
       $scope.stories = project.backlog;
+      $scope.project = project;
     });
 
     $scope.addStory = function () {
