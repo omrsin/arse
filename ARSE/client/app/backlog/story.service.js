@@ -6,11 +6,7 @@
 var module = angular.module('arseApp');
 
 module.factory('Story', function($resource){
-  /*return $resource('/api/stories/:id', {
-    id: '@_id'
-  });*/
-	return $resource('/api/projects/:project_id/stories/:story_id', {
-		//project_id: '564c45cee63398eb102348b5',
+ 	return $resource('/api/projects/:project_id/stories/:story_id', {
 		project_id: '@project',
 		story_id: '@_id'
 	}, {

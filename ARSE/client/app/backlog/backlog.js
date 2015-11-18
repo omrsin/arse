@@ -7,5 +7,10 @@ angular.module('arseApp')
         url: '/backlog/:project_id',
         templateUrl: 'app/backlog/backlog.html',
         controller: 'BacklogCtrl'
+       /* resolve:  {
+        	projects: function(){
+        		return 
+        	}
+        }*/
       });
   });

@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('BacklogCtrl', ['$scope', 'Project', '$http', 'Modal', function ($scope, Project, $http, Modal) {
+  .controller('BacklogCtrl', ['$scope', 'Project', '$http', '$stateParams', 'Modal', function ($scope, Project, $http, $stateParams, Modal) {
     $scope.data = {};
     $scope.stories = [];
-    $scope.project_id = "564363fd8e2091333754b608";
-    Project.get({ id: $scope.project_id }, function (project) {
+    //$scope.project_id = "564c45cee63398eb102348b5";
+    console.log(JSON.stringify($stateParams));
+    Project.get({ id: $stateParams.project_id }, function (project) {
       $scope.stories = project.backlog;
     });
 
@@ -20,12 +21,12 @@ angular.module('arseApp')
     });
 
     // TODO This is called twice atm
-    $rootScope.$on('storyUpdated', function (event, story) {
+    //$rootScope.$on('storyUpdated', function (event, story) {
       //angular.foreach()
       // This is not printed NOOOOOO!
-      $scope.story = story;
-      console.log("broadcast: " + JSON.stringify(story));
-    });
+    //  $scope.story = story;
+    //  console.log("broadcast: " + JSON.stringify(story));
+    //});
 
 }]);
 
