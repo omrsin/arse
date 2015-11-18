@@ -13,7 +13,7 @@ angular.module('arseApp')
     $scope.editStory = function(item) {
           var modalScope = $scope.$new();
           //angular.extend(modalScope, scope);
-          Modal.open($scope, 'editStoryModalContent.html', 'EditModalInstanceCtrl', {story: item}).result.then(function (res) {
+          Modal.open({}, 'app/backlog/storyForm.html', 'EditModalInstanceCtrl', {story: item}).result.then(function (res) {
 
             // Show the updating icon
             $scope.$broadcast("storyUpdating", res);
