@@ -17,24 +17,23 @@
 
 					<div class="container-fluid">
 						<div style="padding:0" class="panel-body">
+							<div class="container-fluid">
+								<div style="margin-bottom: 5px" class="row">
+									<div class="col-xs-4">Story Name</div>
+									<div class="col-xs-4">Description</div>
+									<div class="col-xs-4"><a ng-click="addStory()" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></div>
+								</div>
 
-						<div class="container-fluid">
-							<div style="margin-bottom: 5px" class="row">
-								<div class="col-xs-4">Story Name</div>
-								<div class="col-xs-4">Description</div>
-								<div class="col-xs-4"><a ng-click="addStory()" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></div>
+								<ul data-as-sortable data-ng-model="stories">
+									<li ng-repeat="item in stories" data-as-sortable-item>
+										<div class="row" data-as-sortable-item-handle>
+											<story item="item" ></story>
+										</div>
+									</li>
+								</ul>
+
 							</div>
-
-							<ul data-as-sortable data-ng-model="stories">
-								<li ng-repeat="item in stories" data-as-sortable-item>
-									<div class="row" data-as-sortable-item-handle>
-										<story item="item" ></story>
-									</div>
-								</li>
-							</ul>
-
 						</div>
-					</div>
 				</div>
 			</div>
 		</div>

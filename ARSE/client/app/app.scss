@@ -16,8 +16,10 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 
 // Component styles are injected through grunt
 // injector
+@import 'addProject/addProject.scss';
 @import 'backlog/backlog.scss';
 @import 'directives/addPbiModal/addPbiModal.scss';
+@import 'directives/project/project.scss';
 @import 'directives/story/story.scss';
 @import 'main/main.scss';
 @import 'main/pbiItem/pbiItem.scss';
@@ -37,4 +39,28 @@ textarea {
 
 .alert {
   margin-top: 10px;
+}
+
+ul {
+  margin: 0; 
+  padding: 0;
+  list-style-type: none; 
+  
+}
+
+.project-page-header {
+  padding: 10px;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 10px;
+   
+}
+
+
+.margin-right-10 {
+  margin-right: 10px
+}
+
+.p-item {
+  padding: 5px; 
+  border-bottom: 1px solid lightgray;
 }
