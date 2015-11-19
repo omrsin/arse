@@ -4,6 +4,8 @@ angular.module('arseApp')
   .controller('ProjectCtrl', ['$scope', '$state', 'Project', 'Modal', function ($scope, $state, Project, Modal) {
     
     $scope.projects = [];
+    // Error message if creating a project failed
+    $scope.creationFailed = "";
 
     Project.query(function (projects) {
       $scope.projects = projects;
@@ -16,14 +18,12 @@ angular.module('arseApp')
     });
 
     $scope.new = function () {
-      console.log("New");
-      // FIXME WTF!?
-      $scope.project_id = "Bitch";
       $scope.modal = Modal.open({}, 'app/project/new.html', 'ProjectModalCtrl', {}).result.then(function (project) {
-        // TODO include my nice alerts on failure!     
         project.$save(function (res) {
           console.log(res);
           $scope.$emit('updateView');
+        }, function(err) {
+          $scope.creationFailed = err.data;
         });        
       });
     };
@@ -38,8 +38,6 @@ angular.module('arseApp')
       if ($scope.name && $scope.description) {
         var project = new Project({ name: $scope.name, description: $scope.description });
         $uibModalInstance.close(project);
-      } else {
-        //TODO error message
       }
     };
 
