@@ -17,8 +17,10 @@ angular.module('arseApp')
 
     $scope.new = function () {
       console.log("New");
+      // FIXME WTF!?
       $scope.project_id = "Bitch";
-      $scope.modal = Modal.open({}, 'app/project/new.html', 'ProjectModalCtrl', {}).result.then(function (project) {        
+      $scope.modal = Modal.open({}, 'app/project/new.html', 'ProjectModalCtrl', {}).result.then(function (project) {
+        // TODO include my nice alerts on failure!     
         project.$save(function (res) {
           console.log(res);
           $scope.$emit('updateView');
