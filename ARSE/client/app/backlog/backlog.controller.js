@@ -64,6 +64,8 @@ angular.module('arseApp').controller('StoryFormCtrl',
 
   $scope.story = {};
 
+  $scope.storyTypes = ["Feature", "Enhancement", "Fix"];
+
   if(items.story){
     $scope.create = false;
     angular.copy(items.story, $scope.story);
@@ -78,8 +80,15 @@ angular.module('arseApp').controller('StoryFormCtrl',
   };
 
   $scope.createStory = function() {
-    $scope.story = new Story({name:$scope.story.name, project:items.projectId, 
-      description: $scope.story.description, points: $scope.story.points, summary: $scope.story.summary, orderId: items.orderId});
+    $scope.story = new Story({
+      name:$scope.story.name, 
+      project:items.projectId, 
+      description: $scope.story.description, 
+      points: $scope.story.points, 
+      summary: $scope.story.summary, 
+      type: $scope.story.type,
+      orderId: items.orderId
+    });
     $uibModalInstance.close($scope.story);
   };
 

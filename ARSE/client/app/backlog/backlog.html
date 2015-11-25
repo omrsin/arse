@@ -20,9 +20,12 @@
 							<div style="padding:0" class="panel-body">
 								<div class="container-fluid">
 									<div style="margin-bottom: 5px" class="row">
-										<div class="col-xs-4">Story Name</div>
-										<div class="col-xs-4">Description</div>
-										<div class="col-xs-4"><a ng-click="addStory()" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></div>
+										<div class="col-xs-2">Name</div>
+										<div class="col-xs-2">Description</div>
+										<div class="col-xs-2">Type</div>
+										<div class="col-xs-2">Status</div>
+										<div class="col-xs-1">Story points</div>
+										<div class="col-xs-3"><a ng-click="addStory()" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></div>
 									</div>
 									<ul data-as-sortable="dragControlListeners" data-ng-model="stories">
 										<li ng-repeat="item in stories" data-as-sortable-item>

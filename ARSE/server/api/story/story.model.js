@@ -14,9 +14,24 @@ var StorySchema = new Schema({
     },
   project: {
     type: Schema.Types.ObjectId,
-    ref: 'Project'
+    ref: 'Project',
+    required: true
   },
-  points: Number,
+  type: {
+    type: String,
+    required: true,
+    enum: ["Feature", "Enhancement", "Fix"]
+  },
+  status: {
+    type: String,
+    required: true,
+    enum: ["New", "In progess", "Done"],
+    default: "New"
+  },
+  points: {
+    type: Number,
+    required: true
+  },
   orderId: Number,
   summary: String,
   created_at: Date,
