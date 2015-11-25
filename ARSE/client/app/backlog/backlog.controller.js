@@ -65,6 +65,7 @@ angular.module('arseApp').controller('StoryFormCtrl',
   $scope.story = {};
 
   $scope.storyTypes = ["Feature", "Enhancement", "Fix"];
+  $scope.availableSPs = [0, 1, 2, 3, 5, 8, 13, 20, 40, 100];
 
   if(items.story){
     $scope.create = false;
@@ -74,6 +75,16 @@ angular.module('arseApp').controller('StoryFormCtrl',
     $scope.create = true;
     $scope.title = "Create Story";
   }
+
+  $scope.createOrUpdateStory = function() {
+    if ($scope.story.name && $scope.story.description) {
+      if($scope.create) {
+        $scope.createStory();
+      } else {
+        $scope.updateStory();
+      }
+    }
+  };
 
   $scope.updateStory = function(){
     $uibModalInstance.close($scope.story);

@@ -29,8 +29,7 @@ var StorySchema = new Schema({
     default: "New"
   },
   points: {
-    type: Number,
-    required: true
+    type: Number
   },
   orderId: Number,
   summary: String,
