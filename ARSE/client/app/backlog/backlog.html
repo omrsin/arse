@@ -12,7 +12,7 @@
 				<div class="panel-body">
 					<p>{{project.description}}</p>
 					<hr/>
-         <div ng-show="failed" class="alert alert-danger" role="alert">{{ failed }}</div>
+         	<div ng-show="failed" class="alert alert-danger" role="alert">{{ failed }}</div>
 					<!-- TODO make this looks nice here is the page people http://getbootstrap.com/components/#panels-tables -->
 					<div data-as-sortable data-ng-model="stories">
 
@@ -30,14 +30,17 @@
 									<ul data-as-sortable="dragControlListeners" data-ng-model="stories">
 										<li ng-repeat="item in stories" data-as-sortable-item>
 											<div class="row" data-as-sortable-item-handle>
-												<story  story-item="{{item}}"></story>
+												<story story-item="{{item}}"></story>
 											</div>
 										</li>
 									</ul>
 								</div>
 							</div>
 						</div>
-					</div>					
+					</div>
+					<!-- Additional info about a story. TODO: put this in a better location when the table refactoring is done -->
+					<hr/>
+					<story-detail ng-show="showDetails" story-item="{{detailStory}}"></story-detail>
 				</div>
 
 			</div>
