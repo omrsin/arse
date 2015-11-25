@@ -30,7 +30,7 @@ angular.module('arseApp')
 
         scope.callOpenModal = function (item) {
           scope.editStory(item);
-        }
+        };
 
         
         scope.$on('storyUpdating', function (event, story) {

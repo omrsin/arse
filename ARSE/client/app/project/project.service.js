@@ -7,5 +7,7 @@ var module = angular.module('arseApp'
 module.factory('Project', function($resource){
   return $resource('/api/projects/:id', {
   	id: '@_id'
+  }, {
+    'update': {method: 'PUT'}
   });
 });

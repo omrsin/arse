@@ -5,7 +5,7 @@ angular.module('arseApp')
     
     $scope.projects = [];
     // Error message if creating a project failed
-    $scope.creationFailed = "";
+    $scope.failed = "";
 
     Project.query(function (projects) {
       $scope.projects = projects;
@@ -18,13 +18,23 @@ angular.module('arseApp')
     });
 
     $scope.new = function () {
-      $scope.creationFailed = "";
-      $scope.modal = Modal.open({}, 'app/project/new.html', 'ProjectModalCtrl', {}).result.then(function (project) {
+      $scope.failed = "";
+      Modal.open({}, 'app/project/new.html', 'ProjectModalCtrl', {}).result.then(function (project) {
         project.$save(function (res) {
-          console.log(res);
           $scope.$emit('updateView');
         }, function(err) {
-          $scope.creationFailed = err.data;
+          $scope.failed = err.data;
+        });        
+      });
+    };
+
+    $scope.editProject = function(item) {
+      $scope.failed = "";
+      Modal.open({}, 'app/project/new.html', 'ProjectModalCtrl', {project: item}).result.then(function (project) {
+        Project.update(project, function (res) {
+          $scope.$emit('updateView');
+        }, function(err) {
+          $scope.failed = err.data;
         });        
       });
     };
@@ -32,18 +42,48 @@ angular.module('arseApp')
     $scope.show = function(project){
       $state.go("backlog", { project_id: project._id });
     };
-  }])
+}]);
+
   // Modal controller
-  .controller('ProjectModalCtrl', ['$scope', '$uibModalInstance', 'items', 'Project', '$rootScope', function($scope, $uibModalInstance, items, Project, $rootScope) {
+angular.module('arseApp').controller('ProjectModalCtrl', 
+  ['$scope', '$uibModalInstance', 'items', 'Project', function($scope, $uibModalInstance, items, Project) {
 
-    $scope.create = function () {      
-      if ($scope.name && $scope.description) {
-        var project = new Project({ name: $scope.name, description: $scope.description });
-        $uibModalInstance.close(project);
+
+  $scope.project = {};
+  if(items.project){
+    $scope.create = false;
+    angular.copy(items.project, $scope.project);
+    $scope.title = "Edit Project";
+  }else{
+    $scope.create = true;
+    $scope.title = "Create Project";
+  }
+
+  $scope.createOrUpdateProject = function() {
+    if ($scope.project.name && $scope.project.description) {
+      if($scope.create) {
+        $scope.createProject();
+      } else {
+        $scope.updateProject();
       }
-    };
+    }
+  };
 
-    $scope.cancel = function(){      
-      $uibModalInstance.dismiss();
-    };
-  }]);
+
+  // Use the original story, so that id is staying the same
+  $scope.updateProject = function(){
+    $uibModalInstance.close($scope.project);
+  };
+
+  $scope.createProject = function () {      
+    $scope.project = new Project({ 
+      name: $scope.project.name, 
+      description: $scope.project.description 
+    });
+    $uibModalInstance.close($scope.project);
+  };
+
+  $scope.cancel = function(){      
+    $uibModalInstance.dismiss();
+  };
+}]);

@@ -12,7 +12,11 @@ angular.module('arseApp')
           $http.delete('/api/projects/' + item._id).then(function () {
             scope.$emit('updateView');
           });
-        }
+        };
+
+        scope.callOpenModal = function (item) {
+          scope.editProject(item);
+        };
       }
     };
   });

@@ -77,11 +77,10 @@ angular.module('arseApp')
 angular.module('arseApp').controller('StoryFormCtrl', 
   ['$scope', '$uibModalInstance', 'items', 'Story', function($scope, $uibModalInstance, items, Story){
 
-  $scope.story = {};
-
   $scope.storyTypes = ["Feature", "Enhancement", "Fix"];
   $scope.availableSPs = [0, 1, 2, 3, 5, 8, 13, 20, 40, 100];
 
+  $scope.story = {};
   if(items.story){
     $scope.create = false;
     angular.copy(items.story, $scope.story);
@@ -101,6 +100,7 @@ angular.module('arseApp').controller('StoryFormCtrl',
     }
   };
 
+  // Use the original story, so that id, reference to project, etc. is staying the same
   $scope.updateStory = function(){
     $uibModalInstance.close($scope.story);
   };

@@ -1,25 +1,26 @@
 <div class="modal-header">
-  <h3 class="modal-title">Create Project</h3>
+  <h3 class="modal-title">{{title}}</h3>
 </div>
-<form novalidate name="createProjectForm" ng-submit="create()">
+<form novalidate name="createProjectForm" ng-submit="createOrUpdateProject()">
   <div class="modal-body">
     <div class="form-group">
       <label for="projectName">Name</label>
-      <input name="name" ng-model="name" type="text" class="form-control" id="projectName" placeholder="Name" required="true">
+      <input name="name" ng-model="project.name" type="text" class="form-control" id="projectName" placeholder="Name" required="true">
       <div ng-show="createProjectForm.$submitted || createProjectForm.name.$touched">
         <div ng-show="createProjectForm.name.$error.required" class="alert alert-warning" role="alert">Enter a name.</div>
       </div>
     </div>
     <div class="form-group">
       <label for="projectDescription">Description</label>
-      <textarea name="description" ng-model="description" class="form-control" id="projectDescription" placeholder="Description" required="true" />
+      <textarea name="description" ng-model="project.description" class="form-control" id="projectDescription" placeholder="Description" required="true" />
       <div ng-show="createProjectForm.$submitted || createProjectForm.description.$touched">
         <div ng-show="createProjectForm.description.$error.required" class="alert alert-warning" role="alert">Enter a description.</div>
       </div>
     </div>
   </div>
-  <div class="modal-footer"> 
-    <button class="btn btn-success" type="submit" >
+  <div class="modal-footer">
+    <button ng-show="!create" class="btn btn-primary" type="submit">Update</button>
+    <button ng-show="create" class="btn btn-success" type="submit" >
       <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
       Create
     </button>
