@@ -47,6 +47,7 @@ angular.module('arseApp')
         });
 
         scope.$on('storyUpdateFailed', function (event, id, err) {
+          console.log(id);
           if(scope.item._id == id) {
             scope.isRefreshing = false;
             scope.hasUpdateFailed = true;

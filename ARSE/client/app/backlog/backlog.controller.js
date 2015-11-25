@@ -10,6 +10,9 @@ angular.module('arseApp')
       $scope.project = project;
     });
 
+    // Error message if creating/editing a story failed
+    $scope.failed = "";
+
 
     $scope.editStory = function(item) {
           var modalScope = $scope.$new();
@@ -23,10 +26,10 @@ angular.module('arseApp')
             Story.update(res, function(httpRes){
               // Update the table and remove updating icon
               // It is important to pass the local res, instead of the HTTP res, since
-              // http resturn a resource object whith circular dependencies that cannot be serialized.
+              // http returns a resource object whith circular dependencies that cannot be serialized.
               $scope.$broadcast("storyUpdated", res);              
             }, function(err) {
-              $scope.$broadcast("storyUpdateFailed", res._id, err);
+              $scope.$broadcast("storyUpdateFailed", item._id, res);  
             });
 
           });
@@ -39,6 +42,8 @@ angular.module('arseApp')
         res.$save(function (httpRes){
           console.log(httpRes);
           $scope.stories.push(httpRes);
+        }, function(err) {
+          $scope.failed = err.data;
         });
       });
     };
