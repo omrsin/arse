@@ -1,31 +1,56 @@
-
-<div class="row">
-  <div class="col-sm-12">
-    <div class="project-page-header">
-      <h1>Projects</h1>
+<div class="main-container">  
+  <div class="header">  
+    <div class="row">   
+        <div class="col-sm-12">
+            <h1>Projects</h1>    
+        </div>      
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-sm-12">
+
+  <div class="actions">
+    <div class="row">
+      <div class="col-sm-12">
+        <a ng-click="new()" class="btn btn-primary pull-right">Create a new project</a>        
+      </div>
+    </div>    
+  </div>
+
+  <div class="content">   
+
     <div class="row">
       <div class="col-xs-6 col-sm-10">
          <div ng-show="creationFailed" class="alert alert-danger" role="alert">{{ creationFailed }}</div>
-      </div>
-      <div class="col-xs-6 col-sm-2">        
-        <a ng-click="new()" class="btn btn-primary pull-right margin-right-10">Create a new project</a>        
-      </div>
+      </div>      
+    </div>    
+
+    <div class="table-responsive" ng-show="projects.length">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th> 
+            <th>Name</th>
+            <th>Description</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>          
+          <tr ng-repeat="item in projects" project>
+            <!-- <project item="item"></project>             -->
+          </tr>          
+        </tbody> 
+      </table>
     </div>
-    <div class="row">
-      <div class="container-fluid projects-container">
-          <ul>
-							<li ng-repeat="item in projects">
-								<div class="row p-item">                    
-                    <project item="item" ></project>                    
-								</div>
-							</li>	
-					</ul>
-      </div>
-    </div>
-  </div>
+
+    <!-- <div class="list">      
+      
+      <ul>
+          <li ng-repeat="item in projects">
+            <div class="row p-item">                    
+                                    
+            </div>
+          </li> 
+      </ul>      
+    </div>       -->
+
+  </div> 
 </div>
