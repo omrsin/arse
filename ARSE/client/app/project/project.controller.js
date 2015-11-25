@@ -18,6 +18,7 @@ angular.module('arseApp')
     });
 
     $scope.new = function () {
+      $scope.creationFailed = "";
       $scope.modal = Modal.open({}, 'app/project/new.html', 'ProjectModalCtrl', {}).result.then(function (project) {
         project.$save(function (res) {
           console.log(res);
@@ -32,6 +33,7 @@ angular.module('arseApp')
       $state.go("backlog", { project_id: project._id });
     };
   }])
+  // Modal controller
   .controller('ProjectModalCtrl', ['$scope', '$uibModalInstance', 'items', 'Project', '$rootScope', function($scope, $uibModalInstance, items, Project, $rootScope) {
 
     $scope.create = function () {      

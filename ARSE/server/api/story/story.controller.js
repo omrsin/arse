@@ -12,6 +12,7 @@ exports.index = function(req, res) {
   });
 };
 
+// FIXME what is this for? The update method below is used!?
 exports.edit = function(req, res){
   Story.findOne({'_id': req.params.id}, function(err, story){
     if(err)

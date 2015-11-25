@@ -15,27 +15,28 @@ angular.module('arseApp')
 
 
     $scope.editStory = function(item) {
-          var modalScope = $scope.$new();
-          //angular.extend(modalScope, scope);
-          Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', {story: item}).result.then(function (res) {
+      $scope.failed = "";
+      Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', {story: item}).result.then(function (res) {
 
-            // Show the updating icon
-            $scope.$broadcast("storyUpdating", res);
-            // Actually trigger the update on the server
+        // Show the updating icon
+        $scope.$broadcast("storyUpdating", res);
+        // Actually trigger the update on the server
 
-            Story.update(res, function(httpRes){
-              // Update the table and remove updating icon
-              // It is important to pass the local res, instead of the HTTP res, since
-              // http returns a resource object whith circular dependencies that cannot be serialized.
-              $scope.$broadcast("storyUpdated", res);              
-            }, function(err) {
-              $scope.$broadcast("storyUpdateFailed", item._id, res);  
-            });
+        Story.update(res, function(httpRes){
+          // Update the table and remove updating icon
+          // It is important to pass the local res, instead of the HTTP res, since
+          // http returns a resource object whith circular dependencies that cannot be serialized.
+          $scope.$broadcast("storyUpdated", res);              
+        }, function(err) {
+          $scope.failed = err.data;
+          $scope.$broadcast("storyUpdateFailed", item._id, res);  
+        });
 
-          });
-        };
+      });
+    };
 
     $scope.addStory = function () {
+      $scope.failed = "";
       Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', {projectId: $stateParams.project_id, orderId: $scope.stories.length})
       .result.then(function (res) {
         //TODO handle network latencies and errors pleaseee
