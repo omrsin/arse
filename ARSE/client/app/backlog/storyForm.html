@@ -1,28 +1,39 @@
 <div class="modal-header">
   <h3 class="modal-title">{{title}}</h3>
 </div>
-<div class="modal-body">
-  <form name="form">
+<form novalidate name="storyForm" ng-submit="createOrUpdateStory()">
+  <div class="modal-body">
     <div class="form-group">
-      <label for="">Name</label>
-      <input class="form-control" type="text" name="name" ng-model="story.name" required="">
+      <label for="storyName">Name</label>
+      <input class="form-control" type="text" name="name" ng-model="story.name" id="storyName" placeholder="Name" required="true"/>
+      <div ng-show="storyForm.$submitted || storyForm.name.$touched">
+        <div ng-show="storyForm.name.$error.required" class="alert alert-warning" role="alert">Enter a name.</div>
+      </div>
     </div>
     <div class="form-group">
-      <label for="">Description</label>
-      <input class="form-control" type="text" name="description" ng-model="story.description" required="">
+      <label for="storyDescription">Description</label>
+      <input class="form-control" type="text" name="description" ng-model="story.description" id="storyDescription" placeholder="Description" required="true"/>
+      <div ng-show="storyForm.$submitted || storyForm.description.$touched">
+        <div ng-show="storyForm.description.$error.required" class="alert alert-warning" role="alert">Enter a description.</div>
+      </div>
     </div>
     <div class="form-group">
-      <label for="">Story Points</label>
-      <input class="form-control" type="text" name="points" ng-model="story.points" required="">
+      <label>Story Points</label>
+      <select class="form-control" name="points" ng-model="story.points" ng-options="points for points in availableSPs"></select>
     </div>
     <div class="form-group">
-      <label for="">Summary</label>
-      <input class="form-control" type="text" name="summary" ng-model="story.summary" required="">
+      <label>Summary</label>
+      <input class="form-control" type="text" name="summary" ng-model="story.summary" placeholder="Summary" />
     </div>
+    <div class="form-group">
+      <label>Type</label>
+      <select class="form-control" name="type" ng-model="story.type" ng-options="type for type in storyTypes" ng-init="story.type = storyTypes[0]">
+      </select>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button ng-show="!create" class="btn btn-primary" type="submit">Update</button>
+    <button ng-show="create" class="btn btn-success" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Create Story</button>
+    <button class="btn btn-warning" type="button" ng-click="close()">Cancel</button>
+  </div> 
 </form>
-</div>
-<div class="modal-footer">
-  <button ng-show="!create" class="btn btn-primary" type="button" ng-click="updateStory()">Update</button>
-  <button ng-show="create" class="btn btn-success" ng-click="createStory()"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Create Story</button>
-  <button class="btn btn-warning" type="button" ng-click="close()">Cancel</button>
-</div> 

@@ -22,7 +22,7 @@ angular.module('arseApp')
 
         scope.deleteItem = function (item) {
           console.log('Deleting Item');
-          $http.delete('/api/projects/'+scope.item.project +'/stories/'+ scope.item._id).then(function () {
+          $http.delete('/api/projects/'+scope.item.project._id +'/stories/'+ scope.item._id).then(function () {
               scope.$emit('updateView');
           });
         };
@@ -47,6 +47,7 @@ angular.module('arseApp')
         });
 
         scope.$on('storyUpdateFailed', function (event, id, err) {
+          console.log(id);
           if(scope.item._id == id) {
             scope.isRefreshing = false;
             scope.hasUpdateFailed = true;
