@@ -4,6 +4,7 @@ angular.module('arseApp')
   .controller('BacklogCtrl', ['$scope', 'Project', '$http', '$stateParams', 'Modal', 'Story', function ($scope, Project, $http, $stateParams, Modal, Story) {
     $scope.data = {};
     $scope.stories = [];
+    $scope.allowReorder = true;
     Project.get({ id: $stateParams.project_id }, function (project) {
       //TODO remove the stories after merging with the other features
       $scope.stories = project.backlog;
@@ -33,7 +34,7 @@ angular.module('arseApp')
         };
 
     $scope.addStory = function () {
-      Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', {projectId: $stateParams.project_id, orderId: $scope.stories.length})
+      Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', {projectId: $stateParams.project_id})
       .result.then(function (res) {
         //TODO handle network latencies and errors pleaseee
         res.$save(function (httpRes){
@@ -50,10 +51,18 @@ angular.module('arseApp')
     });
 
     $scope.dragControlListeners = {
-      accept: function (sourceItemHandleScope, destSortableScope) {return true},//override to determine drag is allowed or not. default is true.
+      accept: function (sourceItemHandleScope, destSortableScope) {return $scope.allowReorder},//override to determine drag is allowed or not. default is true.
       itemMoved: function (event) {},
       orderChanged: function(event) {
-        $scope.$broadcast('orderChanged');
+       console.log('reorder');
+       $scope.allowReorder = false;
+          $http.put('/api/projects/'+ $scope.project._id + '/reorder', {
+            oldIndex: event.source.index,
+            newIndex: event.dest.index
+          }).then(function(res) {
+            console.log(res);
+            $scope.allowReorder = true;
+          });
       },
    };
 
