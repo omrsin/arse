@@ -21,8 +21,7 @@ angular.module('arseApp')
         });
 
         scope.deleteItem = function (item) {
-          console.log('Deleting Item');
-          $http.delete('/api/projects/'+scope.item.project._id +'/stories/'+ scope.item._id).then(function () {
+          $http.delete('/api/projects/'+scope.item.project +'/stories/'+ scope.item._id).then(function () {
               scope.$emit('updateView');
           });
         };
@@ -30,6 +29,10 @@ angular.module('arseApp')
 
         scope.callOpenModal = function (item) {
           scope.editStory(item);
+        };
+
+        scope.showItem = function() {
+          console.log("showing item");
         };
 
         
