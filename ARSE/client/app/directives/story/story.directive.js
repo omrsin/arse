@@ -4,7 +4,7 @@ angular.module('arseApp')
   .directive('story', function ($http, Project, $uibModal, Modal) {
     return {
       templateUrl: 'app/directives/story/story.html',
-      restrict: 'E',
+      restrict: 'EA',
       link: function (scope, element, attrs) {
         scope.item = angular.fromJson(attrs.storyItem);
         // Don't show the isRefreshing icon by default
