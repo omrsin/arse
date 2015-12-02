@@ -36,8 +36,8 @@ angular.module('arseApp')
           scope.editStory(item);
         };
 
-        scope.showItem = function () {
-          console.log("showing item");
+        scope.showItem = function(item) {
+          scope.showStoryDetails(item);
         };
 
 

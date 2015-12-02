@@ -5,15 +5,26 @@ angular.module('arseApp')
     $scope.data = {};
     $scope.stories = [];
     $scope.allowReorder = true;
+    $scope.showDetails = false;
+    $scope.detailStory = {};
+    // Error message if creating/editing a story failed
+    $scope.failed = "";
+
     Project.get({ id: $stateParams.project_id }, function (project) {
       //TODO remove the stories after merging with the other features
       $scope.stories = project.backlog;
       $scope.project = project;
     });
-
-    // Error message if creating/editing a story failed
-    $scope.failed = "";
-
+    
+    $scope.showStoryDetails = function(item) {
+      if($scope.detailStory == item) {
+        $scope.detailStory = {};
+        $scope.showDetails = false;
+      } else {
+        $scope.detailStory = item;
+        $scope.showDetails = true;
+      }
+    };
 
     $scope.editStory = function(item) {
       $scope.failed = "";

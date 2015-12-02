@@ -23,31 +23,39 @@
 
       <div class="content">          
 
-        <div class="custom-table">
-          <div class="row">
-            <div class="table-header">
-              <div class="col-xs-2">Name</div>
-              <div class="col-xs-3">Description</div>
-              <div class="col-xs-2">Type</div>
-              <div class="col-xs-2">Status</div>
-              <div class="col-xs-1">Story points</div>
-              <div class="col-xs-2"></div>              
+        <div class="row">
+          <div ng-class="{'col-xs-9 story-detail-separator' : showDetails, 'col-xs-12' : !showDetails}">
+            <div class="custom-table">
+              <div class="row">
+                <div class="table-header">
+                  <div class="col-xs-3">Name</div>
+                  <div class="col-xs-3">Description</div>
+                  <div class="col-xs-2">Type</div>
+                  <div class="col-xs-1">Status</div>
+                  <div class="col-xs-1">Points</div>
+                  <div class="col-xs-2"></div>              
+                </div>
+              </div>
+              <div class="table-content">
+                <ul data-as-sortable="dragControlListeners" data-ng-model="stories">
+                  <li class="table-row" ng-repeat="item in stories" data-as-sortable-item>
+                    <div data-as-sortable-item-handle>
+                      <div class="row">
+                        <story story-item="{{item}}"></story>
+                      </div>
+                    </div>
+                  </li>
+                </ul>            
+              </div>          
             </div>
           </div>
-          <div class="table-content">
-            <ul data-as-sortable="dragControlListeners" data-ng-model="stories">
-              <li class="table-row" ng-repeat="item in stories" data-as-sortable-item>
-                <div data-as-sortable-item-handle>
-                  <div class="row">
-                    <story story-item="{{item}}"></story>
-                  </div>
-                </div>
-              </li>
-            </ul>            
-          </div>          
-        </div>        
+
+          <div class="col-xs-3">            
+              <story-detail ng-show="showDetails" story-item="{{detailStory}}"></story-detail>            
+          </div>
+          
+        </div>                
       </div>    
     </div>    
-  </div>
+  </div>  
 </div>
-
