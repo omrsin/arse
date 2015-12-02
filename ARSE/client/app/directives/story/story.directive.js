@@ -11,6 +11,8 @@ angular.module('arseApp')
         scope.isRefreshing = false;
         scope.errorMessage = "";
         scope.hasUpdateFailed = false;
+        scope.datePickerOpen = false;
+        scope.currentDate = new Date();
 
 
         scope.$on('orderChanged', function () {
@@ -29,6 +31,10 @@ angular.module('arseApp')
 
           });
 
+        };
+
+        scope.openDatePicker = function($event) {
+          scope.datePickerOpen = true;
         };
 
 

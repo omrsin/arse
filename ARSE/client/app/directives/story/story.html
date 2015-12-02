@@ -26,10 +26,15 @@
       <label>Product Backlog</label>
     </div>
   </div>
-  <div class="col-xs-1">
-    Datepicker
-  </div>
   <div class="col-xs-2">
+    <p class="input-group">
+      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="datePickerOpen" min-date="currentDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" placeholder="End date" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </p>
+  </div>
+  <div class="col-xs-1">
     <a ng-click="" class="btn btn-success pull-right">Start Sprint!</a>
   </div>
 </div>
