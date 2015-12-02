@@ -157,8 +157,7 @@ angular.module('arseApp').controller('StoryFormCtrl',
       name:$scope.story.name, 
       project:items.projectId, 
       description: $scope.story.description, 
-      points: $scope.story.points, 
-      summary: $scope.story.summary, 
+      points: $scope.story.points,
       type: $scope.story.type,
       orderId: items.orderId
     });

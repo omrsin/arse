@@ -31,7 +31,6 @@ var StorySchema = new Schema({
   points: {
     type: Number
   },
-  summary: String,
   created_at: Date,
   updated_at: Date
 });
