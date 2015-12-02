@@ -2,14 +2,24 @@
 
 angular.module('arseApp')
   .controller('BacklogCtrl', ['$scope', 'Project', '$http', '$stateParams', 'Modal', 'Story', function ($scope, Project, $http, $stateParams, Modal, Story) {
-    $scope.data = {};
-    $scope.stories = [];
-    $scope.allowReorder = true;
-    Project.get({ id: $stateParams.project_id }, function (project) {
+    
+    // This function is calles every time we receive project data from the backend
+    $scope.onProjectDataReceived = function(project) {
+      // Add a delimiter TODO according to the offset value of the project
+      project.offset = project.backlog.length;
+      project.backlog.push({
+        _id: -1
+      });
+
       //TODO remove the stories after merging with the other features
       $scope.stories = project.backlog;
       $scope.project = project;
-    });
+    };
+
+    $scope.data = {};
+    $scope.stories = [];
+    $scope.allowReorder = true;
+    Project.get({ id: $stateParams.project_id }, $scope.onProjectDataReceived);
 
     // Error message if creating/editing a story failed
     $scope.failed = "";
@@ -40,7 +50,6 @@ angular.module('arseApp')
     $scope.failed = "";
     Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', {projectId: $stateParams.project_id})
       .result.then(function (res) {
-        //TODO handle network latencies and errors pleaseee
         res.$save(function (httpRes){
           console.log(httpRes);
           $scope.stories.push(httpRes);
@@ -51,25 +60,42 @@ angular.module('arseApp')
     };
 
     $scope.$on('updateView', function () {
-      Project.get({ id: $stateParams.project_id  }, function (project) {
-        $scope.stories = project.backlog;
-      });
+      Project.get({ id: $stateParams.project_id  }, $scope.onProjectDataReceived);
     });
 
     $scope.dragControlListeners = {
-      accept: function (sourceItemHandleScope, destSortableScope) {return $scope.allowReorder},//override to determine drag is allowed or not. default is true.
+      //override $scope.allowReorder to determine drag is allowed or not. default is true.
+      accept: function (sourceItemHandleScope, destSortableScope) {return $scope.allowReorder},
       itemMoved: function (event) {},
       orderChanged: function(event) {
-       console.log('reorder');
-       $scope.allowReorder = false;
+        $scope.allowReorder = false;
+        if(event.source.itemScope.item._id !== -1) {
+          // normal story
+          
+          var oldIndex = event.source.index;
+          var newIndex = event.dest.index;
+          // Do math with the index to considerate the delimiter
+          if(oldIndex > $scope.project.offset) oldIndex--;
+          if(newIndex > $scope.project.offset) newIndex--;
+
+          console.log("drag " + oldIndex + " to " + newIndex);
+
           $http.put('/api/projects/'+ $scope.project._id + '/reorder', {
-            oldIndex: event.source.index,
-            newIndex: event.dest.index
+            oldIndex: oldIndex,
+            newIndex: newIndex
           }).then(function(res) {
-            console.log(res);
             $scope.allowReorder = true;
           });
-      },
+        } else {
+          // delimiter
+          // Update offset according to the new position
+          $scope.project.offset = event.dest.index;
+
+          // TODO issue a different request
+          console.log("drag last to " + $scope.project.offset);
+          $scope.allowReorder = true;
+        }
+      }
    };
 
 }]);
