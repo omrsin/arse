@@ -1,47 +1,53 @@
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-lg-1 hidden-sm hidden-md hidden-xs"></div>
-		<div class="col-sm-12 col-lg-10">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<div class="panel-title">
-						{{project.name}}
-					</div>
-				</div>
+<div class="row">
+  <div class="col-xs-1">
+    
+  </div>
+  <div class="col-xs-11">
+    <div class="main-container">
+      <div class="header">
+        <div class="row">
+          <div class="col-sm-12">
+            <h1>{{project.name}}</h1>
+            <p>{{project.description}}</p>
+          </div>
+        </div>    
+      </div>
 
-				<div class="panel-body">
-					<p>{{project.description}}</p>
-					<hr/>
-         <div ng-show="failed" class="alert alert-danger" role="alert">{{ failed }}</div>
-					<!-- TODO make this looks nice here is the page people http://getbootstrap.com/components/#panels-tables -->
-					<div data-as-sortable data-ng-model="stories">
+      <div class="actions">
+        <div class="row">
+          <div class="col-sm-12">
+            <a ng-click="addStory()" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a>      
+          </div>
+        </div>    
+      </div>
 
-						<div class="container-fluid">
-							<div class="panel-body">
-								<div class="container-fluid">
-									<div style="margin-bottom: 5px" class="row">
-										<div class="col-xs-2">Name</div>
-										<div class="col-xs-2">Description</div>
-										<div class="col-xs-2">Type</div>
-										<div class="col-xs-2">Status</div>
-										<div class="col-xs-1">Story points</div>
-										<div class="col-xs-3"><a ng-click="addStory()" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Item</a></div>
-									</div>
-									<ul data-as-sortable="dragControlListeners" data-ng-model="stories">
-										<li ng-repeat="item in stories" data-as-sortable-item>
-											<div class="row" data-as-sortable-item-handle>
-												<story  story-item="{{item}}"></story>
-											</div>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>					
-				</div>
+      <div class="content">          
 
-			</div>
-			<div class="col-lg-1 hidden-sm hidden-md hidden-xs"></div>
-		</div>
-	</div>
+        <div class="custom-table">
+          <div class="row">
+            <div class="table-header">
+              <div class="col-xs-2">Name</div>
+              <div class="col-xs-3">Description</div>
+              <div class="col-xs-2">Type</div>
+              <div class="col-xs-2">Status</div>
+              <div class="col-xs-1">Story points</div>
+              <div class="col-xs-2"></div>              
+            </div>
+          </div>
+          <div class="table-content">
+            <ul data-as-sortable="dragControlListeners" data-ng-model="stories">
+              <li class="table-row" ng-repeat="item in stories" data-as-sortable-item>
+                <div data-as-sortable-item-handle>
+                  <div class="row">
+                    <story story-item="{{item}}"></story>
+                  </div>
+                </div>
+              </li>
+            </ul>            
+          </div>          
+        </div>        
+      </div>    
+    </div>    
+  </div>
 </div>
+
