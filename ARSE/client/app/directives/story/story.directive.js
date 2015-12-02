@@ -15,15 +15,20 @@ angular.module('arseApp')
 
         scope.$on('orderChanged', function () {
           scope.item.orderId = scope.item.$index;
-          $http.put('/api/projects/'+scope.item.project +'/stories/'+ scope.item._id, scope.item).then(function (res) {
+          $http.put('/api/projects/' + scope.item.project + '/stories/' + scope.item._id, scope.item).then(function (res) {
             console.log(res)
           });
         });
 
         scope.deleteItem = function (item) {
-          $http.delete('/api/projects/'+scope.item.project +'/stories/'+ scope.item._id).then(function () {
+          Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl', { message: "Deleting a  story item" }).result.then(function (res) {
+            console.log('Deleting Item');
+            $http.delete('/api/projects/' + scope.item.project + '/stories/' + scope.item._id).then(function () {
               scope.$emit('updateView');
+            });
+
           });
+
         };
 
 
@@ -31,19 +36,19 @@ angular.module('arseApp')
           scope.editStory(item);
         };
 
-        scope.showItem = function() {
+        scope.showItem = function () {
           console.log("showing item");
         };
 
-        
+
         scope.$on('storyUpdating', function (event, story) {
-          if(scope.item._id == story._id) {
+          if (scope.item._id == story._id) {
             scope.isRefreshing = true;
           }
         });
 
         scope.$on('storyUpdated', function (event, story) {
-          if(scope.item._id == story._id) {
+          if (scope.item._id == story._id) {
             scope.isRefreshing = false;
             scope.item = story;
           }
@@ -51,7 +56,7 @@ angular.module('arseApp')
 
         scope.$on('storyUpdateFailed', function (event, id, err) {
           console.log(id);
-          if(scope.item._id == id) {
+          if (scope.item._id == id) {
             scope.isRefreshing = false;
             scope.hasUpdateFailed = true;
             scope.errorMessage = err.data;
