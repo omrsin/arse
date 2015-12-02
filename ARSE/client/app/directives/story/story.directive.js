@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('arseApp')
-  .directive('story', function ($http, Project, $uibModal, Modal) {
+  .directive('story', function ($http, Project, $uibModal, Modal, $location) {
     return {
       templateUrl: 'app/directives/story/story.html',
       restrict: 'EA',
@@ -11,6 +11,8 @@ angular.module('arseApp')
         scope.isRefreshing = false;
         scope.errorMessage = "";
         scope.hasUpdateFailed = false;
+        scope.datePickerOpen = false;
+        scope.currentDate = new Date();
 
 
         scope.$on('orderChanged', function () {
@@ -31,6 +33,10 @@ angular.module('arseApp')
 
         };
 
+        scope.openDatePicker = function($event) {
+          scope.datePickerOpen = true;
+        };
+
 
         scope.callOpenModal = function (item) {
           scope.editStory(item);
@@ -38,6 +44,14 @@ angular.module('arseApp')
 
         scope.showItem = function(item) {
           scope.showStoryDetails(item);
+        };
+
+        scope.startSprint = function() {
+          console.log(scope.endDate);
+          $http.post('/api/projects/' + scope.item.project + '/sprints', {end_date: scope.endDate}).then(function (res) {
+            console.log(res);
+            $location.path('/sprintBoard/' + scope.item.project + "/" + res.data._id);
+          });
         };
 
 
