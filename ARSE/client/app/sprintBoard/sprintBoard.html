@@ -1,0 +1,49 @@
+<div class="main-container">  
+  <div class="header">  
+    <div class="row">   
+        <div class="col-sm-12">
+            <h1>Sprint Board</h1>    
+        </div>      
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="row">
+      <div class="col-sm-12">
+        <a class="btn btn-primary pull-right">Close Sprint</a>        
+      </div>
+    </div>    
+  </div>
+
+  <div class="content">   
+
+    <div class="row">
+      <div class="col-xs-6 col-sm-10">
+         <div ng-show="failed" class="alert alert-danger" role="alert">{{ failed }}</div>
+      </div>      
+    </div>    
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>User Stories</th> 
+            <th>Todo</th>
+            <th>In Progress</th>
+            <th>Done</th>
+          </tr>
+        </thead>
+        <tbody>  
+			<tr ng-repeat='story in backlog'>
+				<th>
+					<label>{{story.name}}</label>
+				</th>
+				<!--TODO Add sprint tasks as a nested ng-repeat as seen in: http://a5hik.github.io/ng-sortable/#/sprint-->
+			</tr>        
+          <!--<tr ng-repeat="item in projects" project>            
+          </tr>          -->
+        </tbody> 
+      </table>
+    </div>
+  </div> 
+</div>
