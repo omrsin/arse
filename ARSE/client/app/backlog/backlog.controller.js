@@ -6,8 +6,8 @@ angular.module('arseApp')
     // This function is calles every time we receive project data from the backend
     $scope.onProjectDataReceived = function(project) {
       // Add a delimiter TODO according to the offset value of the project
-      project.offset = project.backlog.length;
-      project.backlog.push({
+      //project.offset = project.backlog.length;
+      project.backlog.splice(project.offset, 0, {
         _id: -1
       });
 
@@ -91,10 +91,14 @@ angular.module('arseApp')
           // delimiter
           // Update offset according to the new position
           $scope.project.offset = event.dest.index;
-
-          // TODO issue a different request
+          // Issue a different request
           console.log("drag last to " + $scope.project.offset);
-          $scope.allowReorder = true;
+          Project.update({_id:$scope.project._id, offset:$scope.project.offset}, function (res) {
+            $scope.allowReorder = true;
+            console.log("receiver http res");
+          }, function(err) {
+            $scope.failed = err.data;
+          });
         }
       }
    };
