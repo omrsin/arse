@@ -45,11 +45,17 @@ exports.create = function (req, res) {
   Project.findById(req.params.project_id, function (err, project) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send('Project Not Found'); }
+    // First create the Sprint
     Sprint.create(req.body, function (err, sprint) {
       if (err) { return handleError(res, err); }
       project.current_sprint = sprint;
+      project.sprint_counter++;
       project.save(function (err) {
-        if (err) { return res.status(404).send("could not create sprints"); }
+        if (err) { return res.status(500).send("could not create sprints"); }
+      });
+      sprint.name = "Sprint " + project.sprint_counter;
+      sprint.save(function (err) {
+        if (err) { return res.status(500).send("name of the sprint could not be set appropriately"); }
       });
       return res.status(201).json(sprint);
     });
