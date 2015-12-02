@@ -32,7 +32,7 @@ angular.module('arseApp')
     Project.get({ id: $stateParams.project_id }, $scope.onProjectDataReceived);
     
     $scope.showStoryDetails = function(item) {
-      if($scope.detailStory == item) {
+      if($scope.detailStory._id == item._id) {
         $scope.detailStory = {};
         $scope.showDetails = false;
       } else {

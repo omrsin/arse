@@ -6,7 +6,8 @@ angular.module('arseApp')
       templateUrl: 'app/directives/storyDetail/storyDetail.html',
       restrict: 'E',
       scope: {
-        storyItem:'@'
+        storyItem:'@',
+        callback:'&'
       },
       link: function (scope, element, attrs) {
         console.log(scope.detailStory);
@@ -16,6 +17,10 @@ angular.module('arseApp')
               scope.item = angular.fromJson(attrs.storyItem);
           }
         });
+
+        scope.hideItem = function() {
+          scope.callback({item: scope.item});
+        };
       }
     };
   });
