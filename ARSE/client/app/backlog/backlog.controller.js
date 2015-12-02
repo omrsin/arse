@@ -63,6 +63,7 @@ angular.module('arseApp')
       Project.get({ id: $stateParams.project_id  }, $scope.onProjectDataReceived);
     });
 
+    //TODO a bug on reordering
     $scope.dragControlListeners = {
       //override $scope.allowReorder to determine drag is allowed or not. default is true.
       accept: function (sourceItemHandleScope, destSortableScope) {return $scope.allowReorder},

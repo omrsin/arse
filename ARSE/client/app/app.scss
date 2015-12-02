@@ -42,12 +42,15 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
     }
   }
   .actions {
-    
+
   }
   .content {
     margin-top: 20px;
     table {
-      
+      .link:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
     }   
   }
 }
