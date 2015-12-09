@@ -34,8 +34,8 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 /////////////
 
 .main-container {
-  margin-left: 15px;
-  margin-right: 15px;
+  margin-left: 0;
+  margin-right: 0;
   .header {
     border-bottom: 1px solid lightgray;
     margin-bottom: 15px;    
@@ -69,6 +69,7 @@ ul {
   list-style-type: none;   
 }
 
+// bpi-actions should not be used anymore. Use different columns instead
 .bpi-actions {
   list-style-type: none;
   margin: 0;
