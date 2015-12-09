@@ -19,25 +19,25 @@
 </div>
 <!-- Special markup for the seperator -->
 <div ng-show="item._id === -1">
-  <div ng-class="{'col-xs-12': !item.sprintRunning}" class="col-xs-9">
+  <div ng-class="{'col-xs-12': (!item.noSprintRunning || showDetails ), 'col-xs-5 col-sm-4 col-md-5': item.noSprintRunning}">
     <div class="sprint-delimiter">
       <label>Sprint Backlog</label>
       <hr />
       <label>Product Backlog</label>
     </div>
   </div>
-  <div class="col-xs-2" ng-show="item.sprintRunning">
+  <div class="col-xs-5 col-sm-6 col-md-5" ng-show="item.noSprintRunning && !showDetails">
     <p class="input-group">
-      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="endDate" is-open="datePickerOpen" min-date="currentDate" ng-required="true" close-text="Close" placeholder="End date" />
+      <input type="text" class="hidden-xs form-control" uib-datepicker-popup="{{format}}" ng-model="endDate" is-open="datePickerOpen" min-date="currentDate" ng-required="true" close-text="Close" placeholder="End date" />
       <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
       </span>
     </p>
   </div>
-  <div class="col-xs-1" ng-show="item.sprintRunning">
+  <div class="col-xs-2" ng-show="item.noSprintRunning && !showDetails">
     <a ng-click="startSprint()" ng-disabled="endDate == undefined" class="btn btn-success pull-right">Start Sprint!</a>
   </div>
-  <!--<div class="col-xs-3" ng-hide="item.sprintRunning">
+  <!--<div class="col-xs-3" ng-hide="item.noSprintRunning">
     <a ng-click="viewSprint()" class="btn btn-success pull-right">View Sprint</a>
   </div>-->
 </div>

@@ -10,7 +10,7 @@ angular.module('arseApp')
       project.backlog.splice(project.offset, 0, {
         _id: -1,
         project: project._id,
-        sprintRunning: (!project.current_sprint)
+        noSprintRunning: (!project.current_sprint)
       });
 
       $scope.project = project;
@@ -65,7 +65,7 @@ angular.module('arseApp')
         .result.then(function (res) {
           res.$save(function (httpRes) {
             console.log(httpRes);
-            $scope.stories.push(httpRes);
+            $scope.project.backlog.push(httpRes);
           }, function (err) {
             $scope.failed = err.data;
           });
