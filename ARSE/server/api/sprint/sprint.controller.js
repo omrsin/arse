@@ -26,6 +26,7 @@ exports.show = function (req, res) {
       Project.findById(req.params.project_id).populate('backlog').exec(function (err, project) {
         if (err) { return handleError(res, err); }
         if (!project) { return res.status(404).send('could not get stories'); }
+        console.log(project.backlog);
         var sprint_backlog = project.backlog.slice(0, project.offset);
         console.log(sprint_backlog);
         sprint.set('stories', sprint_backlog);
