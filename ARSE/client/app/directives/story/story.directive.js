@@ -5,8 +5,25 @@ angular.module('arseApp')
     return {
       templateUrl: 'app/directives/story/story.html',
       restrict: 'EA',
+      scope: {
+        storyItem:'@',
+        showDetails:'@',
+        editCallback:'&',
+        viewCallback:'&'
+      },
       link: function (scope, element, attrs) {
-        scope.item = angular.fromJson(attrs.storyItem);
+        attrs.$observe('storyItem', function(value){
+          if(value){
+              scope.item = angular.fromJson(attrs.storyItem);
+          }
+        });
+        attrs.$observe('showDetails', function(value){
+          if(value){
+              scope.showDetails = angular.fromJson(attrs.showDetails);
+          }
+        });
+
+
         // Don't show the isRefreshing icon by default
         scope.isRefreshing = false;
         scope.errorMessage = "";
@@ -39,11 +56,11 @@ angular.module('arseApp')
 
 
         scope.callOpenModal = function (item) {
-          scope.editStory(item);
+          scope.editCallback({item: item});
         };
 
         scope.showItem = function(item) {
-          scope.showStoryDetails(item);
+          scope.viewCallback({item: item});
         };
 
         scope.startSprint = function() {
