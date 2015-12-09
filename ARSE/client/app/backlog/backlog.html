@@ -9,6 +9,11 @@
             <h1>{{project.name}}</h1>
             <p>{{project.description}}</p>
           </div>
+
+        <div class="col-xs-1 hidden-sm hidden-md hidden-lg">XS</div> 
+        <div class="col-sm-1 hidden-xs hidden-md hidden-lg">SM</div>
+        <div class="col-md-1 hidden-sm hidden-xs hidden-lg">MD</div>  
+        <div class="col-lg-1 hidden-sm hidden-md hidden-xs">LG</div>  
         </div>    
       </div>
 
@@ -27,12 +32,12 @@
             <div class="custom-table">
               <div class="row">
                 <div class="table-header">
-                  <div class="col-xs-3">Name</div>
-                  <div class="col-xs-3">Description</div>
-                  <div class="col-xs-2">Type</div>
-                  <div class="col-xs-1">Status</div>
-                  <div class="col-xs-1">Points</div>
-                  <div class="col-xs-2"></div>              
+                  <div class="col-xs-6 col-sm-4 col-md-2">Name</div>
+                  <div class="hidden-xs hidden-sm col-md-3">Description</div>
+                  <div class="hidden-xs col-sm-2 col-md-2">Type</div>
+                  <div class="hidden-xs col-sm-2 col-md-2">Status</div>
+                  <div class="hidden-xs col-sm-1 col-md-1">Points</div>
+                  <div class="col-xs-6 col-sm-3 col-md-2"></div>              
                 </div>
               </div>
               <div class="table-content">
