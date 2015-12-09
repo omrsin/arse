@@ -1,11 +1,22 @@
 
 <div ng-show="item._id !== -1">
-  <div class="col-xs-3">{{item.name | limitTo: 40}}{{item.name.length > 40 ? '...' : '' }}</div>
-  <div class="col-xs-3">{{item.description | limitTo: 40}}{{item.description.length > 40 ? '...' : '' }}</div>
-  <div class="col-xs-2">{{item.type}}</div>
-  <div class="col-xs-1">{{item.status}}</div>
-  <div class="col-xs-1">{{item.points}}</div>
-  <div class="col-xs-2">
+  <div ng-class="{'col-xs-6 col-sm-4 col-md-8 col-lg-3' : showDetails, 'col-xs-6 col-sm-4 col-md-2' : !showDetails}">{{item.name | limitTo: 40}}{{item.name.length > 40 ? '...' : '' }}</div>
+  <div ng-class="{'hidden-xs hidden-sm hidden-md hidden-lg' : showDetails, 'hidden-xs hidden-sm col-md-3' : !showDetails}">{{item.description | limitTo: 40}}{{item.description.length > 40 ? '...' : '' }}</div>
+  <div ng-class="{'hidden-xs hidden-sm hidden-md col-lg-2' : showDetails, 'hidden-xs col-sm-2 col-md-2' : !showDetails}">{{item.type}}</div>
+  <div ng-class="{'hidden-xs hidden-sm hidden-md col-lg-2' : showDetails, 'hidden-xs col-sm-2 col-md-2' : !showDetails}">{{item.status}}</div>
+  <div ng-class="{'hidden-xs hidden-sm hidden-md col-lg-1' : showDetails, 'hidden-xs col-sm-1 col-md-1' : !showDetails}">{{item.points}}</div>
+  <div ng-class="{'col-xs-6 col-sm-3 col-md-4 col-lg-4' : showDetails, 'col-xs-6 col-sm-3 col-md-2' : !showDetails}">
+    <div class="btn-group pull-right">
+      <a ng-click="deleteItem(item)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
+      <div class="btn btn-danger disabled" ng-show="hasUpdateFailed"><span class="glyphicon glyphicon-exclamation-sign"></span> {{errorMessage}} </div>
+      <a ng-show="!isRefreshing" ng-click="callOpenModal(item)" class="btn btn-primary">
+          <span class="glyphicon glyphicon-edit"></span>
+      </a>
+      <div class="btn btn-info" ng-show="isRefreshing"><img width="14px" src="assets/images/ajax-loader.gif" /></div>
+      <a ng-click="showItem(item)" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></a>
+    </div>
+
+<!--
     <ul class="pull-right bpi-actions">
       <li>
         <div class="btn btn-danger disabled" ng-show="hasUpdateFailed"><span class="glyphicon glyphicon-exclamation-sign"></span> {{errorMessage}} </div>
@@ -23,6 +34,7 @@
         <a ng-click="showItem(item)" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></a>
       </li>
     </ul>
+    -->
   </div>
 </div>
 <!-- Special markup for the seperator -->
