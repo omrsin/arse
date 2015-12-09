@@ -11,7 +11,7 @@ angular.module('arseApp', [
 ])
   .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider
-      .otherwise('/');
+      .otherwise('/projects');
 
     $locationProvider.html5Mode(true);
   });

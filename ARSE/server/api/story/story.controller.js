@@ -12,8 +12,6 @@ exports.index = function(req, res) {
   });
 };
 
-//TODO: change error handling for story not found at client
-
 // Get a single story
 exports.show = function(req, res) {
   Story.findOne({'_id': req.params.id},function(err, story){
@@ -67,7 +65,6 @@ exports.update = function(req, res) {
 
 // Deletes a story from the DB.
 // needs to propagate the deletion to the project.
-// TODO need to revise and make it functional
 exports.destroy = function(req, res) {
   Project.findById(req.params.project_id, function (project_find_error, project) {
     if(project_find_error) { return handleError(res, project_find_error); }
