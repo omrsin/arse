@@ -12,7 +12,8 @@ var ProjectSchema = new Schema({
   }],
   current_sprint: {
     type: Schema.Types.ObjectId,
-    ref: 'Sprint'
+    ref: 'Sprint',
+    default: null
   },
   offset: {type: Number, default:0}
 });
