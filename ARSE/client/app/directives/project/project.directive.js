@@ -6,6 +6,7 @@ angular.module('arseApp')
       templateUrl: 'app/directives/project/project.html',
       restrict: 'EA',
       link: function (scope, element, attrs) {
+        scope.item = angular.fromJson(attrs.projectItem);
 
         scope.deleteItem = function (item) {
 

@@ -1,7 +1,7 @@
-<th scope=row>{{$index + 1}}</th>
-<td class="link" ng-click="show(item)">{{item.name}}</td>
-<td>{{item.description}}</td>
-<td>
+<div class="col-xs-1">{{$index + 1}}</div>
+<div class="link col-xs-3" ng-click="show(item)">{{item.name | limitTo: 40}}{{item.name.length > 40 ? '...' : '' }}</div>
+<div class="col-xs-6">{{item.description | limitTo: 40}}{{item.description.length > 40 ? '...' : '' }}</div>
+<div class="col-xs-2">
   <ul class="pull-right bpi-actions">
     <li><a ng-click="deleteItem(item)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a></li>
     <li>
@@ -10,4 +10,4 @@
       </a>
     </li>
   </ul>
-</td>
+</div>

@@ -48,12 +48,10 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
   }
   .content {
     margin-top: 20px;
-    table {
-      .link:hover {
-        text-decoration: underline;
-        cursor: pointer;
-      }
-    }   
+    .link:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
 }
 
@@ -69,4 +67,36 @@ ul {
   margin: 0; 
   padding: 0;
   list-style-type: none;   
+}
+
+.bpi-actions {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bpi-actions>li {
+  display: inline;
+
+}
+
+.custom-table {
+  .table-header {
+    div {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+  }
+  .table-content {
+    .table-row {
+      padding: 8px 0px;
+      border-top: 1px solid #ddd
+    }
+    .table-row:nth-child(1) {
+      border-top: 2px solid #ddd 
+    }
+    .table-row:nth-child(odd) {
+      background-color: #f9f9f9;
+    }
+  }
 }

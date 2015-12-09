@@ -23,21 +23,28 @@
       </div>      
     </div>    
 
-    <div class="table-responsive" ng-show="projects.length">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>#</th> 
-            <th>Name</th>
-            <th>Description</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>          
-          <tr ng-repeat="item in projects" project>            
-          </tr>          
-        </tbody> 
-      </table>
+    <div class="row" ng-show="projects.length">
+      <div class="col-xs-12">
+        <div class="custom-table">
+          <div class="row">
+            <div class="table-header">
+              <div class="col-xs-1">#</div>
+              <div class="col-xs-3">Name</div>
+              <div class="col-xs-6">Description</div>
+              <div class="col-xs-2"></div>              
+            </div>
+          </div>
+          <div class="table-content">
+            <ul>
+              <li class="table-row" ng-repeat="item in projects">
+                <div class="row">
+                  <project project-item="{{item}}"></project>
+                </div>
+              </li>
+            </ul>            
+          </div>          
+        </div>
+      </div>
     </div>
   </div> 
 </div>
