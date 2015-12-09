@@ -70,6 +70,10 @@ angular.module('arseApp')
             $location.path('/sprintBoard/' + scope.item.project + "/" + res.data._id);
           });
         };
+        
+        scope.viewSprint = function() {
+           $location.path('/sprintBoard/' + scope.project._id + "/" + scope.project.current_sprint);
+        };
 
 
         scope.$on('storyUpdating', function (event, story) {
