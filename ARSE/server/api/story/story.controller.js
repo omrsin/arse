@@ -12,17 +12,7 @@ exports.index = function(req, res) {
   });
 };
 
-// FIXME what is this for? The update method below is used!?
-exports.edit = function(req, res){
-  Story.findOne({'_id': req.params.id}, function(err, story){
-    if(err)
-      return handleError(res, err);
-    //TODO: change error handling for story not found at client
-    if(!story)
-      return res.status(404).send('Not Found');
-    return res.json(story);
-  });
-};
+//TODO: change error handling for story not found at client
 
 // Get a single story
 exports.show = function(req, res) {
