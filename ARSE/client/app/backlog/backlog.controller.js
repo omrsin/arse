@@ -13,8 +13,6 @@ angular.module('arseApp')
         sprintRunning: (!project.current_sprint)
       });
 
-      //TODO remove the stories after merging with the other features
-      $scope.stories = project.backlog;
       $scope.project = project;
 
       console.log("current sprint");
@@ -22,7 +20,6 @@ angular.module('arseApp')
     };
 
     $scope.data = {};
-    $scope.stories = [];
     $scope.allowReorder = true;
     $scope.showDetails = false;
     $scope.detailStory = {};
