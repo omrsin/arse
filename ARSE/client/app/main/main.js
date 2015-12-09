@@ -6,7 +6,16 @@ angular.module('arseApp')
     $stateProvider
       .state('main', {
         url: '/',
-        redirectTo: '/projects'/*,
+        redirectTo: '/projects',
+        resolve: {
+          currentUser: function(User, $cookies){
+            if($cookies.get('token')){
+              return User.get().$promise; 
+            }
+          }
+        }
+        
+        /*,
         templateUrl: 'app/main/main.html',
         controller: 'MainController',
         controllerAs: 'main'*/
