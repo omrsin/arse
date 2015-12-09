@@ -6,14 +6,19 @@ angular.module('arseApp')
     // This function is calles every time we receive project data from the backend
     $scope.onProjectDataReceived = function(project) {
       // Add a delimiter TODO according to the offset value of the project
-      project.offset = project.backlog.length;
-      project.backlog.push({
-        _id: -1
+      //project.offset = project.backlog.length;
+      project.backlog.splice(project.offset, 0, {
+        _id: -1,
+        project: project._id,
+        sprintRunning: (!project.current_sprint)
       });
 
       //TODO remove the stories after merging with the other features
       $scope.stories = project.backlog;
       $scope.project = project;
+
+      console.log("current sprint");
+      console.log(project.current_sprint);
     };
 
     $scope.data = {};
@@ -71,7 +76,7 @@ angular.module('arseApp')
       orderChanged: function(event) {
         $scope.allowReorder = false;
         if(event.source.itemScope.item._id !== -1) {
-          // normal story
+          // normal story moved
           
           var oldIndex = event.source.index;
           var newIndex = event.dest.index;
@@ -88,13 +93,17 @@ angular.module('arseApp')
             $scope.allowReorder = true;
           });
         } else {
-          // delimiter
+          // delimiter moved
           // Update offset according to the new position
           $scope.project.offset = event.dest.index;
-
-          // TODO issue a different request
+          // Issue a different request to update the offset of the delimiter
           console.log("drag last to " + $scope.project.offset);
-          $scope.allowReorder = true;
+          Project.update({_id:$scope.project._id, offset:$scope.project.offset}, function (res) {
+            $scope.allowReorder = true;
+            console.log("receiver http res");
+          }, function(err) {
+            $scope.failed = err.data;
+          });
         }
       }
    };

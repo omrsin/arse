@@ -15,7 +15,14 @@ var ProjectSchema = new Schema({
     ref: 'Sprint',
     default: null
   },
-  offset: {type: Number, default:0}
+  offset: {
+    type: Number, 
+    default:0
+  },
+  sprint_counter: {
+    type: Number,
+    default:0
+  }
 });
 
 module.exports = mongoose.model('Project', ProjectSchema);
