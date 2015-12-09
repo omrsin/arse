@@ -14,7 +14,10 @@ module.exports = function(app) {
 
   // story routes
   app.use('/api/projects/:project_id/stories', require('./api/story'));
-
+  
+  app.use('/api/users', require('./api/user'));
+  // auth
+  app.use('/auth', require('./auth'));	
 
 
   app.use('/api/projects', require('./api/project'));

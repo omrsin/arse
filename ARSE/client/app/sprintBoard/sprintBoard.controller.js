@@ -13,6 +13,4 @@ angular.module('arseApp')
       $scope.sprint = res.data;
       console.log(res.data);
     });
-
-
   }]);
