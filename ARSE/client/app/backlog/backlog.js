@@ -6,6 +6,7 @@ angular.module('arseApp')
       .state('backlog', {
         url: '/projects/:project_id/backlog',
         templateUrl: 'app/backlog/backlog.html',
-        controller: 'BacklogCtrl'
+        controller: 'BacklogCtrl',
+        authenticate: true
       });
   });
