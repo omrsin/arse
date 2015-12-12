@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var Sprint = require('./sprint.model');
 var Project = require('../project/project.model');
+var Story = require('../story/story.model');
 
 // Get list of sprints
 exports.index = function (req, res) {
@@ -16,6 +17,7 @@ exports.index = function (req, res) {
 // in addition, add the stories to the sprint
 // ?=stories=true or false : default= false
 exports.show = function (req, res) {
+  //TODO: automatically generate sprint name
   Sprint.findById(req.params.id, function (err, sprint) {
     if (err) { return handleError(res, err); }
     if (!sprint) { return res.status(404).send('Not Found'); }
@@ -33,8 +35,8 @@ exports.show = function (req, res) {
         console.log(sprint);
         return res.json(sprint);
       });
-    }else{
-     return res.json(sprint); 
+    } else {
+      return res.json(sprint);
     }
   });
 };
@@ -96,15 +98,26 @@ exports.close = function (req, res) {
   Sprint.findById(req.params.id, function (err, sprint) {
     if (err) { return handleError(res, err); }
     if (!sprint) { return res.status(404).send("Sprint not Found"); }
-    Project.findById(req.params.project_id, function (err, project) {
+    Project.findById(req.params.project_id).populate('backlog').exec(function (err, project) {
       if (err) { return handleError(res, err); }
       if (!project) { return res.status(404).send("Project not Found"); }
+
       project.current_sprint = null;
-      project.save(function (err) {
-        if (err) { return res.status(404).send("could not close sprint"); }
+      
+      // go through stories and remove story if status is "done".
+      var sprint_backlog = project.backlog.slice(0, project.offset);
+      sprint_backlog.forEach(function (item, index, temp) {
+        if(item.status==="Done")
+        {
+          project.backlog.pull(item); 
+        }
       });
 
-      res.status(200).send(project);
+      //after the project return the project with the new state.
+      project.save(function (err) {
+        if (err) { return res.status(404).send("could not close sprint"); }
+        res.status(200).send(project);
+      });
     });
   })
 }
