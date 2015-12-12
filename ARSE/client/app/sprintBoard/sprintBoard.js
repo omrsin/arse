@@ -5,7 +5,7 @@ angular.module('arseApp')
     $stateProvider
       .state('sprintBoard', {
         // TODO make proper URLs e.g. /project/id/sprintBoard/id and /project/id/backlog, etc.
-        url: '/sprintBoard/:project_id/:sprint_id',
+        url: '/projects/:project_id/sprintBoard',
         templateUrl: 'app/sprintBoard/sprintBoard.html',
         controller: 'SprintBoardCtrl'
       });

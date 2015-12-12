@@ -6,7 +6,7 @@ angular.module('arseApp')
     $scope.sprint_id = $stateParams.sprint_id;
 
     $http({
-      url: '/api/projects/' + $scope.project_id + '/sprints/' + $scope.sprint_id, 
+      url: '/api/projects/' + $scope.project_id + '/sprints/current', 
       method: "GET",
       params: {stories: true}
     }).then(function(res) {
