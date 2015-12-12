@@ -12,8 +12,6 @@ angular.module('arseApp')
       var modalScope = $rootScope.$new();
       scope = scope || {};
 
-      //angular.extend(modalScope, scope);
-
       return $uibModal.open({
         templateUrl: templateUrl,
         windowClass: 'modal-default',

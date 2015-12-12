@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('arseApp')
-  .directive('story', function ($http, Project, $uibModal, Modal, $location) {
+  .directive('story', function ($http, Project, $uibModal, Modal, $state) {
     return {
       templateUrl: 'app/directives/story/story.html',
       restrict: 'EA',
@@ -67,14 +67,9 @@ angular.module('arseApp')
           console.log(scope.endDate);
           $http.post('/api/projects/' + scope.item.project + '/sprints', {end_date: scope.endDate}).then(function (res) {
             console.log(res);
-            $location.path('/sprintBoard/' + scope.item.project + "/" + res.data._id);
+            $state.go('sprintBoard', {project_id:scope.item.project});
           });
         };
-        
-        scope.viewSprint = function() {
-           $location.path('/sprintBoard/' + scope.project._id + "/" + scope.project.current_sprint);
-        };
-
 
         scope.$on('storyUpdating', function (event, story) {
           if (scope.item._id == story._id) {

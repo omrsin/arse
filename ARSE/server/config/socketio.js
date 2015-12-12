@@ -21,7 +21,6 @@ function onConnect(socket) {
   require('../api/sprint/sprint.socket').register(socket);
   require('../api/story/story.socket').register(socket);
   require('../api/project/project.socket').register(socket);
-  require('../api/thing/thing.socket').register(socket);
 
 }
 

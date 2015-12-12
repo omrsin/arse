@@ -17,16 +17,15 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 // Component styles are injected through grunt
 // injector
 @import 'backlog/backlog.scss';
-@import 'directives/addPbiModal/addPbiModal.scss';
 @import 'directives/project/project.scss';
 @import 'directives/story/story.scss';
 @import 'directives/storyDetail/storyDetail.scss';
-@import 'main/main.scss';
-@import 'main/pbiItem/pbiItem.scss';
 @import 'project/project.scss';
 @import 'sprintBoard/sprintBoard.scss';
 @import '../components/footer/footer.scss';
 @import '../components/modal/modal.scss';
+@import '../components/project-navbar-mobile/project-navbar-mobile.scss';
+@import '../components/project-navbar/project-navbar.scss';
 // endinjector
 
 /////////////

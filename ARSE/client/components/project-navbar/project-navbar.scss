@@ -1,0 +1,23 @@
+.project-navbar {
+  .row {
+    background-color: #f8f8f8;
+    border-color: #e7e7e7;
+    text-align: center;
+    border-width: 1px;
+    border-top-style: solid;
+    border-right-style: solid;
+    .option {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      font-size: 1.5em;
+      color: #777;
+      cursor: pointer;
+    }    
+  }
+  .row:nth-child(1) {
+    border-top-right-radius: 1em;
+  }
+  .row:last-child {
+    border-bottom-style: solid;
+  }
+}

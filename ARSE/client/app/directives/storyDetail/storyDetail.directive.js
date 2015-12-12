@@ -11,7 +11,7 @@ angular.module('arseApp')
       },
       link: function (scope, element, attrs) {
         console.log(scope.detailStory);
-        // storyItem is fucking JSON STRING - needs to be converted back to object -.-
+        // storyItem is JSON STRING - needs to be converted back to object -.-
         attrs.$observe('storyItem', function(value){
           if(value){
               scope.item = angular.fromJson(attrs.storyItem);
