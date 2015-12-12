@@ -4,9 +4,62 @@
 }
 
 .as-sortable-story {
-  width: 33.3%
+  width: 33.33%;
+
 }
 
-.as-sortable-story-placeholder {
-  border: 1px solid #000;
+.storyItem {
+  border: 1px solid #e7e7e7;
+  padding: 5px;
+  border-radius: 2px;
+  margin: 5px;
 }
+
+ .as-sortable-dragging {
+   .storyItem {
+     border: 0;
+   }
+  }
+
+.as-sortable-story-placeholder {
+  border: 1px dashed #777;
+}
+
+.sprintBoardHeader{
+   
+   padding:0;
+   margin:0;
+   h1 {
+      padding:0;
+      margin:0;
+      font-size: 14pt;
+      color: #777;
+     }
+   .sprintHeader {
+     padding: 10px;
+     margin: 0;
+     text-align: center;
+     background-color: #f8f8f8;
+     border: 1px solid #e7e7e7;
+     border-right: 0;
+    
+     &:last-child {
+        border-right:1px solid #e7e7e7;
+     }
+   }     
+}
+
+.storyItemContainer {
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  
+
+  margin: 0;
+  border: 1px solid #e7e7e7;
+  border-top: 0;
+  text-align: center;
+  color: #777;
+}
+  

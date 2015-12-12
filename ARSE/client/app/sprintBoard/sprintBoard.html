@@ -26,17 +26,16 @@
           </div>      
         </div>  
 
-        <div class="row">
-          <div class="col-xs-4" ng-repeat="column in statuses">
+        <div class="row sprintBoardHeader">
+          <div class="col-xs-4 sprintHeader" ng-repeat="column in statuses">
             <h1>{{column.name}}</h1>
           </div>
         </div>
 
-        <div ng-repeat='story in sprint.stories' class="row">
-        <hr />
+        <div ng-repeat='story in sprint.stories' class="row storyItemContainer">
           <ul ng-model="story.items" as-sortable="sprintBoardOptions">
             <li class="as-sortable-story" data-as-sortable-item ng-repeat="column in story.items">
-              <div ng-show="column.isWithin" >
+              <div ng-show="column.isWithin" class="storyItem" >
                 <label data-as-sortable-item-handle >{{story.name}}</label>
               </div>
               <label ng-hide="column.isWithin"></label>

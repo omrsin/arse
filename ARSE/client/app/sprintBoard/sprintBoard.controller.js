@@ -20,12 +20,6 @@ angular.module('arseApp')
       accept: function (sourceItemHandleScope, destSortableScope) {
         return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
        },
-      itemMoved: function (event) {
-        console.log(event.source.itemScope.modelValue);
-        var oldStatus = event.source.itemScope.modelValue.status;
-        event.source.itemScope.modelValue.status = event.dest.sortableScope.$parent.column.name;
-        $scope.changeStory(event.source.itemScope.modelValue, oldStatus);
-      },
       orderChanged: function(event) {
         var oldStatus = $scope.statuses[event.source.index].name;
         var newStatus = $scope.statuses[event.dest.index].name;
