@@ -12,6 +12,6 @@ router.put('/:id', controller.update);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);
 //endpoint to close a sprint
-router.put('/:id/close',controller.close);
+router.put('/current/close',controller.close);
 
 module.exports = router;
