@@ -1,4 +1,12 @@
-.placeholder {
-  display: block;
+.as-sortable-story, .as-sortable-story-placeholder {
+  display: inline-block;
+  float: left;
+}
+
+.as-sortable-story {
+  width: 33.3%
+}
+
+.as-sortable-story-placeholder {
   border: 1px solid #000;
 }

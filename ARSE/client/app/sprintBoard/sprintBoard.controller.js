@@ -16,29 +16,25 @@ angular.module('arseApp')
     // Sorting options for the sprint board
     $scope.sprintBoardOptions = {
 
-      //restrict move across columns. move only within column.
+      //restrict move across row. move only within row.
       accept: function (sourceItemHandleScope, destSortableScope) {
-       return true;// sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
+        return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
        },
       itemMoved: function (event) {
+        console.log(event.source.itemScope.modelValue);
         var oldStatus = event.source.itemScope.modelValue.status;
         event.source.itemScope.modelValue.status = event.dest.sortableScope.$parent.column.name;
         $scope.changeStory(event.source.itemScope.modelValue, oldStatus);
       },
-      dragStart: function(event) {
-        console.log("dragging");
-        event.source.itemScope.modelValue.isDragged = true;
-      },
-      dragEnd: function(event) {
-        console.log("dropping");
-
-        event.source.itemScope.modelValue.isDragged = false;
-      },
       orderChanged: function(event) {
-        console.log("reordered");
+        var oldStatus = $scope.statuses[event.source.index].name;
+        var newStatus = $scope.statuses[event.dest.index].name;
+        var story = event.source.sortableScope.$parent.story;
+        console.log("reordered from " + oldStatus +" to " + newStatus);
+        story.status = newStatus;
+        $scope.changeStory(story, oldStatus);
       },
-      additionalPlaceholderClass: 'placeholder'
-      // containment: '#board'
+      additionalPlaceholderClass: 'as-sortable-story-placeholder'
     };
 
     $http({
@@ -48,6 +44,13 @@ angular.module('arseApp')
     }).then(function (res) {
       $scope.sprint = res.data;
       console.log(res.data);
+      for(var i = 0; i < $scope.sprint.stories.length; i++) {
+        var story = $scope.sprint.stories[i];
+        story.items = [];// [{isWithin: true}, {isWithin: false}, {isWithin: false}];
+        for(var j = 0; j < $scope.statuses.length; j++) {
+          story.items.push({isWithin: story.status === $scope.statuses[j].name})
+        }
+      }
     });
 
     $scope.closeSprint = function () {
@@ -57,16 +60,15 @@ angular.module('arseApp')
         if (value.status != "Done")
           unfinishedStories = true;
       });
-      if (unfinishedStories)
-        message += " Some stories are still not done";
+      if (unfinishedStories) {
+        message += " Some stories are still not done.";
+      }
       Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl',
         { message: message }).result.then(function (res) {
           console.log('Deleting Item');
           // update the api PROPERLY
           $http.put('/api/projects/' + $scope.project_id + '/sprints/current/close').then(function () {
-            // scope.$emit('updateView');
             $state.go('backlog', { 'project_id': $scope.project_id });
-
           });
         });
     };
