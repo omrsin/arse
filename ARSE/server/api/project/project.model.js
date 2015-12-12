@@ -22,6 +22,11 @@ var ProjectSchema = new Schema({
   sprint_counter: {
     type: Number,
     default:0
+  },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   }
 });
 
