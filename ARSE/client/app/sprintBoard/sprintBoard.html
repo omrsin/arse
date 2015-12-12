@@ -21,6 +21,12 @@
 
       <div class="content">
         <div class="row">
+          <div class="col-xs-6 col-sm-10">
+             <div ng-show="failed" class="alert alert-danger" role="alert">{{ failed }}</div>
+          </div>      
+        </div>  
+
+        <div class="row">
           <div class="col-xs-4" ng-repeat="column in statuses">
             <h1>{{column.name}}</h1>
             <ul ng-model="sprint.stories" as-sortable="sprintBoardOptions">
@@ -28,7 +34,7 @@
                 <div ng-show="story.status === column.name" data-as-sortable-item-handle>
                   <label>{{story.name}}</label>
                 </div>
-                <label ng-hide="story.status === column.name"></label>
+                <label ng-hide="story.status === column.name || story.isDragged">(Empty)</label>
               </li>
             </ul>
           </div>
