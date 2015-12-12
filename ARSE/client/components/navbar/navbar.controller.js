@@ -18,23 +18,29 @@ angular.module('arseApp')
       console.log("is logged in " + $scope.isLoggedIn);
     });
     
-    $scope.menu = [{
-      'title': 'Home',
-      'state': 'main'
-    },
-    {
-      'title': 'Project',
-      'state': 'project'
-    }];
+    $scope.menu = [
+      {
+        'title': 'Project',
+        'state': 'project'
+      }
+    ];
+
+    $scope.rightMenu = [      
+      {
+        'title': 'Logout',
+        'state': 'logout'
+      }
+    ]
     
-    $scope.account = [{
-      'title': 'Login',
-      'state': 'login'
-    },
-    {
-      'title': 'Register',
-      'state': 'signup'
-    }
+    $scope.account = [
+      {
+        'title': 'Login',
+        'state': 'login'
+      },
+      {
+        'title': 'Register',
+        'state': 'signup'
+      }
     ];
 
     $scope.isCollapsed = true;

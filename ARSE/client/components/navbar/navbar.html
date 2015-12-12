@@ -10,23 +10,23 @@
       <a href="/" class="navbar-brand">ARSE</a>
     </div>
     <div uib-collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav" ng-show="isLoggedIn">
         <li ng-repeat="item in menu" ui-sref-active="active">
             <a ui-sref="{{item.state}}">{{item.title}}</a>
         </li>
       </ul>
       <ul class="nav navbar-nav pull-right" ng-hide="isLoggedIn">
-        <li ng-repeat="item in account">
+        <li ng-repeat="item in account" ui-sref-active="active">
             <a ui-sref="{{item.state}}">{{item.title}}</a>
         </li>
       </ul>
       <ul class="nav navbar-nav pull-right" ng-show="isLoggedIn">
         <li>
-            <a ui-sref="logout">{{currentUser.username}}</a>
+            <a ui-sref="settings">{{currentUser.username}}</a>
         </li>
-        <li>
-            <a ui-sref="logout">Logout</a>
-        </li>
+        <li ng-repeat="item in rightMenu" ui-sref-active="active">
+            <a ui-sref="{{item.state}}">{{item.title}}</a>
+        </li>        
       </ul>
     </div>
 

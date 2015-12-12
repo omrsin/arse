@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('LoginCtrl', function($scope, Auth, $state) {
+  .controller('LoginCtrl', function($scope, Auth, $state, $window) {
     $scope.user = {};
     $scope.errors = {};
 
@@ -15,7 +15,7 @@ angular.module('arseApp')
         })
         .then(function() {
           // Logged in, redirect to home
-          $state.go('main');
+          $window.location.assign($state.href('project'));          
         })
         .catch(function(err) {
           $scope.errors.other = err.message;
