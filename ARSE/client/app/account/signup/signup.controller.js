@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('SignupCtrl', function($scope, Auth, $state) {
+  .controller('SignupCtrl', function($scope, Auth, $state, $window) {
     $scope.user = {};
     $scope.errors = {};
 
@@ -16,9 +16,8 @@ angular.module('arseApp')
         })
         .then(function(token) {
           // Account created, redirect to home
-          // TODO: create user scope, also delete on logout, show logout after login
-          console.log(JSON.stringify(token));
-          $state.go('main');
+          // TODO: create user scope, also delete on logout, show logout after login          
+          $window.location.assign($state.href('project'));
         })
         .catch(function(err) {
           err = err.data;
