@@ -2,48 +2,39 @@
 <div class="row">
   <project-navbar class="hidden-xs"></project-navbar>
   <div class="col-xs-12 col-sm-11">
-    <div class="main-container">  
-      <div class="header">  
-        <div class="row">   
-            <div class="col-sm-12">
-                <h1>Sprint Board</h1>    
-            </div>      
+    <div class="main-container">
+      <div class="header">
+        <div class="row">
+          <div class="col-sm-12">
+            <h1>Sprint Board</h1>
+          </div>
         </div>
       </div>
 
       <div class="actions">
         <div class="row">
           <div class="col-sm-12">
-            <a ng-click="closeSprint()" class="btn btn-primary pull-right">Close Sprint</a>        
+            <a ng-click="closeSprint()" class="btn btn-primary pull-right">Close Sprint</a>
           </div>
-        </div>    
+        </div>
       </div>
 
-      <div class="content">     
-
-        <div class="table-responsive">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>User Stories</th> 
-                <th>Todo</th>
-                <th>In Progress</th>
-                <th>Done</th>
-              </tr>
-            </thead>
-            <tbody>  
-        			<tr ng-repeat='story in sprint.stories'>
-        				<th>
-        					<label>{{story.name}}</label>
-        				</th>
-        				<!--TODO Add sprint tasks as a nested ng-repeat as seen in: http://a5hik.github.io/ng-sortable/#/sprint-->
-        			</tr>        
-              <!--<tr ng-repeat="item in projects" project>            
-              </tr>          -->
-            </tbody> 
-          </table>
+      <div class="content">
+        <div class="row">
+          <div class="col-xs-4" ng-repeat="column in statuses">
+            <h1>{{column.name}}</h1>
+            <ul ng-model="sprint.stories" as-sortable="sprintBoardOptions">
+              <li data-as-sortable-item ng-repeat='story in sprint.stories'>
+                <div ng-show="story.status === column.name" data-as-sortable-item-handle>
+                  <label>{{story.name}}</label>
+                </div>
+                <label ng-hide="story.status === column.name"></label>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div> 
+      </div>
+
     </div>
   </div>
 </div>

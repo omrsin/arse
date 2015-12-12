@@ -25,7 +25,7 @@ var StorySchema = new Schema({
   status: {
     type: String,
     required: true,
-    enum: ["New", "In progess", "Done"],
+    enum: ["New", "In progress", "Done"],
     default: "New"
   },
   points: {
