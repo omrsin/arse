@@ -8,13 +8,18 @@ angular.module('arseApp')
     project = Project.get({ id: $stateParams.project_id });
 
     $scope.showProductBacklog = function(){      
-      console.log("This is working");
       $state.go("backlog", { project_id: project._id });
     };
 
     $scope.showSprintBoard = function(){
-      console.log("Entered there");
       $state.go("sprintBoard", { project_id: $stateParams.project_id, sprint_id: project.current_sprint });
     };
 
+    $scope.showUserManagement = function(){
+      $state.go("userManagement", { project_id: project._id });
+    };
+
+    $scope.showConfiguration = function(){
+      $state.go("userManagement", { project_id: project._id });
+    };
   }]);

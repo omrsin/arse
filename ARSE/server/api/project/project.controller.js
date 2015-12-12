@@ -13,7 +13,7 @@ exports.index = function (req, res) {
 
 // Get a single project
 exports.show = function (req, res) {  
-  Project.findOne({ _id: req.params.id }).populate('backlog').populate('owner', '_id username email').exec(function (err, project) {
+  Project.findOne({ _id: req.params.id }).populate('backlog').populate('owner', '_id username email').populate('participants', '_id username email role').exec(function (err, project) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send('Not Found'); }
     return res.json(project);
@@ -22,12 +22,17 @@ exports.show = function (req, res) {
 };
 
 // Creates a new project in the DB.
-exports.create = function (req, res) {
-  // req.body.owner = "566bf3cc0ec8ea297ac6c709"
-  console.log(req.body);
+exports.create = function (req, res) {  
   Project.create(req.body, function (err, project) {
     if (err) { return res.status(500).send("Please specify name and description"); }
-    return res.status(201).json(project);
+
+    project.participants.push(project.owner);
+    project.save(function (error_on_save) {
+      if(error_on_save) { 
+        res.status(500).send("Error while storing the participants");
+      }        
+      return res.status(201).json(project);
+    });
   });
 };
 

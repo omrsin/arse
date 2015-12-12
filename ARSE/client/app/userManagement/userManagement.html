@@ -1,0 +1,56 @@
+<project-navbar-mobile></project-navbar-mobile>
+<div class="row">
+  <project-navbar class="hidden-xs"></project-navbar>
+  <div class="col-xs-12 col-sm-11">
+    <div class="main-container">  
+      <div class="header">  
+        <div class="row">   
+            <div class="col-sm-12">
+                <h1>User Management</h1>    
+            </div>      
+        </div>
+      </div>
+
+      <div class="actions">
+        <div class="row">
+          <div class="col-sm-12">
+            <a ng-click="" class="btn btn-primary pull-right">Add User</a>        
+          </div>
+        </div>    
+      </div>
+
+      <div class="content">   
+
+        <div class="row">
+          <div class="col-xs-6 col-sm-10">
+             <div ng-show="failed" class="alert alert-danger" role="alert">{{ failed }}</div>
+          </div>      
+        </div>    
+
+        <div class="row" ng-show="project.participants.length">
+          <div class="col-xs-12">
+            <div class="custom-table">
+              <div class="row">
+                <div class="table-header">
+                  <div class="col-xs-1">#</div>
+                  <div class="hidden-xs col-sm-4">Username</div>
+                  <div class="col-xs-6 col-sm-4">Email</div>
+                  <div class="col-xs-5 col-sm-3">Role</div>           
+                </div>
+              </div>
+              <div class="table-content">
+                <ul>
+                  <li class="table-row" ng-repeat="item in project.participants">
+                    <div class="row">
+                      <participant participant-item="{{item}}"></participant>                      
+                    </div>
+                  </li>
+                </ul>            
+              </div>          
+            </div>
+          </div>
+        </div>
+      </div>      
+    </div>
+  </div>
+</div>
