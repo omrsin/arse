@@ -17,8 +17,8 @@ angular.module('arseApp')
           // Logged in, redirect to home
           $window.location.assign($state.href('project'));          
         })
-        .catch(function(err) {
-          $scope.errors.other = err.message;
+        .catch(function(err) {          
+          $scope.failed = "Wrong user name or password";
         });
       }
     };
