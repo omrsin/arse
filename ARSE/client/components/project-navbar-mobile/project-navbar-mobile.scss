@@ -9,9 +9,19 @@
     padding-top: 15px;
     padding-bottom: 15px;
     font-size: 1.5em;
-    color: #777;
+    color: #777;     
+  }
+  .disabledLink {
+    span {
+      cursor: not-allowed;
+    } 
+  }
+  .enabledLink {
     span {
       cursor: pointer;
-    }        
-  }
+    } 
+    &:hover {
+      color: #888;
+    }
+  }  
 }
