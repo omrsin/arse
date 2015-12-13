@@ -31,7 +31,7 @@ function respondWith(res, statusCode) {
  * restriction: 'admin'
  */
 exports.index = function(req, res) {
-  User.findAsync({}, '-salt -hashedPassword')
+  User.findAsync({}, {"_id": true, "username": true, "email": true, "role": true}, '-salt -hashedPassword')
     .then(function(users) {
       res.status(200).json(users);
     })
