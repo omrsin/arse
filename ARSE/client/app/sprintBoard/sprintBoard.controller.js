@@ -10,6 +10,9 @@ angular.module('arseApp')
       { name: "Done" },
     ];
 
+    $scope.showDetails = false;
+    $scope.detailStory = {};
+
     // Error message if something failed
     $scope.failed = "";
 
@@ -20,11 +23,11 @@ angular.module('arseApp')
     }).then(function (res) {
       $scope.sprint = res.data;
       console.log(res.data);
-      for(var i = 0; i < $scope.sprint.stories.length; i++) {
+      for (var i = 0; i < $scope.sprint.stories.length; i++) {
         var story = $scope.sprint.stories[i];
         story.items = [];
-        for(var j = 0; j < $scope.statuses.length; j++) {
-          story.items.push({isWithin: story.status === $scope.statuses[j].name})
+        for (var j = 0; j < $scope.statuses.length; j++) {
+          story.items.push({ isWithin: story.status === $scope.statuses[j].name })
         }
       }
     });
@@ -34,12 +37,12 @@ angular.module('arseApp')
       //restrict move across row. move only within row.
       accept: function (sourceItemHandleScope, destSortableScope) {
         return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
-       },
-      orderChanged: function(event) {
+      },
+      orderChanged: function (event) {
         var oldStatus = $scope.statuses[event.source.index].name;
         var newStatus = $scope.statuses[event.dest.index].name;
         var story = event.source.sortableScope.$parent.story;
-        console.log("reordered from " + oldStatus +" to " + newStatus);
+        console.log("reordered from " + oldStatus + " to " + newStatus);
         story.status = newStatus;
         $scope.changeStory(story, oldStatus);
       },
@@ -66,15 +69,30 @@ angular.module('arseApp')
         });
     };
 
-    $scope.changeStory = function(story, oldStatus) {
+    $scope.changeStory = function (story, oldStatus) {
       Story.update(story, function (httpRes) {
-          console.log("Update succeeded");
-        }, function (err) {
-          console.log("Update failed");
-          $scope.failed = err.data;
-          story.status = oldStatus;
-        });
+        console.log("Update succeeded");
+      }, function (err) {
+        console.log("Update failed");
+        $scope.failed = err.data;
+        story.status = oldStatus;
+      });
     }
+    
+    // Displays details of the story in a side view
+    $scope.showItem = function (item) {
+      if ($scope.detailStory._id == item._id) {
+        $scope.detailStory = {};
+        $scope.showDetails = false;
+      } else {
+        $scope.detailStory = item;
+        $scope.showDetails = true;
+      }
+    };
+    
+    $scope.closeShowItem = function () {
+      $scope.showDetails = false;
+    };
 
 
   }]);
