@@ -13,12 +13,16 @@
       font-size: 1.5em;
     }
     .disabledLink {
-      cursor: not-allowed;
+      span {
+        cursor: not-allowed;
+      } 
     }
     .enabledLink {
-      cursor: pointer;
-      &:hover {
-        color: #888;
+      span {
+        cursor: pointer;
+        &:hover {
+          color: #888;
+        }
       }
     }
   }

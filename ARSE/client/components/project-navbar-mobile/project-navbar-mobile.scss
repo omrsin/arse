@@ -19,9 +19,9 @@
   .enabledLink {
     span {
       cursor: pointer;
-    } 
-    &:hover {
-      color: #888;
+      &:hover {
+        color: #888;
+      }
     }
   }  
 }
