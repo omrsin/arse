@@ -67,36 +67,42 @@
         <!--Mobile View-->
         <div class="row hidden-sm hidden-md hidden-lg">
           <div class="col-xs-12">
-             <div ng-repeat='story in sprint.stories' class="row">
-              <ul>
-                <li ng-repeat="column in story.items">
-                  <div ng-show="column.isWithin" class="storyItem" ng-class="{feature: story.type === 'Feature', fix: story.type === 'Fix', enhancement: story.type === 'Enhancement'}">
-                    <div class="row">
-                      <div class="col-xs-1">
-                        <span ng-show="story.type === 'Fix'" class="glyphicon glyphicon-remove-sign"></span>
-                        <span ng-show="story.type === 'Feature'" class="glyphicon glyphicon-record"></span>
-                        <span ng-show="story.type === 'Enhancement'" class="glyphicon glyphicon-new-window"></span>
+              <uib-tabset>
+                <uib-tab ng-repeat="stat in statuses" heading="{{stat.name}}" active="status.active">
+                  <div ng-repeat='story in sprint.stories | filter:{ status: stat.name }'>
+                    <div class="storyItem" ng-class="{feature: story.type === 'Feature', fix: story.type === 'Fix', enhancement: story.type === 'Enhancement'}">
+                      <div class="row">
+                        <div class="col-xs-1">
+                          <span ng-show="story.type === 'Fix'" class="glyphicon glyphicon-remove-sign"></span>
+                          <span ng-show="story.type === 'Feature'" class="glyphicon glyphicon-record"></span>
+                          <span ng-show="story.type === 'Enhancement'" class="glyphicon glyphicon-new-window"></span>
+                        </div>
+                        <div class="col-xs-10">
+                          <label>{{story.name}}</label>
+                        </div>
+                        <div class="col-xs-1">
+                          <span class="badge pull-right">{{story.points}}</span>
+                        </div>
                       </div>
-                      <div class="col-xs-10">
-                        <label>{{story.name}}</label>
+                      <div class="row">
+                        <div class="col-xs-1"></div>
+                        <div class="col-xs-11 description">
+                            <p>{{story.description}}</p>
+                        </div>
                       </div>
-                      <div class="col-xs-1">
-                        <span class="badge pull-right">{{story.points}}</span>
-                        
-
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-xs-1"></div>
-                      <div class="col-xs-11 description">
-                          <p>{{story.description}}</p>
+                      <div class="row">
+                        <div class="col-xs-2">
+                          <a ng-show="story.status !== 'New'" ng-click="moveStoryLeft(story)" class="btn"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                        </div>
+                        <div class="col-xs-8"></div>
+                        <div class="col-xs-2">
+                          <a ng-show="story.status !== 'Done'" ng-click="moveStoryRight(story)" class="btn pull-right"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <label ng-hide="column.isWithin"></label>
-                </li>
-              </ul>
-            </div>
+                </uib-tab>
+              </uib-tabset>
           </div>
         </div>
         <!--/Mobile View-->

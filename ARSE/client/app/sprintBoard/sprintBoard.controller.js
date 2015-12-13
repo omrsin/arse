@@ -69,6 +69,30 @@ angular.module('arseApp')
         });
     };
 
+    // Move an item left in the sprint board (called on mobile)
+    $scope.moveStoryLeft = function(story) {
+      var oldStatus = story.status;
+      if(oldStatus === $scope.statuses[1].name) {
+        story.status = $scope.statuses[0].name;
+      } else if (oldStatus === $scope.statuses[2].name) {
+        story.status = $scope.statuses[1].name;
+      }
+      $scope.changeStory(story, oldStatus);
+    }
+
+
+    // Move an item right in the sprint board (called on mobile)
+    $scope.moveStoryRight = function(story) {
+      var oldStatus = story.status;
+      if(oldStatus === $scope.statuses[0].name) {
+        story.status = $scope.statuses[1].name;
+      } else if (oldStatus === $scope.statuses[1].name) {
+        story.status = $scope.statuses[2].name;
+      }
+      $scope.changeStory(story, oldStatus);
+    }
+
+    // Update a story in the backend
     $scope.changeStory = function (story, oldStatus) {
       Story.update(story, function (httpRes) {
         console.log("Update succeeded");
