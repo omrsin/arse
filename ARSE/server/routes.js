@@ -10,6 +10,11 @@ import path from 'path';
 module.exports = function(app) {
 
   // Insert routes below
+
+  // participants in a project
+  app.use('/api/projects/:project_id/participants', require('./api/participant'));
+
+  // sprints
   app.use('/api/projects/:project_id/sprints', require('./api/sprint'));
 
   // story routes

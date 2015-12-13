@@ -29,7 +29,7 @@ exports.create = function (req, res) {
     project.participants.push(project.owner);
     project.save(function (error_on_save) {
       if(error_on_save) { 
-        res.status(500).send("Error while storing the participants");
+        return res.status(500).send("Error while storing the participants");
       }        
       return res.status(201).json(project);
     });
