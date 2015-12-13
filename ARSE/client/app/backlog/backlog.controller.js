@@ -3,46 +3,7 @@
 angular.module('arseApp')
   .controller('BacklogCtrl', ['$scope', 'Project', '$http', '$stateParams', 'Modal', 'Story', function ($scope, Project, $http, $stateParams, Modal, Story) {
     var sprintRunning = true;
-    
-    // Revert order if user cancels order change on the case of running sprint
-    var revertReorder = function (event) {
-      event.dest.sortableScope.removeItem(event.dest.index);
-      event.source.itemScope.sortableScope.insertItem(event.source.index, event.source.itemScope.item);
-    };
-    
-    // update offset on the backend
-    var updateOffset = function (offset, projectId) {
-      Project.update({ _id: projectId, offset: offset }, function (res) {
-        $scope.allowReorder = true;
-        console.log("receiver http" + JSON.stringify(res));
-      }, function (err) {
-        $scope.failed = err.data;
-      });
-    };
-
-    // update order on the backend
-    var updateOrder = function (newIndex, oldIndex, offset, projectId, offsetMoved) {
-      // Do math with the index to considerate the delimiter
-      if (oldIndex > $scope.project.offset) oldIndex--;
-      if (newIndex > $scope.project.offset) newIndex--;
-
-      console.log("drag " + oldIndex + " to " + newIndex);
-
-      $http.put('/api/projects/' + projectId + '/reorder', {
-        oldIndex: oldIndex,
-        newIndex: newIndex
-      }).then(function (res) {
-        $scope.allowReorder = true;
-        // Update if offset moved
-        if (offsetMoved) {
-          updateOffset(offset, projectId);
-
-        }
-
-      });
-
-    };
-    
+      
     // This function is called every time we receive project data from the backend
     $scope.onProjectDataReceived = function (project) {
       // Add a delimiter according to the offset value of the project
@@ -58,6 +19,12 @@ angular.module('arseApp')
       console.log("current sprint");
       console.log(project.current_sprint);
     };
+    $scope.updateView = function() {
+      Project.get({ id: $stateParams.project_id }, $scope.onProjectDataReceived);
+    };
+    $scope.$on('updateView', function () {
+      $scope.updateView();
+    });
 
     $scope.data = {};
     $scope.allowReorder = true;
@@ -65,8 +32,7 @@ angular.module('arseApp')
     $scope.detailStory = {};
     // Error message if creating/editing a story failed
     $scope.failed = "";
-
-    Project.get({ id: $stateParams.project_id }, $scope.onProjectDataReceived);
+    $scope.updateView();
 
     $scope.showStoryDetails = function (item) {
       if ($scope.detailStory._id == item._id) {
@@ -112,10 +78,6 @@ angular.module('arseApp')
         });
     };
 
-    $scope.$on('updateView', function () {
-      Project.get({ id: $stateParams.project_id }, $scope.onProjectDataReceived);
-    });
-
     //XXX a bug on reordering
     $scope.dragControlListeners = {
       //override $scope.allowReorder to determine drag is allowed or not. default is true.
@@ -130,20 +92,20 @@ angular.module('arseApp')
           var offset = $scope.project.offset;
           var offsetMoved = false;
           
-          // Check if item moved above or bellow offset
+          // Check if item moved above or below offset
           if (oldIndex > offset && newIndex <= offset) {
             offset++;
             offsetMoved = true;
-
           }
           if (oldIndex < offset && newIndex >= offset) {
             offset--;
             offsetMoved = true;
           }
 
-          //show modal if item moved above or bellow offset and sprint is in progress
+          //show modal if item moved above or below offset and sprint is in progress
           if ($scope.project.current_sprint && offsetMoved) {
-            Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl', { message: "Sprint running, are you sure you want to change the scope?" }).result.then(function (res) {
+            Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl', 
+              { message: "Sprint running, are you sure you want to change the scope?" }).result.then(function (res) {
               console.log('Deleting Item');
               updateOrder(newIndex, oldIndex, offset, $scope.project._id, offsetMoved);
             }, function () {
@@ -154,12 +116,13 @@ angular.module('arseApp')
           } else {
             updateOrder(newIndex, oldIndex, offset, $scope.project._id, offsetMoved);
           }
-
-
         } else {
-
+          // delimiter moved
+          console.log("drag delimiter to " + event.dest.index);
+          // Update offset according to the new position
           if ($scope.project.current_sprint) {
-            Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl', { message: "Sprint running, are you sure you want to change the scope?" }).result.then(function (res) {
+            Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl', 
+              { message: "Sprint running, are you sure you want to change the scope?" }).result.then(function (res) {
               $scope.project.offset = event.dest.index;
               updateOffset($scope.project.offset, $scope.project._id);
             }, function () {
@@ -171,15 +134,54 @@ angular.module('arseApp')
             $scope.project.offset = event.dest.index;
             updateOffset($scope.project.offset, $scope.project._id);
           }
-          // delimiter moved
-          // Update offset according to the new position
-        
-          // Issue a different request to update the offset of the delimiter
-          console.log("drag last to " + $scope.project.offset);
-
+          
         }
       }
     };
+
+    // Revert order if user cancels order change on the case of running sprint
+    // Safest: just "refresh"
+    var revertReorder = function (event) {
+      $scope.updateView();
+      //event.dest.sortableScope.removeItem(event.dest.index);
+      //event.source.itemScope.sortableScope.insertItem(event.source.index, event.source.itemScope.item);
+    };
+    
+    // update offset on the backend
+    var updateOffset = function (offset, projectId) {
+      console.log("Updating the offset on the server to " + offset);
+      Project.update({ _id: projectId, offset: offset }, function (res) {
+        $scope.allowReorder = true;
+      }, function (err) {
+        $scope.failed = err.data;
+      });
+    };
+
+    // update order on the backend
+    var updateOrder = function (newIndex, oldIndex, offset, projectId, offsetMoved) {
+      var oldOffset = $scope.project.offset;
+      console.log("drag " + oldIndex + " to " + newIndex);
+      // Do math with the index to considerate the delimiter
+      if (oldIndex >= oldOffset) oldIndex--;
+      if (newIndex >= offset) newIndex--;
+      console.log("offset old " + $scope.project.offset + " vs. new " + offset);
+
+      if(oldIndex != newIndex) {
+      console.log("Updating the order on the server:" + oldIndex + "->" + newIndex);
+        // Issue a PUT request on the server
+        $http.put('/api/projects/' + projectId + '/reorder', {
+          oldIndex: oldIndex,
+          newIndex: newIndex
+        }).then(function (res) {
+          $scope.allowReorder = true;
+        });
+      }
+      // Update if offset moved
+      if (offsetMoved) {
+        updateOffset(offset, projectId);
+      }
+    }
+      
 
   }]);
 

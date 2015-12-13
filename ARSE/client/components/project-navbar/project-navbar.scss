@@ -7,12 +7,24 @@
     border-top-style: solid;
     border-right-style: solid;
     .option {
+      color: #777;
       padding-top: 15px;
       padding-bottom: 15px;
       font-size: 1.5em;
-      color: #777;
-      cursor: pointer;
-    }    
+    }
+    .disabledLink {
+      span {
+        cursor: not-allowed;
+      } 
+    }
+    .enabledLink {
+      span {
+        cursor: pointer;
+        &:hover {
+          color: #888;
+        }
+      }
+    }
   }
   .row:nth-child(1) {
     border-top-right-radius: 1em;
