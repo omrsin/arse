@@ -60,7 +60,7 @@
               </select>
             </div>
             <div class="col-xs-4 col-sm-2">
-              <a ng-click="" class="btn btn-primary pull-right">Add User</a>        
+              <a ng-click="addUserToProject()" class="btn btn-primary pull-right">Add User</a>        
             </div>
           </div>          
         </form>
@@ -83,7 +83,7 @@
                 <ul>
                   <li class="table-row" ng-repeat="item in availableUsers | filter: filterByUsernameAndEmail">
                     <div class="row">
-                      <user user-item="{{item}}" search="search" index="{{$index + 1}}"></user>
+                      <user user-item="{{item}}" search="search" index="{{$index + 1}}" selected-user="selectedUser"></user>
                     </div>
                   </li>
                 </ul>            

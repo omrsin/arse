@@ -4,6 +4,7 @@ angular.module('arseApp')
   .controller('UserManagementCtrl', ['$scope', 'Project', '$stateParams', '$http', '$state', 'User', function ($scope, Project, $stateParams, $http, $state, User) {    
 
     $scope.search = {};
+    $scope.selectedUser = {};
 
     Project.get({ id: $stateParams.project_id }, function(project){
         $scope.project = project;
@@ -28,5 +29,11 @@ angular.module('arseApp')
 
     $scope.filterByUsernameAndEmail = function(user){        
         return user.username.indexOf($scope.search.text) > -1 || user.email.indexOf($scope.search.text) > -1;
-    }; 
+    };
+
+    $scope.addUserToProject = function(){
+        // if($scope.selectedUser){
+            console.log($scope.selectedUser);
+        // }
+    };
   }]);
