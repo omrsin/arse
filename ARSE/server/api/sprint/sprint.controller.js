@@ -30,17 +30,20 @@ exports.show = function (req, res) {
       if (req.query.stories) {
         console.log(req.query.stories);
 
-        Project.populate(project, {path: 'backlog', options: {limit: project.offset}}, function (err3, projectWithBacklog) {
-          if (err3) { return handleError(res, err3); }
-          if (!projectWithBacklog) { return res.status(404).send('could not get stories'); }
-          console.log(projectWithBacklog.backlog);
-          var sprint_backlog = projectWithBacklog.backlog;
-          console.log(sprint_backlog);
-          sprint.set('stories', sprint_backlog);
-          console.log(sprint);
+        if(project.offset == 0) {
+          sprint.set('stories', []);
           return res.json(sprint);
-        });
-
+        } else {
+          Project.populate(project, {path: 'backlog', options: {limit: project.offset}}, function (err3, projectWithBacklog) {
+            if (err3) { return handleError(res, err3); }
+            if (!projectWithBacklog) { return res.status(404).send('could not get stories'); }
+            console.log(projectWithBacklog.backlog);
+            var sprint_backlog = projectWithBacklog.backlog;
+            sprint.set('stories', sprint_backlog);
+            console.log(sprint);
+            return res.json(sprint);
+          });
+        }
       } else {
         return res.json(sprint);
       }

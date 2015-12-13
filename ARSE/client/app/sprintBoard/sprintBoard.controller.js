@@ -13,9 +13,24 @@ angular.module('arseApp')
     // Error message if something failed
     $scope.failed = "";
 
+    $http({
+      url: '/api/projects/' + $scope.project_id + '/sprints/current',
+      method: "GET",
+      params: { stories: true }
+    }).then(function (res) {
+      $scope.sprint = res.data;
+      console.log(res.data);
+      for(var i = 0; i < $scope.sprint.stories.length; i++) {
+        var story = $scope.sprint.stories[i];
+        story.items = [];
+        for(var j = 0; j < $scope.statuses.length; j++) {
+          story.items.push({isWithin: story.status === $scope.statuses[j].name})
+        }
+      }
+    });
+
     // Sorting options for the sprint board
     $scope.sprintBoardOptions = {
-
       //restrict move across row. move only within row.
       accept: function (sourceItemHandleScope, destSortableScope) {
         return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
@@ -30,22 +45,6 @@ angular.module('arseApp')
       },
       additionalPlaceholderClass: 'as-sortable-story-placeholder'
     };
-
-    $http({
-      url: '/api/projects/' + $scope.project_id + '/sprints/current',
-      method: "GET",
-      params: { stories: true }
-    }).then(function (res) {
-      $scope.sprint = res.data;
-      console.log(res.data);
-      for(var i = 0; i < $scope.sprint.stories.length; i++) {
-        var story = $scope.sprint.stories[i];
-        story.items = [];// [{isWithin: true}, {isWithin: false}, {isWithin: false}];
-        for(var j = 0; j < $scope.statuses.length; j++) {
-          story.items.push({isWithin: story.status === $scope.statuses[j].name})
-        }
-      }
-    });
 
     $scope.closeSprint = function () {
       var unfinishedStories = false;

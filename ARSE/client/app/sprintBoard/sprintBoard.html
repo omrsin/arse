@@ -6,7 +6,8 @@
       <div class="header">
         <div class="row">
           <div class="col-sm-12">
-            <h1>Sprint Board</h1>
+            <h1>{{sprint.name}}</h1>
+            {{sprint.start_date | date:'dd.MM.yyyy'}} - {{sprint.end_date | date:'dd.MM.yyyy'}}
           </div>
         </div>
       </div>
