@@ -11,27 +11,6 @@
         </div>
       </div>
 
-      <div class="actions">
-        <form>
-          <div class="row">
-            <div class="col-xs-4 col-sm-6" >
-              <input type="text" class="form-control" id="username" placeholder="Username">
-            </div>
-            <div class="col-xs-4">
-              <select class="form-control">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-            </div>
-            <div class="col-xs-4 col-sm-2">
-              <a ng-click="" class="btn btn-primary pull-right">Add User</a>        
-            </div>
-          </div>          
-        </form>
-      </div>
 
       <div class="content">   
 
@@ -64,7 +43,71 @@
             </div>
           </div>
         </div>
-      </div>      
+      </div>     
+
+      <hr/> 
+      
+      <div class="actions">
+        <form>
+          <div class="row">
+            <div class="col-xs-4 col-sm-6" >
+              <input type="text" class="form-control" ng-model="search.text" placeholder="Username or email">
+            </div>
+            <div class="col-xs-4">
+              <select class="form-control">
+                <option>user</option>
+                <option>admin</option>                
+              </select>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+              <a ng-click="" class="btn btn-primary pull-right">Add User</a>        
+            </div>
+          </div>          
+        </form>
+      </div>
+
+      <div class="content">         
+
+        <div class="row" ng-show="availableUsers.length && search.text">
+          <div class="col-xs-12">
+            <div class="custom-table">
+              <div class="row">
+                <div class="table-header">
+                  <div class="col-xs-1">#</div>
+                  <div class="col-xs-5">Username</div>
+                  <div class="col-xs-6">Email</div>
+                  
+                </div>
+              </div>
+              <div class="table-content">
+                <ul>
+                  <li class="table-row" ng-repeat="item in availableUsers | filter: filterByUsernameAndEmail">
+                    <div class="row">
+                      <user user-item="{{item}}" search="search" index="{{$index + 1}}"></user>
+                    </div>
+                  </li>
+                </ul>            
+              </div>          
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
+
+<!-- <div>
+  <h1>Filtered Participants</h1>
+  {{availableUsers | filter: {username: "Est"} }}
+</div>
+
+<div>
+  <h1>Users</h1>
+  {{users | filter: {username: username} }}
+</div>
+
+<div>
+  <h1>Users</h1>
+  {{users }}
+</div> -->
