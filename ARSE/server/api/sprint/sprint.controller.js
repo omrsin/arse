@@ -113,9 +113,12 @@ exports.close = function (req, res) {
     sprint_backlog.forEach(function (item, index, temp) {
       if(item.status==="Done")
       {
+        // XXX if we need to access past sprints with their stories - this will not work any more
         project.backlog.pull(item); 
       }
     });
+    // Reset the offset to 0
+    project.offset = 0;
 
     //after the project return the project with the new state.
     project.save(function (err) {
