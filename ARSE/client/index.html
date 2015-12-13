@@ -60,6 +60,7 @@
       <script src="bower_components/angular-socket-io/socket.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
       <script src="bower_components/ng-sortable/dist/ng-sortable.js"></script>
+      <script src="bower_components/angular-validation-match/dist/angular-validation-match.min.js"></script>
       <!-- endbower -->
       
       <script src="socket.io-client/socket.io.js"></script>
@@ -67,6 +68,12 @@
     <!-- build:js({.tmp,client}) app/app.js -->
       <script src="app/app.js"></script>
       <!-- injector:js -->
+      <script src="app/account/account.js"></script>
+      <script src="app/account/login/login.controller.js"></script>
+      <script src="app/account/settings/settings.controller.js"></script>
+      <script src="app/account/signup/signup.controller.js"></script>
+      <script src="app/admin/admin.controller.js"></script>
+      <script src="app/admin/admin.js"></script>
       <script src="app/backlog/backlog.controller.js"></script>
       <script src="app/backlog/backlog.js"></script>
       <script src="app/backlog/story.service.js"></script>
@@ -78,6 +85,8 @@
       <script src="app/project/project.service.js"></script>
       <script src="app/sprintBoard/sprintBoard.controller.js"></script>
       <script src="app/sprintBoard/sprintBoard.js"></script>
+      <script src="components/auth/auth.service.js"></script>
+      <script src="components/auth/user.service.js"></script>
       <script src="components/confirmModal/confirmModal.controller.js"></script>
       <script src="components/footer/footer.directive.js"></script>
       <script src="components/modal/modal.service.js"></script>

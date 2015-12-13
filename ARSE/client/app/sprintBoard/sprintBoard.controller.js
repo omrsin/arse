@@ -65,7 +65,7 @@ angular.module('arseApp')
           });
         });
     };
-
+    
     $scope.changeStory = function(story, oldStatus) {
       Story.update(story, function (httpRes) {
           console.log("Update succeeded");
@@ -75,6 +75,5 @@ angular.module('arseApp')
           story.status = oldStatus;
         });
     }
-
-
+    
   }]);
