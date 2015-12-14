@@ -15,10 +15,16 @@
       <div class="content">   
 
         <div class="row">
-          <div class="col-xs-6 col-sm-10">
+          <div class="col-xs-12 col-sm-10">
              <div ng-show="failed" class="alert alert-danger" role="alert">{{ failed }}</div>
           </div>      
-        </div>    
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-10">
+             <div ng-show="success" class="alert alert-success" role="alert">{{ success }}</div>
+          </div>      
+        </div>
 
         <div class="row" ng-show="project.participants.length">
           <div class="col-xs-12">
@@ -99,12 +105,12 @@
 
 <!-- <div>
   <h1>Filtered Participants</h1>
-  {{availableUsers | filter: {username: "Est"} }}
+  {{availableUsers | filter: {username: search.text} }}
 </div>
 
 <div>
   <h1>Users</h1>
-  {{users | filter: {username: username} }}
+  {{users | filter: {username: search.text} }}
 </div>
 
 <div>

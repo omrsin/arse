@@ -10,20 +10,9 @@ angular.module('arseApp')
         $scope.project = project;
         User.getAll(function(users){
             $scope.users = users;
-            $scope.availableUsers = [];            
+            $scope.availableUsers = [];
 
-            for(var i = 0; i < $scope.users.length; i++){                
-                var isAlreadyAssigned = false;
-                for(var j = 0; j < $scope.project.participants.length; j++){                    
-                    if($scope.users[i]._id == $scope.project.participants[j]._id) {
-                        isAlreadyAssigned = true;
-                        break;
-                    }
-                }                
-                if(!isAlreadyAssigned) {
-                    $scope.availableUsers.push($scope.users[i]);
-                }
-            }
+            defineAvailableUsers();            
         });     
     });
 
@@ -32,8 +21,46 @@ angular.module('arseApp')
     };
 
     $scope.addUserToProject = function(){
-        // if($scope.selectedUser){
+        // Validate that the field was not edited after selecting
+        if($scope.selectedUser.email){
             console.log($scope.selectedUser);
-        // }
+            $http.post('/api/projects/' + $scope.project._id + '/participants', {
+                user_id: $scope.selectedUser._id
+            }).then(function(response){                
+                Project.get({ id: $stateParams.project_id }, function(project){
+                    $scope.project = project;
+                    defineAvailableUsers();
+                    $scope.success = "The user " +$scope.selectedUser.username+ " has been successfully added to the project";
+                    cleanScope();
+
+                });                
+            },
+            function(error){
+                $scope.failed = "The user "+$scope.selectedUser.username+" has been already assigned to this project";
+                $cleanScope();
+            });
+        }
     };
+
+    function defineAvailableUsers(){
+        $scope.availableUsers = [];
+        for(var i = 0; i < $scope.users.length; i++){                
+            var isAlreadyAssigned = false;
+            for(var j = 0; j < $scope.project.participants.length; j++){                    
+                if($scope.users[i]._id == $scope.project.participants[j]._id) {
+                    isAlreadyAssigned = true;
+                    break;
+                }
+            }                
+            if(!isAlreadyAssigned) {
+                $scope.availableUsers.push($scope.users[i]);
+            }
+        }
+    }
+
+    function cleanScope(){
+        $scope.selectedUser = {};
+        $scope.search.text = "";
+        $scope.failed = "";
+    }
   }]);
