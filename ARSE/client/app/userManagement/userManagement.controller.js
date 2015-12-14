@@ -22,7 +22,7 @@ angular.module('arseApp')
 
     $scope.addUserToProject = function(){
         // Validate that the field was not edited after selecting
-        if($scope.selectedUser.email){
+        if($scope.selectedUser._id){
             console.log($scope.selectedUser);
             $http.post('/api/projects/' + $scope.project._id + '/participants', {
                 user_id: $scope.selectedUser._id
@@ -39,6 +39,18 @@ angular.module('arseApp')
                 $scope.failed = "The user "+$scope.selectedUser.username+" has been already assigned to this project";
                 $cleanScope();
             });
+        } else {
+            if($scope.search.text) {
+                $scope.failed = "The user "+$scope.search.text+" is not valid. Select a valid user";
+            } else {
+                $scope.failed = "Type the username or email of the user you want to add first";
+            }
+        }
+    };
+
+    $scope.validateSelectedUser = function(){
+        if($scope.selectedUser._id){
+            $scope.selectedUser = {};
         }
     };
 

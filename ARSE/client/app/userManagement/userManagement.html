@@ -57,7 +57,7 @@
         <form>
           <div class="row">
             <div class="col-xs-4 col-sm-6" >
-              <input type="text" class="form-control" ng-model="search.text" placeholder="Username or email">
+              <input type="text" class="form-control" ng-model="search.text" placeholder="Username or email" ng-change="validateSelectedUser()">
             </div>
             <div class="col-xs-4">
               <select class="form-control">
@@ -117,3 +117,7 @@
   <h1>Users</h1>
   {{users }}
 </div> -->
+
+<div>
+  <h1>{{selectedUser}}</h1>
+</div>
