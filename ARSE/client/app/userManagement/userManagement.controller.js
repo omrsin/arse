@@ -5,6 +5,8 @@ angular.module('arseApp')
 
     $scope.search = {};
     $scope.selectedUser = {};
+    $scope.disabled = true;
+
 
     Project.get({ id: $stateParams.project_id }, function(project){
         $scope.project = project;
