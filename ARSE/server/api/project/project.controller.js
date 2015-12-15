@@ -4,8 +4,8 @@ var _ = require('lodash');
 var Project = require('./project.model');
 
 // Get list of projects
-exports.index = function (req, res) {
-  Project.find(function (err, projects) {
+exports.index = function (req, res) {  
+  Project.find({'participants': req.user._id}, function (err, projects) {
     if (err) { return handleError(res, err); }
     return res.status(200).json(projects);
   });

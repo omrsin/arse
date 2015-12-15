@@ -39,7 +39,7 @@ angular.module('arseApp')
             },
             function(error){
                 $scope.failed = "The user "+$scope.selectedUser.username+" has been already assigned to this project";
-                $cleanScope();
+                cleanScope();
             });
         } else {
             if($scope.search.text) {
