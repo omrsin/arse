@@ -8,6 +8,7 @@ var Participant = require('./participant.model');
 exports.index = function (req, res) {  
   Project.find({'participants.user': req.user._id}, function (err, projects) {
     if (err) { return handleError(res, err); }
+    console.log(projects);
     return res.status(200).json(projects);
   });
 };

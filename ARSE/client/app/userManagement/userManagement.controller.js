@@ -40,8 +40,8 @@ angular.module('arseApp')
                 });                
             },
             function(error){
-                $scope.failed = "The user "+$scope.selectedUser.username+" has been already assigned to this project";
                 cleanScope();
+                $scope.failed = error.data;
             });
         } else {
             if($scope.search.text) {

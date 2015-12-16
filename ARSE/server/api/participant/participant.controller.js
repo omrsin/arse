@@ -32,22 +32,31 @@ exports.create = function(req, res) {
       return res.status(404).send("Project not found");
     }
 
-    if(isAlreadyAssignedToProject(project.participants, req.body.user_id)){
-      return res.status(500).send("User already assgined to the project");
-    }
+    User.findById(req.body.user_id, function(err_user, user) {
+      if(err_user) {
+        return handleError(res, err_user); 
+      }
+      if(!user) {
+        return res.status(404).send("User not found");
+      }
 
-    var participant = {
-      user: req.body.user_id,
-      role: req.body.role
-    };
+      if(isAlreadyAssignedToProject(project.participants, req.body.user_id)){
+        return res.status(500).send("The user " + user.username + " has been already assigned to this project.");
+      }
 
-    project.participants.push(participant);
-    project.save(function (error_on_save) {
-      if(error_on_save) { 
-        return res.status(500).send("Error while storing the participants");
-      }        
-      return res.status(201).json(project);
-    });   
+      var participant = {
+        user: user._id,
+        role: req.body.role
+      };
+
+      project.participants.push(participant);
+      project.save(function (error_on_save) {
+        if(error_on_save) { 
+          return res.status(500).send("Error while storing the participants");
+        }        
+        return res.status(201).json(project);
+      });   
+    });
   });
 };
 

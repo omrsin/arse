@@ -15,11 +15,19 @@ module.exports = function(app) {
   app.use('/api/projects/', auth.isAuthenticated());
   
   app.use('/api/projects/:project_id/', function (req, res, next) {
-    // TODO attack project to request to avoid querying it twice
+    // TODO attach project to request to avoid querying it twice
     Project.findOne({ '_id': req.params.project_id, 'participants.user': req.user._id}).exec(function (err, project) {
       if (err) { return res.status(500).send(err); }
       if (!project) { return res.status(404).send('Not Found'); }
       console.log("No problem");
+      next();
+    });    
+  });
+
+  app.use('/api/projects/:project_id/participants', function (req, res, next) {
+    Project.findOne({ '_id': req.params.project_id, 'participants': {$elemMatch: { user: req.user._id, role: 'PO'} }}).exec(function (err, project) {
+      if (err) { return res.status(500).send(err); }
+      if (!project) { return res.status(403).send('Access Denied'); }
       next();
     });    
   });
