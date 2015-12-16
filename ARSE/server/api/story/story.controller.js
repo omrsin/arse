@@ -56,6 +56,7 @@ exports.update = function(req, res) {
     if (err) { return handleError(res, err); }
     if(!story) { return res.status(404).send('Not Found'); }
     var updated = _.merge(story, req.body);
+    console.log(req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.status(200).json(story);
