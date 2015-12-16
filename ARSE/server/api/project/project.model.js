@@ -22,7 +22,16 @@ var ProjectSchema = new Schema({
   sprint_counter: {
     type: Number,
     default:0
-  }
+  },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  participants: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 });
 
 module.exports = mongoose.model('Project', ProjectSchema);

@@ -4,8 +4,8 @@ var _ = require('lodash');
 var Project = require('./project.model');
 
 // Get list of projects
-exports.index = function (req, res) {
-  Project.find(function (err, projects) {
+exports.index = function (req, res) {  
+  Project.find({'participants': req.user._id}, function (err, projects) {
     if (err) { return handleError(res, err); }
     return res.status(200).json(projects);
   });
@@ -13,7 +13,7 @@ exports.index = function (req, res) {
 
 // Get a single project
 exports.show = function (req, res) {  
-  Project.findOne({ _id: req.params.id }).populate('backlog').exec(function (err, project) {
+  Project.findOne({ _id: req.params.id }).populate('backlog').populate('owner', '_id username email').populate('participants', '_id username email role').exec(function (err, project) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send('Not Found'); }
     return res.json(project);
@@ -22,10 +22,17 @@ exports.show = function (req, res) {
 };
 
 // Creates a new project in the DB.
-exports.create = function (req, res) {
+exports.create = function (req, res) {  
   Project.create(req.body, function (err, project) {
     if (err) { return res.status(500).send("Please specify name and description"); }
-    return res.status(201).json(project);
+
+    project.participants.push(project.owner);
+    project.save(function (error_on_save) {
+      if(error_on_save) { 
+        return res.status(500).send("Error while storing the participants");
+      }        
+      return res.status(201).json(project);
+    });
   });
 };
 

@@ -17,6 +17,10 @@ angular.module('arseApp')
         params: {
           id:'me'
         }
+      },
+      getAll: {
+        method: 'GET',
+        isArray: true        
       }
     });
   });

@@ -10,16 +10,21 @@ angular.module('arseApp')
       console.log($scope.nav_project);
     });
 
-    $scope.showProductBacklog = function(){      
-      console.log("This is working");
+    $scope.showProductBacklog = function(){
       $state.go("backlog", { project_id: $scope.nav_project._id });
     };
 
     $scope.showSprintBoard = function(){
-      if($scope.nav_project.current_sprint) {
-        console.log("Entered there");
+      if($scope.nav_project.current_sprint) {        
         $state.go("sprintBoard", { project_id: $stateParams.project_id, sprint_id: $scope.nav_project.current_sprint });
       }
     };
 
+    $scope.showUserManagement = function(){
+      $state.go("userManagement", { project_id: project._id });
+    };
+
+    $scope.showConfiguration = function(){
+      $state.go("userManagement", { project_id: project._id });
+    };
   }]);

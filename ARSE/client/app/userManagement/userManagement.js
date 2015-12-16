@@ -3,10 +3,11 @@
 angular.module('arseApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('backlog', {
-        url: '/projects/:project_id/backlog',
-        templateUrl: 'app/backlog/backlog.html',
-        controller: 'BacklogCtrl',
+      .state('userManagement', {
+        // TODO make proper URLs e.g. /project/id/sprintBoard/id and /project/id/backlog, etc.
+        url: '/projects/:project_id/userManagement',
+        templateUrl: 'app/userManagement/userManagement.html',
+        controller: 'UserManagementCtrl',
         authenticate: true,
         resolve: {
           project: function(Project, $stateParams){
