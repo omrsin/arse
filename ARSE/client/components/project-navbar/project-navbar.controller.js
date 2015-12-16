@@ -3,11 +3,8 @@
 angular.module('arseApp')
   .controller('ProjectNavbarCtrl', ['$scope', '$stateParams', '$state', "Project", function ($scope, $stateParams, $state, Project) {
     
-
-    Project.get({ id: $stateParams.project_id }, function (p) {
-      $scope.nav_project = p;
-      console.log("Project:")
-      console.log($scope.nav_project);
+    Project.get({ id: $stateParams.project_id }, function (project) {
+      $scope.nav_project = project;
     });
 
     $scope.showProductBacklog = function(){
@@ -21,10 +18,10 @@ angular.module('arseApp')
     };
 
     $scope.showUserManagement = function(){
-      $state.go("userManagement", { project_id: project._id });
+      $state.go("userManagement", { project_id: $stateParams.project_id });
     };
 
     $scope.showConfiguration = function(){
-      $state.go("userManagement", { project_id: project._id });
+      $state.go("userManagement", { project_id: $stateParams.project_id });
     };
   }]);
