@@ -23,10 +23,10 @@ angular.module('arseApp')
     };
 
     $scope.showUserManagement = function(){
-      $state.go("userManagement", { project_id: project._id });
+      $state.go("userManagement", { project_id: $stateParams.project_id });
     };
 
     $scope.showConfiguration = function(){
-      $state.go("userManagement", { project_id: project._id });
+      $state.go("userManagement", { project_id: $stateParams.project_id });
     };
   }]);

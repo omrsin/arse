@@ -60,10 +60,7 @@
               <input type="text" class="form-control" ng-model="search.text" placeholder="Username or email" ng-change="validateSelectedUser()">
             </div>
             <div class="col-xs-4">
-              <select class="form-control">
-                <option>user</option>
-                <option>admin</option>                
-              </select>
+              <select class="form-control" name="role" ng-model="role" ng-options="role for role in availableRoles" ng-init="role = availableRoles[1]"></select>
             </div>
             <div class="col-xs-4 col-sm-2">
               <a ng-click="addUserToProject()" class="btn btn-primary pull-right" ng-disabled="!selectedUser._id">Add User</a>        

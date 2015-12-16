@@ -6,6 +6,7 @@ angular.module('arseApp')
     $scope.search = {};
     $scope.selectedUser = {};
     $scope.disabled = true;
+    $scope.availableRoles = ["PO", "Developer"];
 
 
     Project.get({ id: $stateParams.project_id }, function(project){
@@ -27,7 +28,8 @@ angular.module('arseApp')
         if($scope.selectedUser._id){
             console.log($scope.selectedUser);
             $http.post('/api/projects/' + $scope.project._id + '/participants', {
-                user_id: $scope.selectedUser._id
+                user_id: $scope.selectedUser._id,
+                role: $scope.role
             }).then(function(response){                
                 Project.get({ id: $stateParams.project_id }, function(project){
                     $scope.project = project;
@@ -60,8 +62,8 @@ angular.module('arseApp')
         $scope.availableUsers = [];
         for(var i = 0; i < $scope.users.length; i++){                
             var isAlreadyAssigned = false;
-            for(var j = 0; j < $scope.project.participants.length; j++){                    
-                if($scope.users[i]._id == $scope.project.participants[j]._id) {
+            for(var j = 0; j < $scope.project.participants.length; j++){        
+                if($scope.users[i]._id == $scope.project.participants[j].user._id) {
                     isAlreadyAssigned = true;
                     break;
                 }

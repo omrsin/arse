@@ -32,26 +32,22 @@ exports.create = function(req, res) {
       return res.status(404).send("Project not found");
     }
 
-    User.findById(req.body.user_id, function(err_user, user){
-      if(err_user) { 
-        return handleError(res, err_user); 
-      }
-      if(!user) {
-        return res.status(404).send("User not found");
-      }
+    if(isAlreadyAssignedToProject(project.participants, req.body.user_id)){
+      return res.status(500).send("User already assgined to the project");
+    }
 
-      if(isAlreadyAssignedToProject(project.participants, user)){
-        return res.status(500).send("User already assgined to the project");
-      }
+    var participant = {
+      user: req.body.user_id,
+      role: req.body.role
+    };
 
-      project.participants.push(user);
-      project.save(function (error_on_save) {
-        if(error_on_save) { 
-          return res.status(500).send("Error while storing the participants");
-        }        
-        return res.status(201).json(project);
-      });      
-    });    
+    project.participants.push(participant);
+    project.save(function (error_on_save) {
+      if(error_on_save) { 
+        return res.status(500).send("Error while storing the participants");
+      }        
+      return res.status(201).json(project);
+    });   
   });
 };
 
@@ -85,11 +81,12 @@ function handleError(res, err) {
   return res.status(500).send(err);
 }
 
+// XXX check if there is a more elegant solution
 // Checks if a user is already assigned to a project
-function isAlreadyAssignedToProject(participants, user){
+function isAlreadyAssignedToProject(participants, userid){
   var assigned = false;  
   for(var i = 0; i < participants.length; i++){    
-    if(user.id == participants[i]) {
+    if(userid == participants[i].user) {
       assigned = true;      
     }
   }  
