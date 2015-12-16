@@ -1,7 +1,23 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('BacklogCtrl', ['$scope', 'Project', '$http', '$stateParams', 'Modal', 'Story', function ($scope, Project, $http, $stateParams, Modal, Story) {
+  .controller('BacklogCtrl', ['$scope', 'Project', '$http', '$stateParams', 'Modal', 'Story', '$state', 'project', function ($scope, Project, $http, $stateParams, Modal, Story, $state, project) {
+  
+    // This function is called every time we receive project data from the backend
+    $scope.onProjectDataReceived = function (project) {
+      // Add a delimiter according to the offset value of the project
+      //project.offset = project.backlog.length;
+      project.backlog.splice(project.offset, 0, {
+        _id: -1,
+        project: project._id,
+        noSprintRunning: (!project.current_sprint)
+      });
+
+      $scope.project = project;
+    };
+
+    $scope.onProjectDataReceived(project);
+
     var sprintRunning = true;
     
     // Revert order if user cancels order change on the case of running sprint
@@ -14,7 +30,6 @@ angular.module('arseApp')
     var updateOffset = function (offset, projectId) {
       Project.update({ _id: projectId, offset: offset }, function (res) {
         $scope.allowReorder = true;
-        console.log("receiver http" + JSON.stringify(res));
       }, function (err) {
         $scope.failed = err.data;
       });
@@ -24,9 +39,7 @@ angular.module('arseApp')
     var updateOrder = function (newIndex, oldIndex, offset, projectId, offsetMoved) {
       // Do math with the index to considerate the delimiter
       if (oldIndex > $scope.project.offset) oldIndex--;
-      if (newIndex > $scope.project.offset) newIndex--;
-
-      console.log("drag " + oldIndex + " to " + newIndex);
+      if (newIndex > $scope.project.offset) newIndex--;     
 
       $http.put('/api/projects/' + projectId + '/reorder', {
         oldIndex: oldIndex,
@@ -41,23 +54,7 @@ angular.module('arseApp')
 
       });
 
-    };
-    
-    // This function is called every time we receive project data from the backend
-    $scope.onProjectDataReceived = function (project) {
-      // Add a delimiter according to the offset value of the project
-      //project.offset = project.backlog.length;
-      project.backlog.splice(project.offset, 0, {
-        _id: -1,
-        project: project._id,
-        noSprintRunning: (!project.current_sprint)
-      });
-
-      $scope.project = project;
-
-      console.log("current sprint");
-      console.log(project.current_sprint);
-    };
+    };    
 
     $scope.data = {};
     $scope.allowReorder = true;
@@ -65,8 +62,6 @@ angular.module('arseApp')
     $scope.detailStory = {};
     // Error message if creating/editing a story failed
     $scope.failed = "";
-
-    Project.get({ id: $stateParams.project_id }, $scope.onProjectDataReceived);
 
     $scope.showStoryDetails = function (item) {
       if ($scope.detailStory._id == item._id) {
@@ -104,7 +99,6 @@ angular.module('arseApp')
       Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', { projectId: $stateParams.project_id })
         .result.then(function (res) {
           res.$save(function (httpRes) {
-            console.log(httpRes);
             $scope.project.backlog.push(httpRes);
           }, function (err) {
             $scope.failed = err.data;
@@ -143,8 +137,7 @@ angular.module('arseApp')
 
           //show modal if item moved above or bellow offset and sprint is in progress
           if ($scope.project.current_sprint && offsetMoved) {
-            Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl', { message: "Sprint running, are you sure you want to change the scope?" }).result.then(function (res) {
-              console.log('Deleting Item');
+            Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl', { message: "Sprint running, are you sure you want to change the scope?" }).result.then(function (res) {              
               updateOrder(newIndex, oldIndex, offset, $scope.project._id, offsetMoved);
             }, function () {
               revertReorder(event);
@@ -174,8 +167,7 @@ angular.module('arseApp')
           // delimiter moved
           // Update offset according to the new position
         
-          // Issue a different request to update the offset of the delimiter
-          console.log("drag last to " + $scope.project.offset);
+          // Issue a different request to update the offset of the delimiter          
 
         }
       }

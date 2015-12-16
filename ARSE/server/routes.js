@@ -12,13 +12,14 @@ var Project = require('./api/project/project.model');
 
 module.exports = function(app) {  
 
+  // Pipelines validations of authenticated users and attaches the user in the request
   app.use('/api/projects/', auth.isAuthenticated());
   
+  // Validates if the user querying a project belongs to that project
   app.use('/api/projects/:project_id/', function (req, res, next) {
     Project.findOne({ '_id': req.params.project_id, 'participants': req.user._id}).exec(function (err, project) {
       if (err) { return res.status(500).send(err); }
-      if (!project) { return res.status(404).send('Not Found'); }
-      console.log("No problem");
+      if (!project) { return res.status(404).send('Not Found'); }      
       next();
     });    
   });

@@ -7,6 +7,11 @@ angular.module('arseApp')
         url: '/projects/:project_id/backlog',
         templateUrl: 'app/backlog/backlog.html',
         controller: 'BacklogCtrl',
-        authenticate: true
+        authenticate: true,
+        resolve: {
+          project: function(Project, $stateParams){
+            return Project.get({ id: $stateParams.project_id }).$promise;        
+          }
+        }
       });
   });

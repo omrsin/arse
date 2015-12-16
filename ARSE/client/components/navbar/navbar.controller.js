@@ -13,8 +13,7 @@ angular.module('arseApp')
  
     $scope.isLoggedIn = false;
     Auth.isLoggedIn(function(loggedIn){
-      $scope.isLoggedIn = loggedIn;
-      console.log("is logged in " + $scope.isLoggedIn);
+      $scope.isLoggedIn = loggedIn;      
     });
     
     $scope.menu = [

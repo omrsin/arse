@@ -1,22 +1,20 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('UserManagementCtrl', ['$scope', 'Project', '$stateParams', '$http', '$state', 'User', function ($scope, Project, $stateParams, $http, $state, User) {    
+  .controller('UserManagementCtrl', ['$scope', 'Project', '$stateParams', '$http', '$state', 'User', 'project', function ($scope, Project, $stateParams, $http, $state, User, project) {    
 
     $scope.search = {};
     $scope.selectedUser = {};
     $scope.disabled = true;
+    $scope.project = project;
 
 
-    Project.get({ id: $stateParams.project_id }, function(project){
-        $scope.project = project;
-        User.getAll(function(users){
-            $scope.users = users;
-            $scope.availableUsers = [];
+    User.getAll(function(users){
+        $scope.users = users;
+        $scope.availableUsers = [];
 
-            defineAvailableUsers();            
-        });     
-    });
+        defineAvailableUsers();            
+    });     
 
     $scope.filterByUsernameAndEmail = function(user){        
         return user.username.indexOf($scope.search.text) > -1 || user.email.indexOf($scope.search.text) > -1;
