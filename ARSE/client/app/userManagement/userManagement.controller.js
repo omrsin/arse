@@ -7,7 +7,7 @@ angular.module('arseApp')
     $scope.selectedUser = {};
     $scope.disabled = true;
     $scope.availableRoles = ["PO", "Developer"];
-
+    $scope.hasPORights = false;
 
     Project.get({ id: $stateParams.project_id }, function(project){
         $scope.project = project;
