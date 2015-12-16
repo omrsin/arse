@@ -30,7 +30,7 @@ var ProjectSchema = new Schema({
     required: true
   },
   participants: ['Participant']
-});
+}, {strict: false});
 ProjectSchema.index({'participants':1})
 
 module.exports = mongoose.model('Project', ProjectSchema);

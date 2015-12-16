@@ -9,12 +9,18 @@ angular.module('arseApp')
     $scope.availableRoles = ["PO", "Developer"];
     $scope.hasPORights = false;
 
-    Project.get({ id: $stateParams.project_id }, function(project){
+
+    Project.get({ id: $stateParams.project_id, role: true },function(project){
+        // Set if we have the PO right
+        $scope.hasPORights = project.role === $scope.availableRoles[0];
+        console.log("rights " + $scope.hasPORights);
+
         $scope.project = project;
         User.getAll(function(users){
             $scope.users = users;
             $scope.availableUsers = [];
 
+            console.log($scope.project);
             defineAvailableUsers();            
         });     
     });

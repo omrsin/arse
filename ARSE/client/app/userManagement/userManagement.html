@@ -52,45 +52,43 @@
       </div>
 
       <hr/>
-      <div ng-show="hasPORights">
-        <div class="actions">
-          <form>
-            <div class="row">
-              <div class="col-xs-4 col-sm-6">
-                <input type="text" class="form-control" ng-model="search.text" placeholder="Username or email" ng-change="validateSelectedUser()">
-              </div>
-              <div class="col-xs-4">
-                <select class="form-control" name="role" ng-model="role" ng-options="role for role in availableRoles" ng-init="role = availableRoles[1]"></select>
-              </div>
-              <div class="col-xs-4 col-sm-2">
-                <a ng-click="addUserToProject()" class="btn btn-primary pull-right" ng-disabled="!selectedUser._id">Add User</a>
-              </div>
+      <div ng-show="hasPORights" class="actions">
+        <form>
+          <div class="row">
+            <div class="col-xs-4 col-sm-6">
+              <input type="text" class="form-control" ng-model="search.text" placeholder="Username or email" ng-change="validateSelectedUser()">
             </div>
-          </form>
-        </div>
+            <div class="col-xs-4">
+              <select class="form-control" name="role" ng-model="role" ng-options="role for role in availableRoles" ng-init="role = availableRoles[1]"></select>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+              <a ng-click="addUserToProject()" class="btn btn-primary pull-right" ng-disabled="!selectedUser._id">Add User</a>
+            </div>
+          </div>
+        </form>
+      </div>
 
-        <div class="content">
+      <div class="content">
 
-          <div class="row" ng-show="availableUsers.length && search.text">
-            <div class="col-xs-12">
-              <div class="custom-table">
-                <div class="row">
-                  <div class="table-header">
-                    <div class="col-xs-1">#</div>
-                    <div class="col-xs-5">Username</div>
-                    <div class="col-xs-5">Email</div>
-                    <div class="col-xs-1"></div>
-                  </div>
+        <div class="row" ng-show="availableUsers.length && search.text">
+          <div class="col-xs-12">
+            <div class="custom-table">
+              <div class="row">
+                <div class="table-header">
+                  <div class="col-xs-1">#</div>
+                  <div class="col-xs-5">Username</div>
+                  <div class="col-xs-5">Email</div>
+                  <div class="col-xs-1"></div>
                 </div>
-                <div class="table-content">
-                  <ul>
-                    <li class="table-row" ng-repeat="item in availableUsers | filter: filterByUsernameAndEmail">
-                      <div class="row">
-                        <user user-item="{{item}}" search="search" index="{{$index + 1}}" selected-user="selectedUser"></user>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+              </div>
+              <div class="table-content">
+                <ul>
+                  <li class="table-row" ng-repeat="item in availableUsers | filter: filterByUsernameAndEmail">
+                    <div class="row">
+                      <user user-item="{{item}}" search="search" index="{{$index + 1}}" selected-user="selectedUser"></user>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

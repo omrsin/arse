@@ -17,7 +17,6 @@ exports.index = function (req, res) {
 // in addition, add the stories to the sprint
 // ?=stories=true or false : default= false
 exports.show = function (req, res) {
-  //TODO: automatically generate sprint name
   Project.findById(req.params.project_id, function (err, project) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send('Project Not Found'); }

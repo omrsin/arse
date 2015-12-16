@@ -14,6 +14,8 @@ exports.index = function (req, res) {
 };
 
 // Get a single project
+// in addition, add the role of the logged in user to the project
+// ?=role=true or false : default= false
 exports.show = function (req, res) {
   Project.findOne({ _id: req.params.id }).populate('backlog').populate('owner', '_id username email').exec(function (err, project) {
     if (err) { return handleError(res, err); }
@@ -25,7 +27,20 @@ exports.show = function (req, res) {
         model: 'User'
     }, function(err) {
       if (err) { return handleError(res, err); }
-      console.log(project);
+
+      // Add the role if required
+      if (req.query.role) {
+        var role;
+        // Loop through the participants
+        for(var i = 0; i < project.participants.length; i++) {
+          // XXX this is very nasty, but without the '"" +' it does not work!
+          if("" + req.user._id === "" + project.participants[i].user._id) {
+            role = project.participants[i].role;
+            break;
+          }
+        }
+        project.set('role', role);
+      }
       return res.json(project);
     });
   });
