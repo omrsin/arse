@@ -3,11 +3,24 @@
 angular.module('arseApp')
   .controller('UserManagementCtrl', ['$scope', 'Project', '$stateParams', '$http', '$state', 'User', 'project', function ($scope, Project, $stateParams, $http, $state, User, project) {    
 
+    //-----------------
+    // Event handlers
+    //-----------------
+
+    $scope.$on('participantDeleted', function () {
+      Project.get({ id: $stateParams.project_id }, function(project){
+            $scope.project = project;
+            defineAvailableUsers();            
+            $scope.failed = "";
+            $scope.success = "The participant was deleted";
+        });
+    });
+
+
     $scope.search = {};
     $scope.selectedUser = {};
     $scope.disabled = true;
     $scope.project = project;
-
 
     User.getAll(function(users){
         $scope.users = users;
@@ -23,7 +36,6 @@ angular.module('arseApp')
     $scope.addUserToProject = function(){
         // Validate that the field was not edited after selecting
         if($scope.selectedUser._id){
-            console.log($scope.selectedUser);
             $http.post('/api/projects/' + $scope.project._id + '/participants', {
                 user_id: $scope.selectedUser._id
             }).then(function(response){                

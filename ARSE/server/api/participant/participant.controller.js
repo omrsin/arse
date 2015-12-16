@@ -79,7 +79,7 @@ exports.destroy = function(req, res) {
       return res.status(404).send("Project not found");
     }
 
-    var user = { 'id': req.body.user_id}
+    var user = { 'id': req.params.id}
 
     if(!isAlreadyAssignedToProject(project.participants, user)) {
       return res.status(500).send("User is not assgined to the project");
