@@ -3,11 +3,11 @@
   <project-navbar class="hidden-xs"></project-navbar>
   <div class="col-xs-12 col-sm-11">
     <div class="main-container">
+
       <div class="header">
         <div class="row">
           <div class="col-sm-12">
-            <h1>{{sprint.name}}</h1>
-            {{sprint.start_date | date:'dd.MM.yyyy'}} - {{sprint.end_date | date:'dd.MM.yyyy'}}
+            <h1>{{sprint.name}}</h1> {{sprint.start_date | date:'dd.MM.yyyy'}} - {{sprint.end_date | date:'dd.MM.yyyy'}}
           </div>
         </div>
       </div>
@@ -21,30 +21,93 @@
       </div>
 
       <div class="content">
-        <div class="row">
-          <div class="col-xs-6 col-sm-10">
-             <div ng-show="failed" class="alert alert-danger" role="alert">{{ failed }}</div>
-          </div>      
-        </div>  
+        <div class="row hidden-xs">
+          <div ng-class="{'hidden-xs hidden-sm hidden-md col-lg-8 story-detail-separator' : showDetails, 'col-xs-12' : !showDetails}">
+            <div class="row">
+              <div class="col-xs-6 col-sm-10">
+                <div ng-show="failed" class="alert alert-danger" role="alert">{{ failed }}</div>
+              </div>
+            </div>
 
-        <div class="row sprintBoardHeader">
-          <div class="col-xs-4 sprintHeader" ng-repeat="column in statuses">
-            <h1>{{column.name}}</h1>
+            <div class="row sprintBoardHeader">
+              <div class="col-xs-4 sprintHeader" ng-repeat="column in statuses">
+                <h1>{{column.name}}</h1>
+              </div>
+            </div>
+
+            <div ng-repeat='story in sprint.stories' class="row storyItemContainer">
+              <ul ng-model="story.items" as-sortable="sprintBoardOptions">
+                <li class="as-sortable-story " data-as-sortable-item ng-repeat="column in story.items">
+                  <div ng-show="column.isWithin" class="storyItem" ng-class="{feature: story.type === 'Feature', fix: story.type === 'Fix', enhancement: story.type === 'Enhancement'}">
+                    <div class="row">
+                      <div class="col-xs-2">
+                        <span ng-show="story.type === 'Fix'" class="glyphicon glyphicon-remove-sign"></span>
+                        <span ng-show="story.type === 'Feature'" class="glyphicon glyphicon-record"></span>
+                        <span ng-show="story.type === 'Enhancement'" class="glyphicon glyphicon-new-window"></span>
+                      </div>
+                      <div class="col-xs-7">
+                        <label data-as-sortable-item-handle>{{story.name | limitTo: 40}}{{story.name.length > 40 ? '...' : '' }}</label>
+                      </div>
+                      <div class="col-xs-3">
+                        <span class="badge pull-right">{{story.points}}</span>
+                        <span class="glyphicon glyphicon-search pull-right" ng-click="showItem(story)"></span>
+
+                      </div>
+                    </div>
+                  </div>
+                  <label ng-hide="column.isWithin"></label>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+            <story-detail ng-show="showDetails" story-item="{{detailStory}}" callback="closeShowItem()"></story-detail>
           </div>
         </div>
-
-        <div ng-repeat='story in sprint.stories' class="row storyItemContainer">
-          <ul ng-model="story.items" as-sortable="sprintBoardOptions">
-            <li class="as-sortable-story" data-as-sortable-item ng-repeat="column in story.items">
-              <div ng-show="column.isWithin" class="storyItem" >
-                <label data-as-sortable-item-handle >{{story.name}}</label>
-              </div>
-              <label ng-hide="column.isWithin"></label>
-            </li>
-          </ul>
+        <!--Mobile View-->
+        <div class="row hidden-sm hidden-md hidden-lg">
+          <div class="col-xs-12">
+              <uib-tabset>
+                <uib-tab ng-repeat="stat in statuses" heading="{{stat.name}}" active="status.active">
+                  <div ng-repeat='story in sprint.stories | filter:{ status: stat.name }'>
+                    <div class="storyItem" ng-class="{feature: story.type === 'Feature', fix: story.type === 'Fix', enhancement: story.type === 'Enhancement'}">
+                      <div class="row">
+                        <div class="col-xs-1">
+                          <span ng-show="story.type === 'Fix'" class="glyphicon glyphicon-remove-sign"></span>
+                          <span ng-show="story.type === 'Feature'" class="glyphicon glyphicon-record"></span>
+                          <span ng-show="story.type === 'Enhancement'" class="glyphicon glyphicon-new-window"></span>
+                        </div>
+                        <div class="col-xs-10">
+                          <label>{{story.name}}</label>
+                        </div>
+                        <div class="col-xs-1">
+                          <span class="badge pull-right">{{story.points}}</span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xs-1"></div>
+                        <div class="col-xs-11 description">
+                            <p>{{story.description}}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xs-2">
+                          <a ng-show="story.status !== 'New'" ng-click="moveStoryLeft(story)" class="btn"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                        </div>
+                        <div class="col-xs-8"></div>
+                        <div class="col-xs-2">
+                          <a ng-show="story.status !== 'Done'" ng-click="moveStoryRight(story)" class="btn pull-right"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </uib-tab>
+              </uib-tabset>
+          </div>
         </div>
-
+        <!--/Mobile View-->
       </div>
     </div>
+
   </div>
 </div>
