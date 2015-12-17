@@ -8,6 +8,11 @@ angular.module('arseApp')
         url: '/projects/:project_id/sprintBoard',
         templateUrl: 'app/sprintBoard/sprintBoard.html',
         controller: 'SprintBoardCtrl',
-        authenticate: true
+        authenticate: true,
+        resolve: {
+          project: function(Project, $stateParams){
+            return Project.get({ id: $stateParams.project_id }).$promise;        
+          }
+        }
       });
   });

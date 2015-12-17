@@ -22,8 +22,7 @@ var Project = require('../project/project.model');
 // };
 
 // Creates a new participant in the DB.
-exports.create = function(req, res) {
-  console.log(req.body);
+exports.create = function(req, res) {  
   Project.findById(req.params.project_id, function(err, project){
     if(err) { 
       return handleError(res, err); 
@@ -54,7 +53,15 @@ exports.create = function(req, res) {
         if(error_on_save) { 
           return res.status(500).send("Error while storing the participants");
         }        
-        return res.status(201).json(project);
+        // Populate the participants
+        Project.populate(project, {
+            path: 'participants.user',
+            select: '_id username email',
+            model: 'User'
+        }, function(err) {
+          if (err) { return handleError(res, err); }
+          return res.status(201).json(project);
+        });
       });   
     });
   });
@@ -75,16 +82,39 @@ exports.create = function(req, res) {
 // };
 
 // Deletes a participant from the DB.
-// exports.destroy = function(req, res) {
-//   Participant.findById(req.params.id, function (err, participant) {
-//     if(err) { return handleError(res, err); }
-//     if(!participant) { return res.status(404).send('Not Found'); }
-//     participant.remove(function(err) {
-//       if(err) { return handleError(res, err); }
-//       return res.status(204).send('No Content');
-//     });
-//   });
-// };
+exports.destroy = function(req, res) {
+  console.log("I reached this");
+  Project.findById(req.params.project_id, function(err, project){
+    if(err) { 
+      return handleError(res, err); 
+    }
+    if(!project) {
+      return res.status(404).send("Project not found");
+    }
+
+    if(!isAlreadyAssignedToProject(project.participants, req.params.id)) {
+      return res.status(500).send("User is not assgined to the project");
+    }
+
+    // Actually remove the participant
+    removeFromProject(project.participants, req.params.id);
+    project.save(function (error_on_save) {
+        if(error_on_save) { 
+          return res.status(500).send("Error while removing the participants");
+        }
+
+        // Populate the participants
+        Project.populate(project, {
+            path: 'participants.user',
+            select: '_id username email',
+            model: 'User'
+        }, function(err) {
+          if (err) { return handleError(res, err); }
+          return res.status(200).json(project);
+        });
+      }); 
+  });
+};
 
 function handleError(res, err) {
   return res.status(500).send(err);
@@ -100,4 +130,14 @@ function isAlreadyAssignedToProject(participants, userid){
     }
   }  
   return assigned;
+}
+
+//Removes a participant from a project
+function removeFromProject(participants, userid){  
+  for(var i = 0; i < participants.length; i++){    
+    if(userid == participants[i].user) {
+      participants.splice(i,1);
+      break;      
+    }
+  }
 }

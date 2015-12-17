@@ -1,4 +1,12 @@
-<div class="col-xs-1">{{$index + 1}}</div>
-<div class="hidden-xs col-sm-4">{{item.user.username}}</div>
+
+<div class="hidden-xs col-sm-1">{{index}}</div>
+<div class="hidden-xs col-sm-3">{{item.user.username}}</div>
 <div class="col-xs-6 col-sm-4">{{item.user.email}}</div>
-<div class="col-xs-5 col-sm-3">{{item.role}}</div>
+<div class="col-xs-2 col-sm-2">{{item.role}}</div>
+<div class="col-xs-4 col-sm-2">
+  <div class="btn-group pull-right">
+    <a ng-click="deleteItem(item)" class="btn btn-danger">
+      <span class="glyphicon glyphicon-remove"></span>
+    </a>    
+  </div>
+</div>

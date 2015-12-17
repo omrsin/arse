@@ -31,17 +31,18 @@
             <div class="custom-table">
               <div class="row">
                 <div class="table-header">
-                  <div class="col-xs-1">#</div>
-                  <div class="hidden-xs col-sm-4">Username</div>
+                  <div class="hidden-xs col-sm-1">#</div>
+                  <div class="hidden-xs col-sm-3">Username</div>
                   <div class="col-xs-6 col-sm-4">Email</div>
-                  <div class="col-xs-5 col-sm-3">Role</div>
+                  <div class="col-xs-2 col-sm-2">Role</div>
+                  <div class="col-xs-4 col-sm-2"></div>
                 </div>
               </div>
               <div class="table-content">
                 <ul>
                   <li class="table-row" ng-repeat="item in project.participants">
                     <div class="row">
-                      <participant participant-item="{{item}}"></participant>
+                      <participant item="item" remove="removeParticpant(participant)" index="{{$index + 1}}"></participant>
                     </div>
                   </li>
                 </ul>
@@ -75,10 +76,10 @@
             <div class="custom-table">
               <div class="row">
                 <div class="table-header">
-                  <div class="col-xs-1">#</div>
+                  <div class="hidden-xs col-sm-1">#</div>
                   <div class="col-xs-5">Username</div>
                   <div class="col-xs-5">Email</div>
-                  <div class="col-xs-1"></div>
+                  <div class="col-xs-2 col-sm-1"></div>
                 </div>
               </div>
               <div class="table-content">
@@ -97,22 +98,3 @@
     </div>
   </div>
 </div>
-
-<!-- <div>
-  <h1>Filtered Participants</h1>
-  {{availableUsers | filter: {username: search.text} }}
-</div>
-
-<div>
-  <h1>Users</h1>
-  {{users | filter: {username: search.text} }}
-</div>
-
-<div>
-  <h1>Users</h1>
-  {{users }}
-</div> -->
-<!-- 
-<div>
-  <h1>{{selectedUser}}</h1>
-</div> -->

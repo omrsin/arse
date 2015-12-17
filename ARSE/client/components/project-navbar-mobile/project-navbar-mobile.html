@@ -5,10 +5,10 @@
   <div class="col-xs-3 option" ng-class="{'disabledLink' : !nav_project.current_sprint, 'enabledLink' : nav_project.current_sprint}">
     <span title="Sprint Board" class="glyphicon glyphicon-tasks" ng-click="showSprintBoard()"></span>
   </div>
-  <div class="col-xs-3 option">
-    <span title="User Management" class="glyphicon glyphicon-user" ng-click="showUserManagement()"></span>
+  <div class="col-xs-3 option enabledLink">
+    <span title="Manage Users" class="glyphicon glyphicon-user" ng-click="showUserManagement()"></span>
   </div>
-  <div class="col-xs-3 option">
+  <div class="col-xs-3 option enabledLink">
     <span title="Configuration" class="glyphicon glyphicon-wrench" ng-click="showConfiguration()"></span>
   </div> 
 </div>

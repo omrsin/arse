@@ -1,9 +1,8 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('BacklogCtrl', ['$scope', 'Project', '$http', '$stateParams', 'Modal', 'Story', function ($scope, Project, $http, $stateParams, Modal, Story) {
-    var sprintRunning = true;
-      
+  .controller('BacklogCtrl', ['$scope', 'Project', '$http', '$stateParams', 'Modal', 'Story', '$state', 'project', function ($scope, Project, $http, $stateParams, Modal, Story, $state, project) {
+  
     // This function is called every time we receive project data from the backend
     $scope.onProjectDataReceived = function (project) {
       // Add a delimiter according to the offset value of the project
@@ -15,13 +14,16 @@ angular.module('arseApp')
       });
 
       $scope.project = project;
-
-      console.log("current sprint");
-      console.log(project.current_sprint);
     };
+
+    $scope.onProjectDataReceived(project);
+
+    var sprintRunning = true;
+      
     $scope.updateView = function() {
       Project.get({ id: $stateParams.project_id }, $scope.onProjectDataReceived);
     };
+
     $scope.$on('updateView', function () {
       $scope.updateView();
     });
@@ -70,7 +72,6 @@ angular.module('arseApp')
       Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', { projectId: $stateParams.project_id })
         .result.then(function (res) {
           res.$save(function (httpRes) {
-            console.log(httpRes);
             $scope.project.backlog.push(httpRes);
           }, function (err) {
             $scope.failed = err.data;
@@ -104,9 +105,7 @@ angular.module('arseApp')
 
           //show modal if item moved above or below offset and sprint is in progress
           if ($scope.project.current_sprint && offsetMoved) {
-            Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl', 
-              { message: "Sprint running, are you sure you want to change the scope?" }).result.then(function (res) {
-              console.log('Deleting Item');
+            Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl', { message: "Sprint running, are you sure you want to change the scope?" }).result.then(function (res) {              
               updateOrder(newIndex, oldIndex, offset, $scope.project._id, offsetMoved);
             }, function () {
               revertReorder(event);
@@ -134,7 +133,6 @@ angular.module('arseApp')
             $scope.project.offset = event.dest.index;
             updateOffset($scope.project.offset, $scope.project._id);
           }
-          
         }
       }
     };
