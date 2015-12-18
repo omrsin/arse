@@ -83,7 +83,10 @@ exports.create = function(req, res) {
 
 // Deletes a participant from the DB.
 exports.destroy = function(req, res) {
-  console.log("I reached this");
+  if(req.user._id == req.params.id){ 
+    return res.status(500).send("Cannot remove logged in user from a project");
+  }
+
   Project.findById(req.params.project_id, function(err, project){
     if(err) { 
       return handleError(res, err); 

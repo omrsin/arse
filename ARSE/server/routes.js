@@ -20,7 +20,7 @@ module.exports = function(app) {
     // TODO attach project to request to avoid querying it twice
     Project.findOne({ '_id': req.params.project_id, 'participants.user': req.user._id}).exec(function (err, project) {
       if (err) { return res.status(500).send(err); }
-      if (!project) { return res.status(404).send('Not Found'); }      
+      if (!project) { return res.status(403).send('Access Denied'); }      
       next();
     });    
   });
