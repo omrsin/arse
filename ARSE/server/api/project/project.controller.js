@@ -32,9 +32,8 @@ exports.show = function (req, res) {
       if (req.query.role) {
         var role;
         // Loop through the participants
-        for(var i = 0; i < project.participants.length; i++) {
-          // XXX this is very nasty, but without the '"" +' it does not work!
-          if("" + req.user._id === "" + project.participants[i].user._id) {
+        for(var i = 0; i < project.participants.length; i++) {         
+          if(req.user.id === project.participants[i].user.id) {          
             role = project.participants[i].role;
             break;
           }
