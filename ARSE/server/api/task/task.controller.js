@@ -36,9 +36,7 @@ exports.destroy = function(req, res) {
       return res.status(404).send("Story not found");
     }
 
-    console.log(story.tasks.length);
-    story.tasks.id(req.params.id).remove();
-    console.log(story.tasks.length);   
+    story.tasks.id(req.params.id).remove();    
     
     story.save(function (error_on_save) {
       if(error_on_save) { 
@@ -47,37 +45,28 @@ exports.destroy = function(req, res) {
       return res.status(200).send("Task successfully removed");      
     });
   });
+};
 
-  // Project.findById(req.params.project_id, function(err, project){
-  //   if(err) { 
-  //     return handleError(res, err); 
-  //   }
-  //   if(!project) {
-  //     return res.status(404).send("Project not found");
-  //   }
+// Updates an existing task in the DB.
+exports.update = function(req, res) {
+  if(req.body._id) { delete req.body._id; }
+  Story.findById(req.params.story_id, function(err, story){
+    if(err) { 
+      return handleError(res, err); 
+    }
+    if(!story) {
+      return res.status(404).send("Story not found");
+    }
 
-  //   if(!isAlreadyAssignedToProject(project.participants, req.params.id)) {
-  //     return res.status(500).send("User is not assgined to the project");
-  //   }
+    _.merge(story.tasks.id(req.params.id), req.body);
 
-  //   // Actually remove the participant
-  //   removeFromProject(project.participants, req.params.id);
-  //   project.save(function (error_on_save) {
-  //       if(error_on_save) { 
-  //         return res.status(500).send("Error while removing the participants");
-  //       }
-
-  //       // Populate the participants
-  //       Project.populate(project, {
-  //           path: 'participants.user',
-  //           select: '_id username email',
-  //           model: 'User'
-  //       }, function(err) {
-  //         if (err) { return handleError(res, err); }
-  //         return res.status(200).json(project);
-  //       });
-  //     }); 
-  // });
+    story.save(function (error_on_save) {
+      if(error_on_save) { 
+        return res.status(500).send("Error while updating the task");
+      }      
+      return res.status(200).send("Task successfully updated");      
+    });
+  });
 };
 
 function handleError(res, err) {
