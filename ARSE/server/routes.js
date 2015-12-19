@@ -43,6 +43,9 @@ module.exports = function(app) {
 
   // story routes
   app.use('/api/projects/:project_id/stories', require('./api/story'));
+
+  // tasks routes
+  app.use('/api/projects/:project_id/stories/:story_id/tasks', require('./api/task'));
   
   app.use('/api/users', require('./api/user'));
   // auth
