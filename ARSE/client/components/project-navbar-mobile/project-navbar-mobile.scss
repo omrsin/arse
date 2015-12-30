@@ -13,15 +13,11 @@
   }
   .disabledLink {
     span {
-      cursor: not-allowed;
+      color: #BBB;
     } 
   }
   .enabledLink {
     span {
-      cursor: pointer;
-      &:hover {
-        color: #888;
-      }
     }
   }  
 }

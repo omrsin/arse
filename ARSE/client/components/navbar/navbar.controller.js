@@ -18,7 +18,7 @@ angular.module('arseApp')
     
     $scope.menu = [
       {
-        'title': 'Project',
+        'title': 'Projects',
         'state': 'project'
       }
     ];
