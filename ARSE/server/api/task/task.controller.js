@@ -15,7 +15,7 @@ exports.create = function(req, res) {
     }
 
     console.log(story);
-    var task = req.body
+    var task = req.body;
     // var task = new Task(req.body);
     
     story.tasks.push(task);
