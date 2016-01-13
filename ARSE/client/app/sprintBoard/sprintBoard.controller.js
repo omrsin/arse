@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('SprintBoardCtrl', ['$scope', '$stateParams', '$http', 'Modal', '$state', 'Story', function ($scope, $stateParams, $http, Modal, $state, Story) {
+  .controller('SprintBoardCtrl', ['$scope', '$stateParams', '$http', 'Modal', '$state', 'Story', 'project', function ($scope, $stateParams, $http, Modal, $state, Story, project) {
     $scope.project_id = $stateParams.project_id;
     $scope.sprint;
     $scope.statuses = [
@@ -9,6 +9,9 @@ angular.module('arseApp')
       { name: "In progress" },
       { name: "Done" },
     ];
+
+    // Set if we have the PO right
+    $scope.hasPORights = project.role === "PO";
 
     $scope.showDetails = false;
     $scope.detailStory = {};
@@ -63,8 +66,10 @@ angular.module('arseApp')
         { message: message }).result.then(function (res) {
           console.log('Deleting Item');
           // update the api PROPERLY
-          $http.put('/api/projects/' + $scope.project_id + '/sprints/current/close').then(function () {
+          $http.put('/api/projects/' + $scope.project_id + '/sprints/current/close').then(function (res) {
             $state.go('backlog', { 'project_id': $scope.project_id });
+          }, function(error) {
+            $scope.failed = error.data;
           });
         });
     };

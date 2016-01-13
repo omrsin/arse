@@ -11,7 +11,7 @@ angular.module('arseApp')
     $scope.project = project;
 
     // Set if we have the PO right
-    $scope.hasPORights = $scope.project.role === $scope.availableRoles[0];
+    $scope.hasPORights = $scope.project.role === "PO";
 
     User.getAll(function(users){
         $scope.users = users;

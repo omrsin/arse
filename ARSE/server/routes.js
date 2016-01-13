@@ -12,6 +12,15 @@ var Project = require('./api/project/project.model');
 
 module.exports = function(app) {  
 
+  // This function restrict access to a certain URI to POs only
+  var restrictToPO = function (req, res, next) {
+    Project.findOne({ '_id': req.params.project_id, 'participants': {$elemMatch: { user: req.user._id, role: 'PO'} }}).exec(function (err, project) {
+      if (err) { return res.status(500).send(err); }
+      if (!project) { return res.status(403).send('Access Denied'); }
+      next();
+    });    
+  };
+
   // Pipelines validations of authenticated users and attaches the user in the request
   app.use('/api/projects/', auth.isAuthenticated());
   
@@ -25,13 +34,12 @@ module.exports = function(app) {
     });    
   });
 
-  app.use('/api/projects/:project_id/participants', function (req, res, next) {
-    Project.findOne({ '_id': req.params.project_id, 'participants': {$elemMatch: { user: req.user._id, role: 'PO'} }}).exec(function (err, project) {
-      if (err) { return res.status(500).send(err); }
-      if (!project) { return res.status(403).send('Access Denied'); }
-      next();
-    });    
-  });
+  // The participants controller is restricted to POs only
+  app.use('/api/projects/:project_id/participants', restrictToPO);
+
+  // Only POs may start or close a sprint
+  app.use('/api/projects/:project_id/sprints/current/close', restrictToPO);
+  app.post('/api/projects/:project_id/sprints', restrictToPO);
 
   // Insert routes below
 
@@ -59,4 +67,5 @@ module.exports = function(app) {
     .get(function(req, res) {
       res.sendFile(path.resolve(app.get('appPath') + '/index.html'));
     });
+
 };

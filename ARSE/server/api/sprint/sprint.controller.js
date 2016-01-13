@@ -63,7 +63,7 @@ exports.create = function (req, res) {
       project.current_sprint = sprint;
       project.sprint_counter++;
       project.save(function (err) {
-        if (err) { return res.status(500).send("could not create sprints"); }
+        if (err) { return res.status(500).send("could not create sprint"); }
       });
       sprint.name = "Sprint " + project.sprint_counter;
       sprint.save(function (err) {
@@ -113,8 +113,7 @@ exports.close = function (req, res) {
     // go through stories and remove story if status is "done".
     var sprint_backlog = project.backlog.slice(0, project.offset);
     sprint_backlog.forEach(function (item, index, temp) {
-      if(item.status==="Done")
-      {
+      if(item.status==="Done") {
         // XXX if we need to access past sprints with their stories - this will not work any more
         project.backlog.pull(item); 
       }
@@ -124,7 +123,7 @@ exports.close = function (req, res) {
 
     //after the project return the project with the new state.
     project.save(function (err) {
-      if (err) { return res.status(404).send("could not close sprint"); }
+      if (err) { return res.status(500).send("could not close sprint"); }
       res.status(200).send(project);
     });
   });

@@ -6,7 +6,6 @@ angular.module('arseApp')
     // This function is called every time we receive project data from the backend
     $scope.onProjectDataReceived = function (project) {
       // Add a delimiter according to the offset value of the project
-      //project.offset = project.backlog.length;
       project.backlog.splice(project.offset, 0, {
         _id: -1,
         project: project._id,
@@ -14,6 +13,9 @@ angular.module('arseApp')
       });
 
       $scope.project = project;
+
+      // Set if we have the PO right
+      $scope.hasPORights = $scope.project.role === "PO";
     };
 
     $scope.onProjectDataReceived(project);
@@ -21,7 +23,7 @@ angular.module('arseApp')
     var sprintRunning = true;
       
     $scope.updateView = function() {
-      Project.get({ id: $stateParams.project_id }, $scope.onProjectDataReceived);
+      Project.get({ id: $stateParams.project_id, role:true }, $scope.onProjectDataReceived);
     };
 
     $scope.$on('updateView', function () {
@@ -79,7 +81,6 @@ angular.module('arseApp')
         });
     };
 
-    //XXX a bug on reordering
     $scope.dragControlListeners = {
       //override $scope.allowReorder to determine drag is allowed or not. default is true.
       accept: function (sourceItemHandleScope, destSortableScope) { return $scope.allowReorder },

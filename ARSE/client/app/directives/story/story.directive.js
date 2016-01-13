@@ -9,7 +9,8 @@ angular.module('arseApp')
         storyItem:'@',
         showDetails:'@',
         editCallback:'&',
-        viewCallback:'&'
+        viewCallback:'&',
+        hasporights: '='   
       },
       link: function (scope, element, attrs) {
         attrs.$observe('storyItem', function(value){
@@ -68,6 +69,9 @@ angular.module('arseApp')
           $http.post('/api/projects/' + scope.item.project + '/sprints', {end_date: scope.endDate}).then(function (res) {
             console.log(res);
             $state.go('sprintBoard', {project_id:scope.item.project});
+          }, function(error) {
+            console.log(error.data);
+            scope.errorMessage = error.data;
           });
         };
 
