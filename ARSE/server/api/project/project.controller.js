@@ -15,7 +15,7 @@ exports.index = function (req, res) {
 
 // Get a single project
 // in addition, add the role of the logged in user to the project
-// ?=role=true or false : default= false
+// ?role=true or false : default= false
 exports.show = function (req, res) {
   Project.findOne({ _id: req.params.id }).populate('backlog').populate('owner', '_id username email').exec(function (err, project) {
     if (err) { return handleError(res, err); }

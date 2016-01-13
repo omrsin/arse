@@ -10,7 +10,8 @@ angular.module('arseApp')
         changerole:'&',
         item: '=',
         index: '@',
-        roles: '='      
+        roles: '=',
+        hasporights: '='   
       },
       link: function (scope, element, attrs) {
         scope.currentUser = {};
