@@ -94,8 +94,10 @@ angular.module('arseApp')
 
     // Update a story in the backend
     $scope.changeStory = function (story, oldStatus) {
+
       Story.update(story, function (httpRes) {
         console.log("Update succeeded");
+        story.__v = httpRes.__v;
       }, function (err) {
         console.log("Update failed");
         $scope.failed = err.data;
