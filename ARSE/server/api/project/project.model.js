@@ -23,7 +23,7 @@ var ProjectSchema = new Schema({
     type: Number,
     default:0
   },
-  // TODO remove ower. We have the role PO for that now.
+  // TODO remove owner. We have the role PO for that now.
   owner: {
     type: Schema.Types.ObjectId,
     ref: 'User',

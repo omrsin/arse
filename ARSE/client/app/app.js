@@ -8,7 +8,8 @@ angular.module('arseApp', [
   'ui.router',
   'ui.bootstrap',
 	'validation.match',
-  'as.sortable'
+  'as.sortable',
+  'xeditable'
 ])
   .config(function($stateProvider, $urlRouterProvider, $locationProvider,
 		$httpProvider) {
@@ -44,7 +45,10 @@ angular.module('arseApp', [
       }
 		};
 	})
-	.run(function($rootScope, $state, Auth){
+	.run(function($rootScope, $state, Auth, editableOptions){
+
+    // Set the theme for xeditable
+    editableOptions.theme = 'bs3';
     
     // Redirects to the previous state in case the stateChangeError event is triggered
     // This event is triggered usually when promises are rejected while resolving the routes

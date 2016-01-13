@@ -7,8 +7,10 @@ angular.module('arseApp')
       restrict: 'E',
       scope: {
         remove:'&',
+        changerole:'&',
         item: '=',
-        index: '@'        
+        index: '@',
+        roles: '='      
       },
       link: function (scope, element, attrs) {
         scope.currentUser = {};
@@ -23,6 +25,10 @@ angular.module('arseApp')
             { message: "Are you sure you want to delete participant "+item.user.username+"?"}).result.then(function (res) {  
               scope.remove({participant: item});
           });
+        };
+
+        scope.updateRole = function(data) {
+          return scope.changerole({participant: scope.item, role: data});
         };
       }   
     };

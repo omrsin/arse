@@ -49,6 +49,7 @@ angular.module('arseApp')
         }
     };
 
+    // Removes a participant
     $scope.removeParticpant = function(participant) {
         console.log("deleting");
         $http.delete('/api/projects/'+$stateParams.project_id+'/participants/'+participant.user._id).then(function(res){
@@ -62,6 +63,14 @@ angular.module('arseApp')
             cleanScope();
             $scope.failed = error.data;
             refreshProject();
+        });
+    };
+
+    // Changes the role of a participant. Returns the http promise
+    $scope.changeParticipantRole = function(participant, role) {
+        console.log("changing role to " + role);
+        return $http.put('/api/projects/'+$stateParams.project_id+'/participants/'+participant.user._id, {
+                role: role
         });
     };
 

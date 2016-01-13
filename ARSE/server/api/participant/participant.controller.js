@@ -67,19 +67,39 @@ exports.create = function(req, res) {
   });
 };
 
-// Updates an existing participant in the DB.
-// exports.update = function(req, res) {
-//   if(req.body._id) { delete req.body._id; }
-//   Participant.findById(req.params.id, function (err, participant) {
-//     if (err) { return handleError(res, err); }
-//     if(!participant) { return res.status(404).send('Not Found'); }
-//     var updated = _.merge(participant, req.body);
-//     updated.save(function (err) {
-//       if (err) { return handleError(res, err); }
-//       return res.status(200).json(participant);
-//     });
-//   });
-// };
+//Updates an existing participant in the DB.
+exports.update = function(req, res) {
+  Project.findById(req.params.project_id, function(err, project){
+    if(err) { 
+      return handleError(res, err); 
+    }
+    if(!project) {
+      return res.status(404).send("Project not found");
+    }
+
+    if(!isAlreadyAssignedToProject(project.participants, req.params.id)) {
+      return res.status(500).send("User is not assgined to the project");
+    }
+
+    console.log(req.user._id + " vs " + req.params.id);
+    if(req.user._id == req.params.id) {
+      return res.status(500).send("You cannot change your own role.");
+    }
+
+    // Actually change the role
+    var index = changeRole(project.participants, req.params.id, req.body.role);
+    // Tell mongoose that the array actually changed.
+    project.markModified('participants.' + index);
+
+    
+    project.save(function (error_on_save) {
+        if(error_on_save) { 
+          return res.status(500).send("Error while changing the role.");
+        }
+        return res.status(200).json("Success");
+    }); 
+  });
+};
 
 // Deletes a participant from the DB.
 exports.destroy = function(req, res) {
@@ -141,6 +161,18 @@ function removeFromProject(participants, userid){
     if(userid == participants[i].user) {
       participants.splice(i,1);
       break;      
+    }
+  }
+}
+
+// Changes a role from a particpant from a project
+// Returns the index of the changed participant
+function changeRole(participants, userid, role){  
+  for(var i = 0; i < participants.length; i++){    
+    if(userid == participants[i].user) {
+      participants[i].role = role;
+      console.log(participants[i]);
+      return i;      
     }
   }
 }

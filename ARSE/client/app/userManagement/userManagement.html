@@ -42,7 +42,7 @@
                 <ul>
                   <li class="table-row" ng-repeat="item in project.participants">
                     <div class="row">
-                      <participant item="item" remove="removeParticpant(participant)" index="{{$index + 1}}"></participant>
+                      <participant item="item" roles="availableRoles" remove="removeParticpant(participant)" changerole="changeParticipantRole(participant,role)" index="{{$index + 1}}"></participant>
                     </div>
                   </li>
                 </ul>
