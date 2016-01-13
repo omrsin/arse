@@ -1,0 +1,10 @@
+
+<!--<label ng-hide="showSelectBox" ng-click="showSelectBox=true">Assignee: <a href="">{{selectedUser.username}}</a></label>
+<select ng-show="showSelectBox" class="form-control" ng-model="selectedUser" name="select-participant" ng-options="participant as participant.user.username for participant in participants track by participant.user._id"
+ng-change="assignUser(selectedUser)" >
+  <option value="{{selectedUser}}">{{selectedUser.username}}</option>
+</select>-->
+
+<a href="#" editable-select="currentStory.user" buttons="no" e-ng-options="participant.user for participant in participants">
+    {{ currentStory.user.username || 'Unassigned' }}
+  </a>

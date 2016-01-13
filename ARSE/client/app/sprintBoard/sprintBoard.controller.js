@@ -4,6 +4,8 @@ angular.module('arseApp')
   .controller('SprintBoardCtrl', ['$scope', '$stateParams', '$http', 'Modal', '$state', 'Story', 'project', function ($scope, $stateParams, $http, Modal, $state, Story, project) {
     $scope.project_id = $stateParams.project_id;
     $scope.sprint;
+    $scope.project;
+    $scope.participants;
     $scope.statuses = [
       { name: "New" },
       { name: "In progress" },
@@ -15,6 +17,9 @@ angular.module('arseApp')
 
     $scope.showDetails = false;
     $scope.detailStory = {};
+
+    $scope.selectedParticpant = {};
+    $scope.showAddParticipant = false;
 
     // Error message if something failed
     $scope.failed = "";
@@ -33,6 +38,16 @@ angular.module('arseApp')
           story.items.push({ isWithin: story.status === $scope.statuses[j].name })
         }
       }
+    });
+    
+    // request users/participants
+    $http({
+      url: '/api/projects/' + $scope.project_id,
+      method: 'GET',
+    }).then(function (res) {
+      $scope.project = res.data;
+      $scope.participants = res.data.participants;
+      console.log("project participants: " + JSON.stringify($scope.participants));
     });
 
     // Sorting options for the sprint board
@@ -108,6 +123,7 @@ angular.module('arseApp')
       });
     }
     
+    $scope.selectedUser = {};
     // Displays details of the story in a side view
     $scope.showItem = function (item) {
       if ($scope.detailStory._id == item._id) {
@@ -118,8 +134,11 @@ angular.module('arseApp')
         $scope.showDetails = true;
       }
     };
-    
+
     $scope.closeShowItem = function () {
       $scope.showDetails = false;
     };
+
+
+
   }]);

@@ -14,7 +14,7 @@ exports.index = function(req, res) {
 
 // Get a single story
 exports.show = function(req, res) {
-  Story.findOne({'_id': req.params.id},function(err, story){
+  Story.findOne({'_id': req.params.id}).populate('user').exec(function(err, story){
       if(err) { return handleError(res, err); }
       if(!story) { return res.status(404).send('Not Found'); }
 
@@ -26,6 +26,8 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   Story.create(req.body, function(err, story) {
     if(err) { return handleError(res, err); }
+    
+   
 
     // Find the project
     Project.findById(req.params.project_id, 
@@ -36,13 +38,19 @@ exports.create = function(req, res) {
         if(!project) {
           return res.status(404).send("Project not found");
         }
-
+        
+        story.save(); 
         project.backlog.push(story);
         project.save(function (error_on_save) {
           if(error_on_save) { 
             return handleError(res,error_on_save); 
           }
-          return res.status(201).json(story);
+          Story.populate(story, {path:'user'}, function(err2, storyWithUser){
+            if(err2){return handleError(res, err2);}
+            if(!storyWithUser){return res.status(404).send('Not Found');}
+            return res.status(201).json(story);  
+          });
+          
         });
       }
     );
@@ -51,6 +59,7 @@ exports.create = function(req, res) {
 
 // Updates an existing story in the DB.
 exports.update = function(req, res) {
+  console.log("update just called");
   if(req.body._id) { delete req.body._id; }
   Story.findById(req.params.id, function (err, story) {
     if (err) { return handleError(res, err); }
@@ -59,10 +68,34 @@ exports.update = function(req, res) {
     console.log(req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
-      return res.status(200).json(story);
+      // populate story with user
+      // TODO fix populate the story with user that has ONLY username
+      Story.populate(updated, {path: 'user'}, function (err2, storyWithUser){
+        if (err2) { return handleError(res, err2); }
+        return res.status(200).json(storyWithUser);
+      });
     });
   });
 };
+
+// assign user story to a developer
+exports.assign = function(req, res){
+  if(req.body._id) { delete req.body._id; }
+  Story.findById(req.params.id, function(err, story){
+    if (err) { return handleError(res, err); }
+    if(!story) { return res.status(404).send('Not Found'); }
+   
+    req.body.user = req.params.user_id;
+    var updated_story = _.merge(story, req.body);
+     console.log("story; " + JSON.stringify(story));
+     
+    updated_story.save(function(err){
+      if (err) { return handleError(res, err); }
+      console.log("updated story; " + JSON.stringify(updated_story));
+      return res.status(200).json(updated_story);
+    });
+  });
+}
 
 // Deletes a story from the DB.
 // needs to propagate the deletion to the project.
@@ -85,5 +118,6 @@ exports.destroy = function(req, res) {
 };
 
 function handleError(res, err) {
+  console.log(err);
   return res.status(500).send(err);
 }

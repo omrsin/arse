@@ -29,18 +29,20 @@ exports.show = function (req, res) {
       if (req.query.stories) {
         console.log(req.query.stories);
 
-        if(project.offset == 0) {
+        if (project.offset == 0) {
           sprint.set('stories', []);
           return res.json(sprint);
         } else {
-          Project.populate(project, {path: 'backlog', options: {limit: project.offset}}, function (err3, projectWithBacklog) {
+          Project.populate(project, { path: 'backlog', options: { limit: project.offset } }, function (err3, projectWithBacklog) {
             if (err3) { return handleError(res, err3); }
             if (!projectWithBacklog) { return res.status(404).send('could not get stories'); }
-            console.log(projectWithBacklog.backlog);
             var sprint_backlog = projectWithBacklog.backlog;
-            sprint.set('stories', sprint_backlog);
-            console.log(sprint);
-            return res.json(sprint);
+            // Populate the stories with the user that is assigned to each story
+            Story.populate(sprint_backlog, { path: 'user' }, function (err, sprintWithUsers) {
+                sprint.set('stories', sprint_backlog);
+              return res.json(sprint);
+            });
+
           });
         }
       } else {
@@ -115,7 +117,7 @@ exports.close = function (req, res) {
     sprint_backlog.forEach(function (item, index, temp) {
       if(item.status==="Done") {
         // XXX if we need to access past sprints with their stories - this will not work any more
-        project.backlog.pull(item); 
+        project.backlog.pull(item);
       }
     });
     // Reset the offset to 0
