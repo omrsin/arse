@@ -10,12 +10,6 @@ var UserSchema = new Schema({
     type: String,
     lowercase: true
   },
-  // TODO This role here must be deleted. In the forntend: UserManagement then it needs to be checked the
-  // role of the user in the current project instead of this.
-  role: {
-    type: String,
-    default: 'user'
-  },
   password: String,
   provider: String,
   salt: String

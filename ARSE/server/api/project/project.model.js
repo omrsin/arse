@@ -23,12 +23,6 @@ var ProjectSchema = new Schema({
     type: Number,
     default:0
   },
-  // TODO remove owner. We have the role PO for that now.
-  owner: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
   participants: ['Participant']
 }, {strict: false});
 ProjectSchema.index({'participants':1})
