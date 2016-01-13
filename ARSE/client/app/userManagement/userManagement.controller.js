@@ -29,11 +29,12 @@ angular.module('arseApp')
             $http.post('/api/projects/' + $scope.project._id + '/participants', {
                 user_id: $scope.selectedUser._id,
                 role: $scope.role
-            }).then(function(res){                
+            }).then(function(res){    
+                var name = $scope.selectedUser.username;
                 $scope.project = res.data;
                 defineAvailableUsers();
                 cleanScope();
-                $scope.success = "The user " +$scope.selectedUser.username+ " has been successfully added to the project";            
+                $scope.success = "The user " + name + " has been successfully added to the project";            
             },
             function(error){
                 cleanScope();
