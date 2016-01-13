@@ -5,6 +5,7 @@ var Story = require('../story/story.model');
 
 // Creates a new task in the DB embedded in its corresponfing story.
 exports.create = function(req, res) {
+  console.log(req.params.story_id);
   Story.findById(req.params.story_id, function(err, story){
     if(err) { 
       return handleError(res, err); 
@@ -13,14 +14,15 @@ exports.create = function(req, res) {
       return res.status(404).send("Story not found");
     }
 
-    var task = new Task(req.body);
+    console.log(story);
+    var task = req.body
+    // var task = new Task(req.body);
     
     story.tasks.push(task);
     story.save(function (error_on_save) {
       if(error_on_save) { 
         return res.status(500).send("Error while creating the task");
       }        
-      console.log(task);
       return res.status(201).send("Task created successfully");        
     });    
   });  
