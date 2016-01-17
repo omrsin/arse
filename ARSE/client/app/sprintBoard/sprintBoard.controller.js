@@ -25,11 +25,22 @@ angular.module('arseApp')
       console.log(res.data);
       for (var i = 0; i < $scope.sprint.stories.length; i++) {
         var story = $scope.sprint.stories[i];
-        story.items = [];
+        // TODO rename items!
+        story.inColumn = [];
+        // For each story, save in a boolean array, if it belongs to the corresponding column
         for (var j = 0; j < $scope.statuses.length; j++) {
-          story.items.push({ isWithin: story.status === $scope.statuses[j].name })
+          story.inColumn.push({ isWithin: story.status === $scope.statuses[j].name });
+        }
+        // Do the same for tasks
+        for (var j = 0; j < $scope.sprint.stories[i].tasks.length; j++) {
+          var task = $scope.sprint.stories[i].tasks[j];
+          task.inColumn = [];
+          for (var k = 0; k < $scope.statuses.length; k++) {
+            task.inColumn.push({ isWithin: task.status === $scope.statuses[k].name });
+          }
         }
       }
+      console.log($scope.sprint);
     });
 
     // Sorting options for the sprint board
