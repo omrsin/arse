@@ -15,6 +15,7 @@ exports.index = function (req, res) {
 
 // Get a single story
 exports.show = function (req, res) {
+  console.log("before show");
   Story.findOne({ '_id': req.params.id }).populate('user').exec(function (err, story) {
     if (err) { return handleError(res, err); }
     if (!story) { return res.status(404).send('Not Found'); }
@@ -117,6 +118,7 @@ exports.assign = function (req, res) {
     });
   });
 }
+
 
 // Deletes a story from the DB.
 // needs to propagate the deletion to the project.
