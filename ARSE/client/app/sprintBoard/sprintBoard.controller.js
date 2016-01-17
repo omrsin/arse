@@ -92,6 +92,30 @@ angular.module('arseApp')
       $scope.changeStory(story, oldStatus);
     }
 
+    //moves a task to left (called on mobile)
+    $scope.moveTaskLeft = function(task) {
+      var oldStatus = task.status;
+      if(oldStatus === $scope.statuses[1].name){
+        task.status = $scope.statuses[0].name;
+      } else if (oldStatus === $scope.statuses[2].name) {
+        task.status = $scope.statuses[1].name;
+      }
+      //TODO:: replace with the proper code that updates this particular task
+      $scope.changeTask(task, oldStatus);
+    }
+    
+    //moves a task to right (called on mobile)
+    $scope.moveTaskRight = function(task) {
+      var oldStatus = task.status;
+      if(oldStatus === $scope.statuses[0].name){
+        task.status = $scope.statuses[1].name;
+      } else if (oldStatus === $scope.statuses[1].name) {
+        task.status = $scope.statuses[2].name;
+      }
+      //TODO:: replace with the proper code that updates this particular task
+      $scope.changeTask(task, oldStatus);
+    }
+
     // Update a story in the backend
     $scope.changeStory = function (story, oldStatus) {
 
