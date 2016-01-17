@@ -108,7 +108,7 @@
                       </div>
                       <div class="col-xs-8 center-button-placeholder">
                         <!-- TODO add the functionality for creating a task-->
-                        <a ng-click="" class="btn"><span class="glyphicon glyphicon-plus"></span></a></div>
+                        <a ng-click="addTask(story)" class="btn"><span class="glyphicon glyphicon-plus"></span></a></div>
                       <div class="col-xs-2">
 
                         <a ng-show="story.status !== 'Done'" ng-click="moveStoryRight(story)" class="btn pull-right"><span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -134,14 +134,14 @@
                     </div>
                     <div class="row">
                       <div class="col-xs-2">
-                        <a ng-show="task.status !== 'New'" ng-click="moveTaskLeft(task)" class="btn"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                        <a ng-show="task.status !== 'New'" ng-click="moveTaskLeft(task,story)" class="btn"><span class="glyphicon glyphicon-chevron-left"></span></a>
                       </div>
                       <div class="col-xs-8 center-button-placeholder">
                         <!-- TODO add the functionality for edit -->
                         <a ng-click="" class="btn"><span class="glyphicon glyphicon-edit"></span></a>
                       </div>
                       <div class="col-xs-2">
-                        <a ng-show="task.status !== 'Done'" ng-click="moveTaskRight(task)" class="btn pull-right"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                        <a ng-show="task.status !== 'Done'" ng-click="moveTaskRight(task,story)" class="btn pull-right"><span class="glyphicon glyphicon-chevron-right"></span></a>
                       </div>
                     </div>
                   </div>

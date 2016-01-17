@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('SprintBoardCtrl', ['$scope', '$stateParams', '$http', 'Modal', '$state', 'Story', function ($scope, $stateParams, $http, Modal, $state, Story) {
+  .controller('SprintBoardCtrl', ['$scope', '$stateParams', '$http', 'Modal', '$state', 'Story', 'Task', function ($scope, $stateParams, $http, Modal, $state, Story, Task) {
     $scope.project_id = $stateParams.project_id;
     $scope.sprint;
     $scope.statuses = [
@@ -70,9 +70,9 @@ angular.module('arseApp')
     };
 
     // Move an item left in the sprint board (called on mobile)
-    $scope.moveStoryLeft = function(story) {
+    $scope.moveStoryLeft = function (story) {
       var oldStatus = story.status;
-      if(oldStatus === $scope.statuses[1].name) {
+      if (oldStatus === $scope.statuses[1].name) {
         story.status = $scope.statuses[0].name;
       } else if (oldStatus === $scope.statuses[2].name) {
         story.status = $scope.statuses[1].name;
@@ -82,9 +82,9 @@ angular.module('arseApp')
 
 
     // Move an item right in the sprint board (called on mobile)
-    $scope.moveStoryRight = function(story) {
+    $scope.moveStoryRight = function (story) {
       var oldStatus = story.status;
-      if(oldStatus === $scope.statuses[0].name) {
+      if (oldStatus === $scope.statuses[0].name) {
         story.status = $scope.statuses[1].name;
       } else if (oldStatus === $scope.statuses[1].name) {
         story.status = $scope.statuses[2].name;
@@ -93,27 +93,27 @@ angular.module('arseApp')
     }
 
     //moves a task to left (called on mobile)
-    $scope.moveTaskLeft = function(task) {
+    $scope.moveTaskLeft = function (task, story) {
       var oldStatus = task.status;
-      if(oldStatus === $scope.statuses[1].name){
+      if (oldStatus === $scope.statuses[1].name) {
         task.status = $scope.statuses[0].name;
       } else if (oldStatus === $scope.statuses[2].name) {
         task.status = $scope.statuses[1].name;
       }
       //TODO:: replace with the proper code that updates this particular task
-      $scope.changeTask(task, oldStatus);
+      $scope.changeTask(task, story, oldStatus);
     }
     
     //moves a task to right (called on mobile)
-    $scope.moveTaskRight = function(task) {
+    $scope.moveTaskRight = function (task, story) {
       var oldStatus = task.status;
-      if(oldStatus === $scope.statuses[0].name){
+      if (oldStatus === $scope.statuses[0].name) {
         task.status = $scope.statuses[1].name;
       } else if (oldStatus === $scope.statuses[1].name) {
         task.status = $scope.statuses[2].name;
       }
       //TODO:: replace with the proper code that updates this particular task
-      $scope.changeTask(task, oldStatus);
+      $scope.changeTask(task, story, oldStatus);
     }
 
     // Update a story in the backend
@@ -129,6 +129,20 @@ angular.module('arseApp')
       });
     }
     
+    //Update a task in the backend
+    $scope.changeTask = function (task, story, oldStatus) {
+      $http.put('/api/projects/' + $scope.project_id + '/stories/' + story._id + '/tasks/' + task._id, task)
+        .success(function (data, status, headers, config) {
+          console.log("Task updated successfully");
+          task.__v = data.__v;
+        })
+        .error(function (data, status, header, config) {
+          console.log("Update of the task failed");
+          $scope.failed = err.data;
+          task.status = oldStatus;
+        });
+    }
+    
     // Displays details of the story in a side view
     $scope.showItem = function (item) {
       if ($scope.detailStory._id == item._id) {
@@ -139,16 +153,16 @@ angular.module('arseApp')
         $scope.showDetails = true;
       }
     };
-    
+
     $scope.closeShowItem = function () {
       $scope.showDetails = false;
     };
 
     // Add a task to the story
-    $scope.addTask = function(story) {
+    $scope.addTask = function (story) {
       $scope.failed = "";
       Modal.open({}, 'app/sprintBoard/taskForm.html', 'TaskFormCtrl', { projectId: $stateParams.project_id, storyId: story._id })
-        .result.then(function (res) {          
+        .result.then(function (res) {
           res.$save(function (httpRes) {
             story.tasks.push(httpRes);
             console.log(story);
@@ -156,7 +170,7 @@ angular.module('arseApp')
             $scope.failed = err.data;
           });
         });
-      };
+    };
   }]);
 
 angular.module('arseApp').controller('TaskFormCtrl',
