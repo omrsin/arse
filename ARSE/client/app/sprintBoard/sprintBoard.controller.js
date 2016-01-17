@@ -252,9 +252,35 @@ angular.module('arseApp')
                 story.tasksByStatus[i].push(httpRes);
               }
             }
+            // Expand story
+            $scope.expand(story);
           }, function (err) {
             $scope.failed = err.data;
           });
+        });
+    };
+
+    $scope.removeTask = function(task, story) {
+      $scope.failed = "";
+      var message = "Are you sure you want to delete this task?";
+      Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl',
+        { message: message }).result.then(function (res) {
+          // update the api PROPERLY
+          $http.delete('/api/projects/' + $scope.project_id + '/stories/' + story._id + '/tasks/' + task._id)
+            .success(function (data, status, headers, config) {
+              console.log("Task deleted successfully");
+              story.tasks.splice(story.tasks.indexOf(task), 1);
+              // delete it in the array of the corresponding status
+              for(var i = 0; i < $scope.statuses.length; i++) {
+                if($scope.statuses[i].name === task.status) {
+                  story.tasksByStatus[i].splice(story.tasksByStatus[i].indexOf(task), 1);
+                }
+              }
+            })
+            .error(function (data, status, header, config) {
+              console.log("Delete of the task failed");
+              $scope.failed = data;
+            });
         });
     };
 
