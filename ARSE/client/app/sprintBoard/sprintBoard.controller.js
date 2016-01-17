@@ -138,7 +138,7 @@ angular.module('arseApp')
         })
         .error(function (data, status, header, config) {
           console.log("Update of the task failed");
-          $scope.failed = err.data;
+          $scope.failed = data;
           task.status = oldStatus;
         });
     }
@@ -171,6 +171,25 @@ angular.module('arseApp')
           });
         });
     };
+
+    $scope.editTask = function (task, story) {
+      $scope.failed = "";
+      Modal.open({}, 'app/sprintBoard/taskForm.html', 'TaskFormCtrl', { projectId: $stateParams.project_id, storyId: story._id, task: task })
+        .result.then(function (res) {
+          $http.put('/api/projects/' + $scope.project_id + '/stories/' + story._id + '/tasks/' + task._id, res)
+            .success(function (data, status, headers, config) {
+              console.log("Task updated successfully");
+              angular.copy(data,task);
+              // task = angular.copy(data);
+            })
+            .error(function (data, status, header, config) {
+              console.log("Update of the task failed");
+              $scope.failed = data;
+            });
+        }, function (err) {
+          $scope.failed = err.data;
+        });
+    };
   }]);
 
 angular.module('arseApp').controller('TaskFormCtrl',
@@ -199,6 +218,7 @@ angular.module('arseApp').controller('TaskFormCtrl',
 
     // Use the original story, so that id, reference to project, etc. is staying the same
     $scope.updateTask = function () {
+
       $uibModalInstance.close($scope.task);
     };
 
