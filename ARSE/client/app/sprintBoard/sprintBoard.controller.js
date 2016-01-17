@@ -198,6 +198,9 @@ angular.module('arseApp')
 
     // Update a story in the backend
     $scope.changeStory = function (story, oldStatus) {
+      if(story.status === "Done") {
+        // TODO display a warning
+      }
 
       console.log(story);
       Story.update(story, function (httpRes) {
