@@ -134,7 +134,17 @@ angular.module('arseApp')
       } else if (oldStatus === $scope.statuses[2].name) {
         task.status = $scope.statuses[1].name;
       }
-      //TODO:: replace with the proper code that updates this particular task
+      // save it in the array of the corresponding status
+      for(var i = 0; i < $scope.statuses.length; i++) {
+        if($scope.statuses[i].name === oldStatus) {
+          // remove
+          story.tasksByStatus[i].splice(story.tasksByStatus[i].indexOf(task), 1);
+        }
+        if($scope.statuses[i].name === task.status) {
+          story.tasksByStatus[i].push(task);
+        }
+      }
+
       $scope.changeTask(task, story, oldStatus);
     }
     
@@ -146,13 +156,24 @@ angular.module('arseApp')
       } else if (oldStatus === $scope.statuses[1].name) {
         task.status = $scope.statuses[2].name;
       }
-      //TODO:: replace with the proper code that updates this particular task
+      // save it in the array of the corresponding status
+      for(var i = 0; i < $scope.statuses.length; i++) {
+        if($scope.statuses[i].name === oldStatus) {
+          // remove
+          story.tasksByStatus[i].splice(story.tasksByStatus[i].indexOf(task), 1);
+        }
+        if($scope.statuses[i].name === task.status) {
+          story.tasksByStatus[i].push(task);
+        }
+      }
+      
       $scope.changeTask(task, story, oldStatus);
     }
 
     // Update a story in the backend
     $scope.changeStory = function (story, oldStatus) {
 
+      console.log(story);
       Story.update(story, function (httpRes) {
         console.log("Update succeeded");
         story.__v = httpRes.__v;
@@ -199,7 +220,12 @@ angular.module('arseApp')
         .result.then(function (res) {
           res.$save(function (httpRes) {
             story.tasks.push(httpRes);
-            console.log(story);
+            // save it in the array of the corresponding status
+            for(var i = 0; i < $scope.statuses.length; i++) {
+              if($scope.statuses[i].name === httpRes.status) {
+                story.tasksByStatus[i].push(httpRes);
+              }
+            }
           }, function (err) {
             $scope.failed = err.data;
           });
