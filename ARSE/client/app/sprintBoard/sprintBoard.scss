@@ -1,6 +1,10 @@
-.as-sortable-story, .as-sortable-story-placeholder {
+.as-sortable-story, .as-sortable-placeholder {
   display: inline-block;
   float: left;
+}
+
+.as-sortable-placeholder {
+  border: 1px dashed #777;
 }
 
 .as-sortable-story {
@@ -60,11 +64,13 @@
     .enhancement {
       background: #D0EAF2;
     }
+    
+
   
   }
 
-.as-sortable-story-placeholder {
-  border: 1px dashed #777;
+.taskColumnContainer {
+  min-height: 10px;
 }
 
 .sprintBoardHeader{
@@ -118,5 +124,15 @@
   background: #D0EAF2;
 }
 
+.task {     
+  background: #D0D0D0;
+}
 
+.badge-task {
+  color: black;
+}
+
+.center-button-placeholder{
+  text-align: center;
+}
   
