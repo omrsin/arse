@@ -23,7 +23,7 @@ exports.create = function(req, res) {
       if(error_on_save) { 
         return res.status(500).send("Error while creating the task");
       }        
-      return res.status(201).send("Task created successfully");        
+      return res.status(201).json(story.tasks[story.tasks.length - 1]);        
     });    
   });  
 };
@@ -66,7 +66,7 @@ exports.update = function(req, res) {
       if(error_on_save) { 
         return res.status(500).send("Error while updating the task");
       }      
-      return res.status(200).send("Task successfully updated");      
+      return res.status(200).json(story.tasks.id(req.params.id));
     });
   });
 };
