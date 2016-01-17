@@ -62,30 +62,31 @@
               </ul>
 
               <div class="clearfix"></div>
-
-              <div ng-show="story.isExpanded" ng-repeat="i in [0,1,2]" class="col-xs-4">
-                <!-- dynamic ID to identify the column later when dropping -->
-                <ul ng-attr-id="{{ i }}" as-sortable="sprintBoardTaskOptions" ng-model="story.tasksByStatus[i]" class="taskColumnContainer"> 
-                  <li data-as-sortable-item ng-repeat="task in story.tasksByStatus[i]">
-                    <div class="storyItem">
-                      <div class="row">
-                        <div class="col-xs-7">
-                          <label data-as-sortable-item-handle>{{task.name}}</label>
+              <div ng-show="story.isExpanded" >
+                <div ng-repeat="i in [0,1,2]" class="col-xs-4">
+                  <!-- dynamic ID to identify the column later when dropping -->
+                  <ul ng-attr-id="{{ i }}" as-sortable="sprintBoardTaskOptions" ng-model="story.tasksByStatus[i]" class="taskColumnContainer"> 
+                    <li data-as-sortable-item ng-repeat="task in story.tasksByStatus[i]">
+                      <div class="storyItem task">
+                        <div class="row">
+                          <div class="col-xs-7">
+                            <label data-as-sortable-item-handle>{{task.name}}</label>
+                          </div>
+                          <!-- TODO find out smallest we can get this col -->
+                          <div class="col-xs-5 story-actions">
+                            <span class="glyphicon glyphicon-edit pull-right" ng-click="editTask(task,story)"></span>  
+                            <span class="glyphicon glyphicon-remove pull-right" ng-click="removeTask(task,story)"></span>               
+                          </div>
                         </div>
-                        <!-- TODO find out smallest we can get this col -->
-                        <div class="col-xs-5 story-actions">
-                          <span class="glyphicon glyphicon-edit pull-right" ng-click="editTask(task,story)"></span>  
-                          <span class="glyphicon glyphicon-remove pull-right" ng-click="removeTask(task,story)"></span>               
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <p>{{task.description}}</p>
+                          </div>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-xs-12">
-                          <p>{{task.description}}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
+                    </li>
+                  </ul>
+                </div>
               </div>
               <div class="col-xs-4">
               </div>
@@ -162,8 +163,8 @@
                         <a ng-show="task.status !== 'New'" ng-click="moveTaskLeft(task,story)" class="btn"><span class="glyphicon glyphicon-chevron-left"></span></a>
                       </div>
                       <div class="col-xs-8 center-button-placeholder">
-                        <!-- TODO add the functionality for edit -->
                         <a ng-click="editTask(task,story)" class="btn"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a ng-click="removeTask(task,story)" class="btn"><span class="glyphicon glyphicon-remove"></span></a>
                       </div>
                       <div class="col-xs-2">
                         <a ng-show="task.status !== 'Done'" ng-click="moveTaskRight(task,story)" class="btn pull-right"><span class="glyphicon glyphicon-chevron-right"></span></a>
