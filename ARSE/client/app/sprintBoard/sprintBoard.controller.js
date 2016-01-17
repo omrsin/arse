@@ -49,7 +49,6 @@ angular.module('arseApp')
     $scope.sprintBoardOptions = {
       //restrict move across row. move only within row.
       accept: function (sourceItemHandleScope, destSortableScope) {
-        // TODO don't allow mixing task and stories!
         return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
       },
       orderChanged: function (event) {
@@ -67,8 +66,10 @@ angular.module('arseApp')
     $scope.sprintBoardTaskOptions = {
       //restrict move across row. move only within row.
       accept: function (sourceItemHandleScope, destSortableScope) {
-        // TODO: restrict that tasks cannot be moved to other stories
-        return true;// sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
+        var sourceID = sourceItemHandleScope.itemScope.sortableScope.$parent.$parent.$id;
+        var destID = destSortableScope.$parent.$parent.$id;
+
+        return sourceID === destID;
       },
       itemMoved: function (event) {
         var story = event.dest.sortableScope.$parent.$parent.story;
