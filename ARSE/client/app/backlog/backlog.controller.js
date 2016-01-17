@@ -21,9 +21,9 @@ angular.module('arseApp')
     $scope.onProjectDataReceived(project);
 
     var sprintRunning = true;
-      
-    $scope.updateView = function() {
-      Project.get({ id: $stateParams.project_id, role:true }, $scope.onProjectDataReceived);
+
+    $scope.updateView = function () {
+      Project.get({ id: $stateParams.project_id, role: true }, $scope.onProjectDataReceived);
     };
 
     $scope.$on('updateView', function () {
@@ -74,7 +74,7 @@ angular.module('arseApp')
       $scope.failed = "";
       Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', { participants: $scope.project.participants, projectId: $stateParams.project_id })
         .result.then(function (res) {
-          
+
           res.$save(function (httpRes) {
             console.log('The result with the user is:')
             console.log(httpRes);
@@ -84,7 +84,7 @@ angular.module('arseApp')
           });
         });
     };
-    
+
 
     $scope.dragControlListeners = {
       //override $scope.allowReorder to determine drag is allowed or not. default is true.
@@ -196,18 +196,33 @@ angular.module('arseApp').controller('StoryFormCtrl',
     $scope.availableSPs = [0, 1, 2, 3, 5, 8, 13, 20, 40, 100];
 
     $scope.story = {};
-    $scope.participants = items.participants;
+    $scope.participants = [];
+    angular.copy(items.participants, $scope.participants);
+    console.log('before slicing: ' + JSON.stringify($scope.participants));
+    $scope.participants.splice(0, 0, {
+      role: '',
+      user: {
+        username: 'Unassigned'
+      }
+    });
+
+    console.log('after slicing: ' + JSON.stringify($scope.participants));
     if (items.story) {
       $scope.create = false;
       angular.copy(items.story, $scope.story);
+      if($scope.story.user === null)
+      $scope.story.user = {
+        username: 'Unassigned'
+      };
       $scope.title = "Edit Story";
-      console.log('The edited story content is: ' + JSON.stringify($scope.story));
       // Find the participant in the array
-      for(var i = 0; i < $scope.participants.length; i++) {
-        if($scope.participants[i].user.username === $scope.story.user.username) {
-          $scope.story.user = $scope.participants[i].user;
-          break;
-        }
+      for (var i = 0; i < $scope.participants.length; i++) {
+        if ($scope.story.user !== null) {
+          if ($scope.participants[i].user.username === $scope.story.user.username) {
+            $scope.story.user = $scope.participants[i].user;
+            break;
+          }
+        } 
       }
     } else {
       $scope.create = true;
@@ -231,7 +246,7 @@ angular.module('arseApp').controller('StoryFormCtrl',
 
     $scope.createStory = function () {
       console.log('Story with user: ' + JSON.stringify($scope.story));
-      
+
       $scope.story = new Story({
         name: $scope.story.name,
         project: items.projectId,

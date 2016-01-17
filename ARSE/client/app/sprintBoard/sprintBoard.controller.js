@@ -47,6 +47,13 @@ angular.module('arseApp')
     }).then(function (res) {
       $scope.project = res.data;
       $scope.participants = res.data.participants;
+      // Make unassign available on the drowpdown
+      $scope.participants.splice(0, 0, {
+        role: '',
+        user: {
+          username: 'Unassigned'
+        }
+      });
       console.log("project participants: " + JSON.stringify($scope.participants));
     });
 
@@ -83,16 +90,16 @@ angular.module('arseApp')
           // update the api PROPERLY
           $http.put('/api/projects/' + $scope.project_id + '/sprints/current/close').then(function (res) {
             $state.go('backlog', { 'project_id': $scope.project_id });
-          }, function(error) {
+          }, function (error) {
             $scope.failed = error.data;
           });
         });
     };
 
     // Move an item left in the sprint board (called on mobile)
-    $scope.moveStoryLeft = function(story) {
+    $scope.moveStoryLeft = function (story) {
       var oldStatus = story.status;
-      if(oldStatus === $scope.statuses[1].name) {
+      if (oldStatus === $scope.statuses[1].name) {
         story.status = $scope.statuses[0].name;
       } else if (oldStatus === $scope.statuses[2].name) {
         story.status = $scope.statuses[1].name;
@@ -102,9 +109,9 @@ angular.module('arseApp')
 
 
     // Move an item right in the sprint board (called on mobile)
-    $scope.moveStoryRight = function(story) {
+    $scope.moveStoryRight = function (story) {
       var oldStatus = story.status;
-      if(oldStatus === $scope.statuses[0].name) {
+      if (oldStatus === $scope.statuses[0].name) {
         story.status = $scope.statuses[1].name;
       } else if (oldStatus === $scope.statuses[1].name) {
         story.status = $scope.statuses[2].name;
@@ -122,7 +129,7 @@ angular.module('arseApp')
         story.status = oldStatus;
       });
     }
-    
+
     $scope.selectedUser = {};
     // Displays details of the story in a side view
     $scope.showItem = function (item) {
