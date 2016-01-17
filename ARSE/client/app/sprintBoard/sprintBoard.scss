@@ -25,10 +25,14 @@
       margin: 0;
       padding:0;
     }
-    
-    .glyphicon-search {
-      cursor: pointer;
-      margin-right: 5px;
+
+    .story-actions {
+      span {
+        margin: 0 3px;
+      }
+      .glyphicon {
+        cursor: pointer;        
+      }
     }
     
     .description {

@@ -143,4 +143,62 @@ angular.module('arseApp')
     $scope.closeShowItem = function () {
       $scope.showDetails = false;
     };
+
+    // Add a task to the story
+    $scope.addTask = function(story) {
+      $scope.failed = "";
+      Modal.open({}, 'app/sprintBoard/taskForm.html', 'TaskFormCtrl', { projectId: $stateParams.project_id, storyId: story._id })
+        .result.then(function (res) {          
+          res.$save(function (httpRes) {
+            story.tasks.push(httpRes);
+            console.log(story);
+          }, function (err) {
+            $scope.failed = err.data;
+          });
+        });
+      };
+  }]);
+
+angular.module('arseApp').controller('TaskFormCtrl',
+  ['$scope', '$uibModalInstance', 'items', 'Task', function ($scope, $uibModalInstance, items, Task) {
+
+
+    $scope.task = {};
+    if (items.task) {
+      $scope.create = false;
+      angular.copy(items.task, $scope.task);
+      $scope.title = "Edit Task";
+    } else {
+      $scope.create = true;
+      $scope.title = "Create Task";
+    }
+
+    $scope.createOrUpdateTask = function () {
+      if ($scope.task.name && $scope.task.description) {
+        if ($scope.create) {
+          $scope.createTask();
+        } else {
+          $scope.updateTask();
+        }
+      }
+    };
+
+    // Use the original story, so that id, reference to project, etc. is staying the same
+    $scope.updateTask = function () {
+      $uibModalInstance.close($scope.task);
+    };
+
+    $scope.createTask = function () {
+      $scope.task = new Task({
+        name: $scope.task.name,
+        description: $scope.task.description,
+        project: items.projectId,
+        story: items.storyId
+      });
+      $uibModalInstance.close($scope.task);
+    };
+
+    $scope.close = function () {
+      $uibModalInstance.dismiss('cancel');
+    };
   }]);
