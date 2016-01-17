@@ -190,6 +190,15 @@ angular.module('arseApp')
           $scope.failed = err.data;
         });
     };
+    
+    $scope.countByStatus = function(tasks,stat) {
+      console.log("Filtering");
+      var filteredTasks = tasks.filter(function(elem){
+        return elem.status === stat;
+      });
+      return filteredTasks.length > 0;  
+    };
+    
   }]);
 
 angular.module('arseApp').controller('TaskFormCtrl',
