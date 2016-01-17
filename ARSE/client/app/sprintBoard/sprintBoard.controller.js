@@ -25,7 +25,6 @@ angular.module('arseApp')
       console.log(res.data);
       for (var i = 0; i < $scope.sprint.stories.length; i++) {
         var story = $scope.sprint.stories[i];
-        // TODO rename items!
         story.inColumn = [];
         // For each story, save in a boolean array, if it belongs to the corresponding column
         for (var j = 0; j < $scope.statuses.length; j++) {
@@ -108,9 +107,20 @@ angular.module('arseApp')
       var oldStatus = story.status;
       if (oldStatus === $scope.statuses[1].name) {
         story.status = $scope.statuses[0].name;
+        // Update desktop view
+        var temp = story.inColumn[1];
+        story.inColumn[1] = story.inColumn[0];
+        story.inColumn[0] = temp;
       } else if (oldStatus === $scope.statuses[2].name) {
         story.status = $scope.statuses[1].name;
+        // Update desktop view
+        var temp = story.inColumn[2];
+        story.inColumn[2] = story.inColumn[1];
+        story.inColumn[1] = temp;
       }
+      console.log(story.inColumn);
+
+
       $scope.changeStory(story, oldStatus);
     }
 
@@ -120,8 +130,16 @@ angular.module('arseApp')
       var oldStatus = story.status;
       if (oldStatus === $scope.statuses[0].name) {
         story.status = $scope.statuses[1].name;
+        // Update desktop view
+        var temp = story.inColumn[1];
+        story.inColumn[1] = story.inColumn[0];
+        story.inColumn[0] = temp;
       } else if (oldStatus === $scope.statuses[1].name) {
         story.status = $scope.statuses[2].name;
+        // Update desktop view
+        var temp = story.inColumn[2];
+        story.inColumn[2] = story.inColumn[1];
+        story.inColumn[1] = temp;
       }
       $scope.changeStory(story, oldStatus);
     }
@@ -166,7 +184,7 @@ angular.module('arseApp')
           story.tasksByStatus[i].push(task);
         }
       }
-      
+
       $scope.changeTask(task, story, oldStatus);
     }
 
