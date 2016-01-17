@@ -38,7 +38,7 @@
             <div ng-repeat='story in sprint.stories' class="row storyItemContainer">
               
               <ul ng-model="story.inColumn" as-sortable="sprintBoardOptions">
-                <li class="as-sortable-story " data-as-sortable-item ng-repeat="column in story.inColumn">
+                <li class="as-sortable-story" data-as-sortable-item ng-repeat="column in story.inColumn">
                   <div ng-show="column.isWithin" class="storyItem" ng-class="{feature: story.type === 'Feature', fix: story.type === 'Fix', enhancement: story.type === 'Enhancement'}">
                     <div class="row">
                       <div class="col-xs-1">
@@ -62,16 +62,16 @@
 
               <div class="clearfix"></div>
 
-              <div ng-repeat="status in statuses" class="col-xs-4">
-                <ul>
-                  <li ng-repeat="task in story.tasks | filter:{status:status.name}">
+              <div ng-repeat="tasksList in story.tasksByStatus" class="col-xs-4">
+                <ul as-sortable="sprintBoardTaskOptions" ng-model="tasksList"> 
+                  <li data-as-sortable-item ng-repeat="task in tasksList">
                     <div class="storyItem">
                       <div class="row">
                         <div class="col-xs-1">
                           
                         </div>
                         <div class="col-xs-6">
-                          <label>{{task.name | limitTo: 40}}{{task.name.length > 40 ? '...' : '' }}</label>
+                          <label data-as-sortable-item-handle>{{task.name | limitTo: 40}}{{task.name.length > 40 ? '...' : '' }}</label>
                         </div>
                         <div class="col-xs-5">                        
                         </div>

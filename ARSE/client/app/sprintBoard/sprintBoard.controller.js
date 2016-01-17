@@ -31,22 +31,25 @@ angular.module('arseApp')
         for (var j = 0; j < $scope.statuses.length; j++) {
           story.inColumn.push({ isWithin: story.status === $scope.statuses[j].name });
         }
-        // Do the same for tasks
+        // Create 3 arrays for the tasks for the three statuses
+        story.tasksByStatus = [[],[],[]];
         for (var j = 0; j < $scope.sprint.stories[i].tasks.length; j++) {
           var task = $scope.sprint.stories[i].tasks[j];
-          task.inColumn = [];
           for (var k = 0; k < $scope.statuses.length; k++) {
-            task.inColumn.push({ isWithin: task.status === $scope.statuses[k].name });
+            if(task.status === $scope.statuses[k].name) {
+              story.tasksByStatus[k].push(task);
+            }
           }
         }
       }
       console.log($scope.sprint);
     });
 
-    // Sorting options for the sprint board
+    // Sorting options for the sprint board when sorting stories
     $scope.sprintBoardOptions = {
       //restrict move across row. move only within row.
       accept: function (sourceItemHandleScope, destSortableScope) {
+        // TODO don't allow mixing task and stories!
         return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
       },
       orderChanged: function (event) {
@@ -57,6 +60,23 @@ angular.module('arseApp')
         story.status = newStatus;
         $scope.changeStory(story, oldStatus);
       },
+      additionalPlaceholderClass: 'as-sortable-story-placeholder'
+    };
+
+    // Sorting options for the sprint board when sorting tasks
+    $scope.sprintBoardTaskOptions = {
+      //restrict move across row. move only within row.
+      accept: function (sourceItemHandleScope, destSortableScope) {
+        // TODO: retrict that tasks cannot be moved to other stories
+        return true;// sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
+      },
+      orderChanged: function (event) {
+        console.log("reordered from " + event.source.index + " to " + event.dest.index);
+      },
+      itemMoved: function (event) {
+        console.log(event);
+      },
+      // TODO other class
       additionalPlaceholderClass: 'as-sortable-story-placeholder'
     };
 
