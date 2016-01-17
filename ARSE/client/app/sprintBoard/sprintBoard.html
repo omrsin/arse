@@ -52,6 +52,8 @@
                         <span class="badge pull-right">{{story.points}}</span>
                         <span class="glyphicon glyphicon-search pull-right" ng-click="showItem(story)"></span>
                         <span class="glyphicon glyphicon-plus pull-right" ng-click="addTask(story)"></span>
+                        <span ng-hide="story.isExpanded" class="glyphicon glyphicon-chevron-down pull-right" ng-click="expand(story)"></span>
+                        <span ng-show="story.isExpanded" class="glyphicon glyphicon-chevron-up pull-right" ng-click="collapse(story)"></span>
                       </div>
                     </div>
                   </div>
@@ -61,7 +63,7 @@
 
               <div class="clearfix"></div>
 
-              <div ng-repeat="i in [0,1,2]" class="col-xs-4">
+              <div ng-show="story.isExpanded" ng-repeat="i in [0,1,2]" class="col-xs-4">
                 <!-- dynamic ID to identify the column later when dropping -->
                 <ul ng-attr-id="{{ i }}" as-sortable="sprintBoardTaskOptions" ng-model="story.tasksByStatus[i]" class="taskColumnContainer"> 
                   <li data-as-sortable-item ng-repeat="task in story.tasksByStatus[i]">

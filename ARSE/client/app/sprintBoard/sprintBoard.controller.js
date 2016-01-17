@@ -188,6 +188,14 @@ angular.module('arseApp')
       $scope.changeTask(task, story, oldStatus);
     }
 
+    // Collapse and expand to see tasks of a story
+    $scope.expand = function(story) {
+      story.isExpanded = true;
+    }
+    $scope.collapse = function(story) {
+      story.isExpanded = false;
+    }
+
     // Update a story in the backend
     $scope.changeStory = function (story, oldStatus) {
 
