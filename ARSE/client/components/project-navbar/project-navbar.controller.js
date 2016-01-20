@@ -3,8 +3,9 @@
 angular.module('arseApp')
   .controller('ProjectNavbarCtrl', ['$scope', '$stateParams', '$state', "Project", function ($scope, $stateParams, $state, Project) {
     
-    Project.get({ id: $stateParams.project_id }, function (project) {
+    Project.get({ id: $stateParams.project_id, role: true }, function (project) {
       $scope.nav_project = project;
+      $scope.hasPORights = project.role === "PO";
     });
 
     $scope.showProductBacklog = function(){
@@ -21,6 +22,7 @@ angular.module('arseApp')
       $state.go("userManagement", { project_id: $stateParams.project_id });
     };
 
+    // TODO adjust this
     $scope.showConfiguration = function(){
       $state.go("userManagement", { project_id: $stateParams.project_id });
     };
