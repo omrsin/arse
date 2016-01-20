@@ -15,6 +15,8 @@ angular.module('arseApp')
 
     // Error message if something failed
     $scope.failed = "";
+    // Informative messages go here
+    $scope.infoMessage = "";
 
     $http({
       url: '/api/projects/' + $scope.project_id + '/sprints/current',
@@ -198,8 +200,20 @@ angular.module('arseApp')
 
     // Update a story in the backend
     $scope.changeStory = function (story, oldStatus) {
+      $scope.failed = "";
+      $scope.infoMessage = "";
       if(story.status === "Done") {
-        // TODO display a warning
+        // TODO display a warning if there are tasks undone.
+        // Check if there is a task which is not done
+        console.log("Story:");
+        console.log(story);
+        for(var i = 0; i < story.tasks.length; i++) {
+          console.log(story.tasks[i].status);
+          if(story.tasks[i].status !== "Done") {
+            $scope.infoMessage = "Please note that there are still tasks of this story, which are not done yet.";
+            break;
+          }
+        }
       }
 
       console.log(story);
@@ -215,6 +229,9 @@ angular.module('arseApp')
     
     //Update a task in the backend
     $scope.changeTask = function (task, story, oldStatus) {
+      $scope.failed = "";
+      $scope.infoMessage = "";
+
       $http.put('/api/projects/' + $scope.project_id + '/stories/' + story._id + '/tasks/' + task._id, task)
         .success(function (data, status, headers, config) {
           console.log("Task updated successfully");
@@ -245,6 +262,8 @@ angular.module('arseApp')
     // Add a task to the story
     $scope.addTask = function (story) {
       $scope.failed = "";
+      $scope.infoMessage = "";
+
       Modal.open({}, 'app/sprintBoard/taskForm.html', 'TaskFormCtrl', { projectId: $stateParams.project_id, storyId: story._id })
         .result.then(function (res) {
           res.$save(function (httpRes) {
@@ -265,6 +284,8 @@ angular.module('arseApp')
 
     $scope.removeTask = function(task, story) {
       $scope.failed = "";
+      $scope.infoMessage = "";
+
       var message = "Are you sure you want to delete this task?";
       Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl',
         { message: message }).result.then(function (res) {
@@ -289,6 +310,8 @@ angular.module('arseApp')
 
     $scope.editTask = function (task, story) {
       $scope.failed = "";
+      $scope.infoMessage = "";
+
       Modal.open({}, 'app/sprintBoard/taskForm.html', 'TaskFormCtrl', { projectId: $stateParams.project_id, storyId: story._id, task: task })
         .result.then(function (res) {
           $http.put('/api/projects/' + $scope.project_id + '/stories/' + story._id + '/tasks/' + task._id, res)

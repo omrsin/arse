@@ -6,7 +6,7 @@
 
       <div class="header">
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-xs-12">
             <h1>{{sprint.name}}</h1> {{sprint.start_date | date:'dd.MM.yyyy'}} - {{sprint.end_date | date:'dd.MM.yyyy'}}
           </div>
         </div>
@@ -14,8 +14,14 @@
 
       <div class="actions">
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-xs-12">
             <a ng-click="closeSprint()" class="btn btn-primary pull-right">Close Sprint</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div ng-show="failed" class="alert alert-danger" role="alert">{{ failed }}</div>
+            <div ng-show="infoMessage" class="alert alert-info" role="alert">{{ infoMessage }}</div>
           </div>
         </div>
       </div>
@@ -23,11 +29,6 @@
       <div class="content">
         <div class="row hidden-xs">
           <div ng-class="{'hidden-xs hidden-sm hidden-md col-lg-8 story-detail-separator' : showDetails, 'col-xs-12' : !showDetails}">
-            <div class="row">
-              <div class="col-xs-6 col-sm-10">
-                <div ng-show="failed" class="alert alert-danger" role="alert">{{ failed }}</div>
-              </div>
-            </div>
 
             <div class="row sprintBoardHeader">
               <div class="col-xs-4 sprintHeader" ng-repeat="column in statuses">
