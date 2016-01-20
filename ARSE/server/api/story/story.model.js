@@ -31,6 +31,10 @@ var StorySchema = new Schema({
   points: {
     type: Number
   },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   created_at: Date,
   updated_at: Date
 });

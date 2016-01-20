@@ -47,7 +47,7 @@
                   <li class="table-row" ng-repeat="item in project.backlog" data-as-sortable-item>
                     <div data-as-sortable-item-handle>
                       <div class="row">
-                        <story show-details="{{showDetails}}" story-item="{{item}}" edit-callback="editStory(item)" view-callback="showStoryDetails(item)"></story>
+                        <story show-details="{{showDetails}}" story-item="{{item}}" hasporights="hasPORights" edit-callback="editStory(item)" view-callback="showStoryDetails(item)"></story>
                       </div>
                     </div>
                   </li>
@@ -57,7 +57,7 @@
           </div>
 
           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">            
-              <story-detail ng-show="showDetails" story-item="{{detailStory}}" callback="showStoryDetails(item)"></story-detail>            
+              <story-detail ng-show="showDetails" story-item="detailStory" participants="project.participants" callback="showStoryDetails(item)"></story-detail>            
           </div>
           
         </div>                

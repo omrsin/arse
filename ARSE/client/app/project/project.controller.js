@@ -46,7 +46,7 @@ angular.module('arseApp')
 
   // Modal controller
 angular.module('arseApp').controller('ProjectModalCtrl', 
-  ['$scope', '$uibModalInstance', 'items', 'Project', function($scope, $uibModalInstance, items, Project) {
+  ['$scope', '$uibModalInstance', 'items', 'Project', 'Auth', '$cookies', '$http', function($scope, $uibModalInstance, items, Project, Auth, $cookies, $http) {
 
 
   $scope.project = {};
@@ -59,8 +59,16 @@ angular.module('arseApp').controller('ProjectModalCtrl',
     $scope.title = "Create Project";
   }
 
+  /* Get current user to associate to the project */
+  var currentUser = {};
+    if($cookies.get('token')){
+      $http.get('api/users/me').then(function(response){
+        currentUser = response.data;
+      }); 
+    }
+
   $scope.createOrUpdateProject = function() {
-    if ($scope.project.name && $scope.project.description) {
+    if ($scope.project.name && $scope.project.description) {      
       if($scope.create) {
         $scope.createProject();
       } else {
@@ -78,7 +86,8 @@ angular.module('arseApp').controller('ProjectModalCtrl',
   $scope.createProject = function () {      
     $scope.project = new Project({ 
       name: $scope.project.name, 
-      description: $scope.project.description 
+      description: $scope.project.description,
+      owner: currentUser._id
     });
     $uibModalInstance.close($scope.project);
   };

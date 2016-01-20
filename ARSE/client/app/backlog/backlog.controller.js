@@ -1,13 +1,11 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('BacklogCtrl', ['$scope', 'Project', '$http', '$stateParams', 'Modal', 'Story', function ($scope, Project, $http, $stateParams, Modal, Story) {
-    var sprintRunning = true;
-      
+  .controller('BacklogCtrl', ['$scope', 'Project', '$http', '$stateParams', 'Modal', 'Story', '$state', 'project', function ($scope, Project, $http, $stateParams, Modal, Story, $state, project) {
+  
     // This function is called every time we receive project data from the backend
     $scope.onProjectDataReceived = function (project) {
       // Add a delimiter according to the offset value of the project
-      //project.offset = project.backlog.length;
       project.backlog.splice(project.offset, 0, {
         _id: -1,
         project: project._id,
@@ -16,12 +14,18 @@ angular.module('arseApp')
 
       $scope.project = project;
 
-      console.log("current sprint");
-      console.log(project.current_sprint);
+      // Set if we have the PO right
+      $scope.hasPORights = $scope.project.role === "PO";
     };
-    $scope.updateView = function() {
-      Project.get({ id: $stateParams.project_id }, $scope.onProjectDataReceived);
+
+    $scope.onProjectDataReceived(project);
+
+    var sprintRunning = true;
+
+    $scope.updateView = function () {
+      Project.get({ id: $stateParams.project_id, role: true }, $scope.onProjectDataReceived);
     };
+
     $scope.$on('updateView', function () {
       $scope.updateView();
     });
@@ -46,13 +50,14 @@ angular.module('arseApp')
 
     $scope.editStory = function (item) {
       $scope.failed = "";
-      Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', { story: item }).result.then(function (res) {
+      Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', { story: item, participants: $scope.project.participants }).result.then(function (res) {
 
         // Show the updating icon
         $scope.$broadcast("storyUpdating", res);
         // Actually trigger the update on the server
-
+        
         Story.update(res, function (httpRes) {
+          
           // Update the table and remove updating icon
           // It is important to pass the local res, instead of the HTTP res, since
           // http returns a resource object whith circular dependencies that cannot be serialized.
@@ -67,9 +72,11 @@ angular.module('arseApp')
 
     $scope.addStory = function () {
       $scope.failed = "";
-      Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', { projectId: $stateParams.project_id })
+      Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', { participants: $scope.project.participants, projectId: $stateParams.project_id })
         .result.then(function (res) {
+
           res.$save(function (httpRes) {
+            console.log('The result with the user is:')
             console.log(httpRes);
             $scope.project.backlog.push(httpRes);
           }, function (err) {
@@ -78,7 +85,7 @@ angular.module('arseApp')
         });
     };
 
-    //XXX a bug on reordering
+
     $scope.dragControlListeners = {
       //override $scope.allowReorder to determine drag is allowed or not. default is true.
       accept: function (sourceItemHandleScope, destSortableScope) { return $scope.allowReorder },
@@ -104,9 +111,7 @@ angular.module('arseApp')
 
           //show modal if item moved above or below offset and sprint is in progress
           if ($scope.project.current_sprint && offsetMoved) {
-            Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl', 
-              { message: "Sprint running, are you sure you want to change the scope?" }).result.then(function (res) {
-              console.log('Deleting Item');
+            Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl', { message: "Sprint running, are you sure you want to change the scope?" }).result.then(function (res) {
               updateOrder(newIndex, oldIndex, offset, $scope.project._id, offsetMoved);
             }, function () {
               revertReorder(event);
@@ -121,20 +126,19 @@ angular.module('arseApp')
           console.log("drag delimiter to " + event.dest.index);
           // Update offset according to the new position
           if ($scope.project.current_sprint) {
-            Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl', 
+            Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl',
               { message: "Sprint running, are you sure you want to change the scope?" }).result.then(function (res) {
-              $scope.project.offset = event.dest.index;
-              updateOffset($scope.project.offset, $scope.project._id);
-            }, function () {
-              revertReorder(event);
-              $scope.allowReorder = true;
-            });
+                $scope.project.offset = event.dest.index;
+                updateOffset($scope.project.offset, $scope.project._id);
+              }, function () {
+                revertReorder(event);
+                $scope.allowReorder = true;
+              });
 
           } else {
             $scope.project.offset = event.dest.index;
             updateOffset($scope.project.offset, $scope.project._id);
           }
-          
         }
       }
     };
@@ -166,8 +170,8 @@ angular.module('arseApp')
       if (newIndex >= offset) newIndex--;
       console.log("offset old " + $scope.project.offset + " vs. new " + offset);
 
-      if(oldIndex != newIndex) {
-      console.log("Updating the order on the server:" + oldIndex + "->" + newIndex);
+      if (oldIndex != newIndex) {
+        console.log("Updating the order on the server:" + oldIndex + "->" + newIndex);
         // Issue a PUT request on the server
         $http.put('/api/projects/' + projectId + '/reorder', {
           oldIndex: oldIndex,
@@ -181,7 +185,7 @@ angular.module('arseApp')
         updateOffset(offset, projectId);
       }
     }
-      
+
 
   }]);
 
@@ -192,10 +196,34 @@ angular.module('arseApp').controller('StoryFormCtrl',
     $scope.availableSPs = [0, 1, 2, 3, 5, 8, 13, 20, 40, 100];
 
     $scope.story = {};
+    $scope.participants = [];
+    angular.copy(items.participants, $scope.participants);
+    console.log('before slicing: ' + JSON.stringify($scope.participants));
+    $scope.participants.splice(0, 0, {
+      role: '',
+      user: {
+        username: 'Unassigned'
+      }
+    });
+
+    console.log('after slicing: ' + JSON.stringify($scope.participants));
     if (items.story) {
       $scope.create = false;
       angular.copy(items.story, $scope.story);
+      if($scope.story.user === null)
+      $scope.story.user = {
+        username: 'Unassigned'
+      };
       $scope.title = "Edit Story";
+      // Find the participant in the array
+      for (var i = 0; i < $scope.participants.length; i++) {
+        if ($scope.story.user !== null) {
+          if ($scope.participants[i].user.username === $scope.story.user.username) {
+            $scope.story.user = $scope.participants[i].user;
+            break;
+          }
+        } 
+      }
     } else {
       $scope.create = true;
       $scope.title = "Create Story";
@@ -217,13 +245,16 @@ angular.module('arseApp').controller('StoryFormCtrl',
     };
 
     $scope.createStory = function () {
+      console.log('Story with user: ' + JSON.stringify($scope.story));
+
       $scope.story = new Story({
         name: $scope.story.name,
         project: items.projectId,
         description: $scope.story.description,
         points: $scope.story.points,
         type: $scope.story.type,
-        orderId: items.orderId
+        orderId: items.orderId,
+        user: $scope.story.user._id
       });
       $uibModalInstance.close($scope.story);
     };

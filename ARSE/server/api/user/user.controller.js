@@ -5,6 +5,8 @@ import passport from 'passport';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
 
+var Story = require('../story/story.model');
+
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
   return function(err) {
@@ -29,9 +31,10 @@ function respondWith(res, statusCode) {
 /**
  * Get list of users
  * restriction: 'admin'
+ TODO This restriction should be changed somehow!?
  */
 exports.index = function(req, res) {
-  User.findAsync({}, '-salt -hashedPassword')
+  User.findAsync({}, {"_id": true, "username": true, "email": true, "role": true}, '-salt -hashedPassword')
     .then(function(users) {
       res.status(200).json(users);
     })
@@ -71,6 +74,27 @@ exports.show = function(req, res, next) {
     .catch(function(err) {
       return next(err);
     });
+};
+
+// unassign user from all stories
+exports.unassign = function(req, res){
+  console.log("am here");
+  // get stories, loop thru, set to null if username is equal
+  User.findById({_id: req.params.id}, function(err, user){
+    if (err) { return handleError(res, err); }
+    if (!user) { return res.status(404).send('Not Found'); }
+    Story.find({user: user._id}, function(err2, stories){
+      if(err2){return handleError(res);}
+      if(!stories){return res.status(404).send('Not Found');}
+      stories.forEach(function(story, index, temp){
+        story.user = null;
+        story.save(function(err){
+          if(err){return handleError(res);}
+        });
+      });
+      
+    });
+  });
 };
 
 /**

@@ -10,10 +10,6 @@ var UserSchema = new Schema({
     type: String,
     lowercase: true
   },
-  role: {
-    type: String,
-    default: 'user'
-  },
   password: String,
   provider: String,
   salt: String

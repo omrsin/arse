@@ -1,25 +1,29 @@
 'use strict';
 
 angular.module('arseApp')
-  .directive('storyDetail', function () {
+  .directive('storyDetail', function ($http) {
     return {
       templateUrl: 'app/directives/storyDetail/storyDetail.html',
       restrict: 'E',
       scope: {
-        storyItem:'@',
-        callback:'&'
+        storyItem: '=',
+        callback: '&',
+        participants: '='
       },
       link: function (scope, element, attrs) {
         console.log(scope.detailStory);
-        // storyItem is JSON STRING - needs to be converted back to object -.-
-        attrs.$observe('storyItem', function(value){
+        scope.item = scope.storyItem;
+        // Show the currently selected story in the story detail view
+        scope.$watch('storyItem', function(value){
           if(value){
-              scope.item = angular.fromJson(attrs.storyItem);
+              scope.item = value;
+              scope.selectedUser = scope.item.user;
           }
         });
 
-        scope.hideItem = function() {
-          scope.callback({item: scope.item});
+        scope.hideItem = function () {
+          console.log(scope.item.user);
+          scope.callback({ item: scope.item });
         };
       }
     };

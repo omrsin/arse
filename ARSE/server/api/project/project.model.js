@@ -22,7 +22,9 @@ var ProjectSchema = new Schema({
   sprint_counter: {
     type: Number,
     default:0
-  }
-});
+  },
+  participants: ['Participant']
+}, {strict: false});
+ProjectSchema.index({'participants':1})
 
 module.exports = mongoose.model('Project', ProjectSchema);
