@@ -4,10 +4,14 @@ angular.module('arseApp')
   .controller('SettingsCtrl', function($scope, User, Auth) {
     $scope.errors = {};
 
-    $scope.changePassword = function(form) {
+    // TODO don't bring the password
+    $scope.user = User.get();
+    console.log($scope.user);
+
+    $scope.editUser = function(form) {
       $scope.submitted = true;
       if (form.$valid) {
-        Auth.changePassword($scope.user.oldPassword, $scope.user.newPassword)
+        Auth.editUser($scope.user.username, $scope.user.oldPassword, $scope.user.newPassword)
           .then(function() {
             $scope.message = 'Password successfully changed.';
           })

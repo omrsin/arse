@@ -110,16 +110,18 @@ exports.destroy = function(req, res) {
 };
 
 /**
- * Change a users password
+ * Edit user
  */
-exports.changePassword = function(req, res, next) {
+exports.editUser = function(req, res, next) {
   var userId = req.user._id;
+  var username = req.body.username;
   var oldPass = String(req.body.oldPassword);
   var newPass = String(req.body.newPassword);
 
   User.findByIdAsync(userId)
     .then(function(user) {
       if (user.authenticate(oldPass)) {
+        user.username = username;
         user.password = newPass;
         return user.saveAsync()
           .then(function() {

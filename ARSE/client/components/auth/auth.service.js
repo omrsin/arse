@@ -77,15 +77,17 @@ angular.module('arseApp')
       },
 
       /**
-       * Change password
+       * Edit user
        *
+       * @param  {String}   username
        * @param  {String}   oldPassword
        * @param  {String}   newPassword
        * @param  {Function} callback    - optional, function(error, user)
        * @return {Promise}
        */
-      changePassword: function(oldPassword, newPassword, callback) {
-        return User.changePassword({ id: currentUser._id }, {
+      editUser: function(username, oldPassword, newPassword, callback) {
+        return User.editUser({ id: currentUser._id }, {
+          username: username,
           oldPassword: oldPassword,
           newPassword: newPassword
         }, function() {
