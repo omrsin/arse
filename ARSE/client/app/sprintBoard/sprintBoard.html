@@ -106,7 +106,7 @@
         <div class="row hidden-sm hidden-md hidden-lg">
           <div class="col-xs-12">
             <uib-tabset>
-              <uib-tab ng-repeat="stat in statuses" heading="{{stat.name}}" active="status.active">
+              <uib-tab ng-repeat="stat in statuses" heading="{{stat.name}}" active="stat.active">
                 <div ng-repeat='story in sprint.stories'>
                   <div ng-show="story.status == stat.name" class="storyItem" ng-class="{feature: story.type === 'Feature', fix: story.type === 'Fix', enhancement: story.type === 'Enhancement'}">
                     <div class="row">

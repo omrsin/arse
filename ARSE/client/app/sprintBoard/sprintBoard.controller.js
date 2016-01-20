@@ -274,8 +274,11 @@ angular.module('arseApp')
                 story.tasksByStatus[i].push(httpRes);
               }
             }
-            // Expand story
+            // Expand story in desktop view to see the task
             $scope.expand(story);
+            // Switch to "New" tab in mobile view to see the task
+            console.log($scope.statuses);
+            $scope.statuses[0].active = true;
           }, function (err) {
             $scope.failed = err.data;
           });
