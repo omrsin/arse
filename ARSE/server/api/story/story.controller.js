@@ -73,7 +73,7 @@ exports.update = function(req, res) {
     if (err) { return handleError(res, err); }
     if (!story) { return res.status(404).send('Not Found'); }
     // To check if unassigned then user is null
-    if (req.body.user.username === 'Unassigned') {
+    if (!req.body.user || req.body.user.username === 'Unassigned') {
       req.body.user = null;
     }
     var updated = _.merge(story, req.body);

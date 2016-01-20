@@ -103,7 +103,7 @@ angular.module('arseApp')
       var unfinishedStories = false;
       var message = "Are you sure you want to close this sprint?";
       angular.forEach($scope.sprint.stories, function (value, index) {
-        if (value.status != "Done")
+        if (value.status !== "Done")
           unfinishedStories = true;
       });
       if (unfinishedStories) {
