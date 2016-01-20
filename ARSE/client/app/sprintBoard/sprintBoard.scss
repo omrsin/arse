@@ -135,4 +135,40 @@
 .center-button-placeholder{
   text-align: center;
 }
+.taskContainer {
+  margin:5px;
+  border-radius: 2px;
+     border: 1px solid #e7e7e7;
+} 
   
+.taskItem {
+   border: 1px solid #e7e7e7;
+
+   .row {
+      margin: 0;
+      padding: 2px;
+      
+      .col-xs-1, .col-xs-2,.col-xs-3, .col-xs-5 {
+        padding: 0;
+        margin: 0;
+      }
+    }
+    label {
+      margin: 0;
+      padding:0;
+    }
+
+    .story-actions {
+      span {
+        margin: 0 3px;
+      }
+      .glyphicon {
+        cursor: pointer;        
+      }
+    }
+    
+    .description {
+      font-size: 9pt;
+    }
+    
+  }

@@ -142,7 +142,17 @@
                       </div>
                     </div>
                   </div>
-                  <div ng-repeat="task in story.tasks | filter:{ status: stat.name }" class="storyItem task">
+                  <div ng-show="countByStatus(story.tasks,stat.name)" class="taskContainer">
+                  <div ng-repeat="task in story.tasks | filter:{ status: stat.name }" class="taskItem task">
+                    <div ng-show="$first" class="row">
+                      <div class="col-xs-1">
+                      </div>
+                      <div class="col-xs-10">
+                      </div>
+                      <div class="col-xs-1">
+                        <span  class="badge pull-right badge-task" ng-class="{feature: story.type === 'Feature', fix: story.type === 'Fix', enhancement: story.type === 'Enhancement'}">{{story.name | limitTo: 20}}</span>
+                      </div>
+                    </div>
                     <div class="row">
                       <div class="col-xs-1">
                       </div>
@@ -150,7 +160,6 @@
                         <label>{{task.name}}</label>
                       </div>
                       <div class="col-xs-1">
-                        <span class="badge pull-right badge-task" ng-class="{feature: story.type === 'Feature', fix: story.type === 'Fix', enhancement: story.type === 'Enhancement'}">{{story.name}}</span>
                       </div>
                     </div>
                     <div class="row">
@@ -171,6 +180,7 @@
                         <a ng-show="task.status !== 'Done'" ng-click="moveTaskRight(task,story)" class="btn pull-right"><span class="glyphicon glyphicon-chevron-right"></span></a>
                       </div>
                     </div>
+                  </div>
                   </div>
                 </div>
               </uib-tab>
