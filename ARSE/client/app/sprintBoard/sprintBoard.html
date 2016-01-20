@@ -6,7 +6,7 @@
 
       <div class="header">
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-xs-12">
             <h1>{{sprint.name}}</h1> {{sprint.start_date | date:'dd.MM.yyyy'}} - {{sprint.end_date | date:'dd.MM.yyyy'}}
           </div>
         </div>
@@ -14,8 +14,14 @@
 
       <div class="actions">
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-xs-12">
             <a ng-show="hasPORights" ng-click="closeSprint()" class="btn btn-primary pull-right">Close Sprint</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div ng-show="failed" class="alert alert-danger" role="alert">{{ failed }}</div>
+            <div ng-show="infoMessage" class="alert alert-info" role="alert">{{ infoMessage }}</div>
           </div>
         </div>
       </div>
@@ -23,11 +29,6 @@
       <div class="content">
         <div class="row hidden-xs">
           <div ng-class="{'hidden-xs hidden-sm hidden-md col-lg-8 story-detail-separator' : showDetails, 'col-xs-12' : !showDetails}">
-            <div class="row">
-              <div class="col-xs-6 col-sm-10">
-                <div ng-show="failed" class="alert alert-danger" role="alert">{{ failed }}</div>
-              </div>
-            </div>
 
             <div class="row sprintBoardHeader">
               <div class="col-xs-4 sprintHeader" ng-repeat="column in statuses">
@@ -36,8 +37,8 @@
             </div>
 
             <div ng-repeat='story in sprint.stories' class="row storyItemContainer">
-              <ul ng-model="story.items" as-sortable="sprintBoardOptions">
-                <li class="as-sortable-story " data-as-sortable-item ng-repeat="column in story.items">
+              <ul ng-model="story.inColumn" as-sortable="sprintBoardOptions">
+                <li class="as-sortable-story" data-as-sortable-item ng-repeat="column in story.inColumn">
                   <div ng-show="column.isWithin" class="storyItem" ng-class="{feature: story.type === 'Feature', fix: story.type === 'Fix', enhancement: story.type === 'Enhancement'}">
                     <div class="row">
                       <div class="col-xs-1">
@@ -45,13 +46,15 @@
                         <span ng-show="story.type === 'Feature'" class="glyphicon glyphicon-record"></span>
                         <span ng-show="story.type === 'Enhancement'" class="glyphicon glyphicon-new-window"></span>
                       </div>
-                      <div class="col-xs-8">
+                      <div class="col-xs-6">
                         <label data-as-sortable-item-handle>{{story.name | limitTo: 40}}{{story.name.length > 40 ? '...' : '' }}</label>
                       </div>
-                      <div class="col-xs-3">
+                      <div class="col-xs-5 story-actions">
                         <span class="badge pull-right">{{story.points}}</span>
                         <span class="glyphicon glyphicon-search pull-right" ng-click="showItem(story)"></span>
-
+                        <span class="glyphicon glyphicon-plus pull-right" ng-click="addTask(story)"></span>
+                        <span ng-hide="story.isExpanded || story.tasks.length == 0" class="glyphicon glyphicon-chevron-down pull-right" ng-click="expand(story)"></span>
+                        <span ng-show="story.isExpanded && story.tasks.length != 0" class="glyphicon glyphicon-chevron-up pull-right" ng-click="collapse(story)"></span>
                       </div>
                     </div>
                     <div class="row">
@@ -66,6 +69,41 @@
                   <label ng-hide="column.isWithin"></label>
                 </li>
               </ul>
+
+              <div class="clearfix"></div>
+              <div ng-show="story.isExpanded" >
+                <div ng-repeat="i in [0,1,2]" class="col-xs-4">
+                  <!-- dynamic ID to identify the column later when dropping -->
+                  <ul ng-attr-id="{{ i }}" as-sortable="sprintBoardTaskOptions" ng-model="story.tasksByStatus[i]" class="taskColumnContainer"> 
+                    <li data-as-sortable-item ng-repeat="task in story.tasksByStatus[i]">
+                      <div class="storyItem task">
+                        <div class="row">
+                          <div class="col-xs-7">
+                            <label data-as-sortable-item-handle>{{task.name}}</label>
+                          </div>
+                          <!-- TODO find out smallest we can get this col -->
+                          <div class="col-xs-5 story-actions">
+                            <span class="glyphicon glyphicon-edit pull-right" ng-click="editTask(task,story)"></span>  
+                            <span class="glyphicon glyphicon-remove pull-right" ng-click="removeTask(task,story)"></span>               
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <p>{{task.description}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-xs-4">
+              </div>
+              <div class="col-xs-4">
+              </div>
+
+              
+
             </div>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
@@ -76,9 +114,9 @@
         <div class="row hidden-sm hidden-md hidden-lg">
           <div class="col-xs-12">
             <uib-tabset>
-              <uib-tab ng-repeat="stat in statuses" heading="{{stat.name}}" active="status.active">
-                <div ng-repeat='story in sprint.stories | filter:{ status: stat.name }'>
-                  <div class="storyItem" ng-class="{feature: story.type === 'Feature', fix: story.type === 'Fix', enhancement: story.type === 'Enhancement'}">
+              <uib-tab ng-repeat="stat in statuses" heading="{{stat.name}}" active="stat.active">
+                <div ng-repeat='story in sprint.stories'>
+                  <div ng-show="story.status == stat.name"  class="storyItem" ng-class="{feature: story.type === 'Feature', fix: story.type === 'Fix', enhancement: story.type === 'Enhancement'}">
                     <div class="row">
                       <div class="col-xs-1">
                         <span ng-show="story.type === 'Fix'" class="glyphicon glyphicon-remove-sign"></span>
@@ -93,12 +131,6 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-xs-1"></div>
-                      <div class="col-xs-11 description">
-                        <p>{{story.description}}</p>
-                      </div>
-                    </div>
-                    <div class="row">
                       <div class="col-xs-1 assignUserIcon">
                         <span class="glyphicon glyphicon-user" ng-click="assignUser(story._id)"></span>
                       </div>
@@ -107,18 +139,66 @@
                       </div>
                     </div>
                     <div class="row">
+                      <div class="col-xs-1"></div>
+                      <div class="col-xs-11 description">
+                        <p>{{story.description}}</p>
+                      </div>
+                    </div>
+                    <div class="row">
                       <div class="col-xs-2">
                         <a ng-show="story.status !== 'New'" ng-click="moveStoryLeft(story)" class="btn"><span class="glyphicon glyphicon-chevron-left"></span></a>
                       </div>
-                      <div class="col-xs-8"></div>
+                      <div class="col-xs-8 center-button-placeholder">
+                        <a ng-click="addTask(story)" class="btn"><span class="glyphicon glyphicon-plus"></span></a></div>
                       <div class="col-xs-2">
+
                         <a ng-show="story.status !== 'Done'" ng-click="moveStoryRight(story)" class="btn pull-right"><span class="glyphicon glyphicon-chevron-right"></span></a>
                       </div>
                     </div>
                   </div>
+                  <div ng-show="countByStatus(story.tasks,stat.name)" class="taskContainer">
+                  <div ng-repeat="task in story.tasks | filter:{ status: stat.name }" class="taskItem task">
+                    <div ng-show="$first" class="row">
+                      <div class="col-xs-1">
+                      </div>
+                      <div class="col-xs-10">
+                      </div>
+                      <div class="col-xs-1">
+                        <span  class="badge pull-right badge-task" ng-class="{feature: story.type === 'Feature', fix: story.type === 'Fix', enhancement: story.type === 'Enhancement'}">{{story.name | limitTo: 20}}</span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-1">
+                      </div>
+                      <div class="col-xs-10">
+                        <label>{{task.name}}</label>
+                      </div>
+                      <div class="col-xs-1">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-1"></div>
+                      <div class="col-xs-11 description">
+                        <p>{{task.description}}</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-2">
+                        <a ng-show="task.status !== 'New'" ng-click="moveTaskLeft(task,story)" class="btn"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                      </div>
+                      <div class="col-xs-8 center-button-placeholder">
+                        <a ng-click="editTask(task,story)" class="btn"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a ng-click="removeTask(task,story)" class="btn"><span class="glyphicon glyphicon-remove"></span></a>
+                      </div>
+                      <div class="col-xs-2">
+                        <a ng-show="task.status !== 'Done'" ng-click="moveTaskRight(task,story)" class="btn pull-right"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
                 </div>
               </uib-tab>
-              </uib-tabset>
+            </uib-tabset>
           </div>
         </div>
         <!--/Mobile View-->

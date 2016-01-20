@@ -64,9 +64,11 @@ exports.create = function (req, res) {
 };
 
 // Updates an existing story in the DB.
-exports.update = function (req, res) {
-  console.log("update just called");
-  if (req.body._id) { delete req.body._id; }
+exports.update = function(req, res) {
+  // Remove things that should not be merged
+  if(req.body._id) { delete req.body._id; }
+  if(req.body.tasks) {delete req.body.tasks; }
+  
   Story.findById(req.params.id, function (err, story) {
     if (err) { return handleError(res, err); }
     if (!story) { return res.status(404).send('Not Found'); }
@@ -75,7 +77,7 @@ exports.update = function (req, res) {
       req.body.user = null;
     }
     var updated = _.merge(story, req.body);
-    console.log(req.body);
+    console.log(updated);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
       // populate story with user
