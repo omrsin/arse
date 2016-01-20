@@ -45,7 +45,10 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
     }
   }
   .actions {
-
+    .btn {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
   }
   .content {
     margin-top: 20px;

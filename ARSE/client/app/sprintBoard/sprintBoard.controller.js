@@ -111,9 +111,19 @@ angular.module('arseApp')
       }
       Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl',
         { message: message }).result.then(function (res) {
-          console.log('Deleting Item');
-          // update the api PROPERLY
           $http.put('/api/projects/' + $scope.project_id + '/sprints/current/close').then(function (res) {
+            $state.go('backlog', { 'project_id': $scope.project_id });
+          }, function (error) {
+            $scope.failed = error.data;
+          });
+        });
+    };
+
+    $scope.cancelSprint = function () {
+      var message = "Are you sure you want to cancel this sprint?";
+      Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl',
+        { message: message }).result.then(function (res) {
+          $http.put('/api/projects/' + $scope.project_id + '/sprints/current/cancel').then(function (res) {
             $state.go('backlog', { 'project_id': $scope.project_id });
           }, function (error) {
             $scope.failed = error.data;

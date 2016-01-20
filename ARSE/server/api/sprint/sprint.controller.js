@@ -131,6 +131,25 @@ exports.close = function (req, res) {
   });
 }
 
+// cancel sprint and update current sprint in project
+exports.cancel = function (req, res) {
+  Project.findById(req.params.project_id).populate('backlog').exec(function (err, project) {
+    if (err) { return handleError(res, err); }
+    if (!project) { return res.status(404).send("Project not Found"); }
+
+    project.current_sprint = null;
+    // Do not remove any stories
+    // Reset the offset to 0
+    project.offset = 0;
+
+    //after the project return the project with the new state.
+    project.save(function (err) {
+      if (err) { return res.status(500).send("could not cancel sprint"); }
+      res.status(200).send(project);
+    });
+  });
+}
+
 function handleError(res, err) {
   return res.status(500).send(err);
 }
