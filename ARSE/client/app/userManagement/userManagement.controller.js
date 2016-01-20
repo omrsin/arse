@@ -8,6 +8,7 @@ angular.module('arseApp')
     $scope.disabled = true;
     $scope.availableRoles = ["PO", "Developer"];
     $scope.hasPORights = false;
+    
     $scope.project = project;
 
     // Set if we have the PO right

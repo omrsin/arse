@@ -11,7 +11,6 @@ angular.module('arseApp')
         participants: '='
       },
       link: function (scope, element, attrs) {
-        console.log(scope.detailStory);
         scope.item = scope.storyItem;
         // Show the currently selected story in the story detail view
         scope.$watch('storyItem', function(value){
@@ -22,7 +21,6 @@ angular.module('arseApp')
         });
 
         scope.hideItem = function () {
-          console.log(scope.item.user);
           scope.callback({ item: scope.item });
         };
       }

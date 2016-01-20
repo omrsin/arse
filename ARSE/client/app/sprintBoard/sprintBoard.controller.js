@@ -4,7 +4,6 @@ angular.module('arseApp')
   .controller('SprintBoardCtrl', ['$scope', '$stateParams', '$http', 'Modal', '$state', 'Story', 'project', 'Task', function ($scope, $stateParams, $http, Modal, $state, Story, project, Task) {
     $scope.project_id = $stateParams.project_id;
     $scope.sprint;
-    $scope.project;
     $scope.participants;
     $scope.statuses = [
       { name: "New" },
@@ -22,6 +21,14 @@ angular.module('arseApp')
 
     $scope.selectedParticpant = {};
     $scope.showAddParticipant = false;
+    $scope.participants = project.participants;
+    // Make unassign available on the drowpdown
+    $scope.participants.splice(0, 0, {
+      role: '',
+      user: {
+        username: 'Unassigned'
+      }
+    });
 
     // Error message if something failed
     $scope.failed = "";
@@ -34,7 +41,6 @@ angular.module('arseApp')
       params: { stories: true }
     }).then(function (res) {
       $scope.sprint = res.data;
-      console.log(res.data);
       for (var i = 0; i < $scope.sprint.stories.length; i++) {
         var story = $scope.sprint.stories[i];
         story.inColumn = [];
@@ -53,24 +59,6 @@ angular.module('arseApp')
           }
         }
       }
-      console.log($scope.sprint);
-    });
-    
-    // request users/participants
-    $http({
-      url: '/api/projects/' + $scope.project_id,
-      method: 'GET',
-    }).then(function (res) {
-      $scope.project = res.data;
-      $scope.participants = res.data.participants;
-      // Make unassign available on the drowpdown
-      $scope.participants.splice(0, 0, {
-        role: '',
-        user: {
-          username: 'Unassigned'
-        }
-      });
-      console.log("project participants: " + JSON.stringify($scope.participants));
     });
 
     // Sorting options for the sprint board when sorting stories
@@ -362,7 +350,6 @@ angular.module('arseApp')
     };
     
     $scope.countByStatus = function(tasks,stat) {
-      console.log("Filtering");
       var filteredTasks = tasks.filter(function(elem){
         return elem.status === stat;
       });
