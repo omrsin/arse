@@ -13,4 +13,9 @@ router.post('/', controller.create);
 router.put('/:id', controller.update);
 router.delete('/:id', controller.destroy);
 
+
+// FUNCTIONS RELATED TO CONFIGURATION
+router.post('/:id/config/addStoryType', controller.addStoryType);
+router.delete('/:id/config/removeStoryType', controller.removeStoryType);
+
 module.exports = router;

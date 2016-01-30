@@ -145,3 +145,34 @@ exports.destroy = function (req, res) {
 function handleError(res, err) {
   return res.status(500).send(err);
 }
+
+// FUNCTIONS RELATED TO CONFIGURATION
+exports.addStoryType = function(req, res) {
+  Project.findById(req.params.id, function (err, project) {
+    if (err) { return handleError(res, err); }
+    if (!project) { return res.status(404).send('Not Found'); }
+    project.story_types.push(req.body);
+
+    project.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.status(200);
+    });
+  });
+};
+
+// TODO make sure the list does not get empty
+// TODO reasssign type of stories that have the deleted type to the first type in the list.
+exports.removeStoryType = function(req, res) {
+  Project.findById(req.params.id, function (err, project) {
+    if (err) { return handleError(res, err); }
+    if (!project) { return res.status(404).send('Not Found'); }
+
+    var index = project.story_types.indexOf(req.body);
+    project.story_types.splice(index, 1);
+
+    project.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.status(200);
+    });
+  });
+};

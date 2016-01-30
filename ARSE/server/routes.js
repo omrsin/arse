@@ -41,6 +41,9 @@ module.exports = function(app) {
   app.put('/api/projects/:project_id', restrictToPO);
   app.delete('/api/projects/:project_id', restrictToPO);
 
+  // Only POs may config projects
+  app.use('/api/projects/:project_id/config', restrictToPO);
+
   // Only POs may start or close/cancel a sprint
   app.use('/api/projects/:project_id/sprints/current/close', restrictToPO);
   app.use('/api/projects/:project_id/sprints/current/cancel', restrictToPO);
