@@ -17,6 +17,10 @@ angular.module('arseApp')
       }
     };
 
+    $scope.showChat = function(){
+      $state.go("chat", { project_id: $stateParams.project_id });
+    }
+
     $scope.showUserManagement = function(){
       $state.go("userManagement", { project_id: $stateParams.project_id });
     };

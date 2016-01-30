@@ -4,7 +4,7 @@
 
 'use strict';
 
-var Participant = require('./participant.model');
+var Participant = require('../project/participant.model');
 
 exports.register = function(socket) {
   Participant.schema.post('save', function (doc) {
