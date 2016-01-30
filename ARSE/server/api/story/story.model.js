@@ -36,8 +36,7 @@ var StorySchema = new Schema({
   },
   type: {
     type: String,
-    required: true,
-    enum: ["Feature", "Enhancement", "Fix"]
+    required: true
   },
   status: {
     type: String,

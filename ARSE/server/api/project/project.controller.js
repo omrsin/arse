@@ -151,6 +151,12 @@ exports.addStoryType = function(req, res) {
   Project.findById(req.params.id, function (err, project) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send('Not Found'); }
+
+    var index = project.story_types.indexOf(req.body.type);
+    if(index != -1) {
+      return res.status(500).send("Story type already added.");
+    }
+
     project.story_types.push(req.body.type);
 
     project.save(function (err) {

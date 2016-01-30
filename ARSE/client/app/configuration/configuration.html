@@ -35,7 +35,9 @@
                   <li class="table-row" ng-repeat="type in project.story_types">
                     <div class="row">
                       <div class="col-xs-8">{{ type }}</div>
-                      <div class="col-xs-2">Color</div>
+                      <div class="col-xs-2">
+                        <div class="color-box" ng-class="'story-type-{{$index}}'"></div>
+                      </div>
                       <div class="col-xs-2 col-sm-2">
                         <div ng-show="project.story_types.length != 1" class="btn-group pull-right">    
                           <a ng-click="deleteStoryType(type)" class="btn btn-danger">

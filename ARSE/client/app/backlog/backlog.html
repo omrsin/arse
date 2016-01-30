@@ -27,7 +27,12 @@
         </div>    
       </div>
 
-      <div class="content">          
+      <div class="content">
+        <div class="row">
+          <div class="col-xs-12 col-sm-10">
+            <div ng-show="failed" class="alert alert-danger" role="alert">{{ failed }}</div>
+          </div>
+        </div>       
 
         <div class="row">
           <div ng-class="{'hidden-xs hidden-sm col-md-6 col-lg-8 story-detail-separator' : showDetails, 'col-xs-12' : !showDetails}">
