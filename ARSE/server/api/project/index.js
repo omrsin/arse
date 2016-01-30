@@ -18,7 +18,7 @@ router.delete('/:id', controller.destroy);
 router.post('/:id/config/addStoryType', controller.addStoryType);
 router.post('/:id/config/removeStoryType', controller.removeStoryType);
 
-router.post('/:id/config/addStoryType', controller.addStoryStatus);
-router.post('/:id/config/addStoryType', controller.removeStoryStatus);
+router.post('/:id/config/addStoryStatus', controller.addStoryStatus);
+router.post('/:id/config/removeStoryStatus', controller.removeStoryStatus);
 
 module.exports = router;

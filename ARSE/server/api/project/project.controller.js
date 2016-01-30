@@ -187,6 +187,10 @@ exports.addStoryStatus = function (req, res) {
   Project.findById(req.params.id, function (err, project) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send('Not Found'); }
+    if(project.story_statuses.indexOf(req.body.status) > -1){
+      //the code 409 is used for resouorce conflict
+      return  res.status(409).send("This status already exists!");
+    }
     project.story_statuses.push(req.body.status);
     project.save(function (err) {
       if (err) { return handleError(res, err); }
