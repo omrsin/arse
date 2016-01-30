@@ -146,16 +146,17 @@ function handleError(res, err) {
   return res.status(500).send(err);
 }
 
+// XXX why are these requests not printed on the console?
 // FUNCTIONS RELATED TO CONFIGURATION
 exports.addStoryType = function(req, res) {
   Project.findById(req.params.id, function (err, project) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send('Not Found'); }
-    project.story_types.push(req.body);
+    project.story_types.push(req.body.type);
 
     project.save(function (err) {
       if (err) { return handleError(res, err); }
-      return res.status(200);
+      return res.status(200).send('No Content');
     });
   });
 };
@@ -167,12 +168,14 @@ exports.removeStoryType = function(req, res) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send('Not Found'); }
 
-    var index = project.story_types.indexOf(req.body);
+    var index = project.story_types.indexOf(req.body.type);
+    if(index == -1) {
+      return res.status(404).send("Story type not found");
+    }
     project.story_types.splice(index, 1);
-
     project.save(function (err) {
       if (err) { return handleError(res, err); }
-      return res.status(200);
+      return res.status(200).send('No Content');
     });
   });
 };

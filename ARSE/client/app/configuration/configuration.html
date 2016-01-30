@@ -11,7 +11,6 @@
         </div>
       </div>
 
-
       <div class="content">
 
         <div class="row">
@@ -22,27 +21,51 @@
 
         <div class="row">
           <div class="col-xs-12">
+            <p>Configure the story types available for stories in this project.</p>
             <div class="custom-table">
               <div class="row">
                 <div class="table-header">
                   <div class="col-xs-8">Story Type</div>
-                  <div class="col-xs-4">Color</div>
+                  <div class="col-xs-2">Color</div>
+                  <div class="col-xs-2"></div>
                 </div>
               </div>
               <div class="table-content">
                 <ul>
                   <li class="table-row" ng-repeat="type in project.story_types">
                     <div class="row">
-                      <!-- TODO use directive? -->
                       <div class="col-xs-8">{{ type }}</div>
-                      <div class="col-xs-4">Color</div>
+                      <div class="col-xs-2">Color</div>
+                      <div class="col-xs-2 col-sm-2">
+                      <div class="btn-group pull-right">    
+                        <a ng-click="deleteStoryType(type)" class="btn btn-danger">
+                          <span class="glyphicon glyphicon-remove"></span>
+                        </a>    
+                      </div>
                     </div>
                   </li>
                 </ul>
               </div>
             </div>
+
           </div>
         </div>
+      </div>
+
+
+      <div class="actions">
+        <form>
+          <div class="row">
+            <div class="col-xs-8 col-sm-10">
+              <input type="text" class="form-control" ng-model="storyTypeField" placeholder="Story Type">
+            </div>
+            <div class="col-xs-4 col-sm-2">
+              <a ng-click="addStoryType(storyTypeField)" class="btn btn-primary pull-right" ng-disabled="!storyTypeField">Add Story Type</a>
+            </div>
+          </div>
+        </form>
+      </div>
+
     </div>
   </div>
 </div>
