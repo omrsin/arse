@@ -1,18 +1,18 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('ProjectCtrl', ['$scope', '$state', 'Project', 'Modal', function ($scope, $state, Project, Modal) {
+  .controller('ProjectCtrl', ['$scope', '$state', 'Project', 'Modal', '$http', function ($scope, $state, Project, Modal, $http) {
     
     $scope.projects = [];
     // Error message if creating a project failed
     $scope.failed = "";
 
-    Project.query(function (projects) {
+    Project.query({role: true}, function (projects) {
       $scope.projects = projects;
     });
 
     $scope.$on('updateView', function () {
-      Project.query(function (projects) {
+      Project.query({role: true}, function (projects) {
         $scope.projects = projects;
       });
     });
@@ -37,6 +37,22 @@ angular.module('arseApp')
           $scope.failed = err.data;
         });        
       });
+    };
+
+    $scope.deleteProject = function(item) {
+      $scope.failed = "";
+
+      Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl', { message: "Deleting a  project"}).
+        result.then(function (res) {
+          console.log('Deleting Item');
+
+          $http.delete('/api/projects/' + item._id).then(function (res) {
+              $scope.$emit('updateView');
+            },
+            function(error){
+                $scope.failed = error.data;
+            });
+        });
     };
 
     $scope.show = function(project){

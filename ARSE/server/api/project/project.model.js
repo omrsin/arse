@@ -23,6 +23,10 @@ var ProjectSchema = new Schema({
     type: Number,
     default:0
   },
+  story_types: {
+    type: [String],
+    default: ["Feature", "Enhancement", "Fix"]
+  },
   participants: ['Participant']
 }, {strict: false});
 ProjectSchema.index({'participants':1})

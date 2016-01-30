@@ -6,10 +6,26 @@ var Story = require('../story/story.model');
 var Participant = require('./participant.model');
 
 // Get list of projects
+// in addition, add the role of the logged in user to the projects
+// ?role=true or false : default= false
 exports.index = function (req, res) {
   Project.find({ 'participants.user': req.user._id }, function (err, projects) {
     if (err) { return handleError(res, err); }
-    console.log(projects);
+    
+    // Add the role if required
+    if (req.query.role) {
+      for(var j = 0; j < projects.length; j++) {
+        var role;
+        // Loop through the participants
+        for (var i = 0; i < projects[j].participants.length; i++) {
+          if (req.user.id == projects[j].participants[i].user) {
+            role = projects[j].participants[i].role;
+            break;
+          }
+        }
+        projects[j].set('role', role);
+      }
+    }
     return res.status(200).json(projects);
   });
 };
@@ -48,17 +64,6 @@ exports.show = function (req, res) {
         return res.json(project);
       });
     });
-
-// exports.show = function (req, res) {
-//   Project.findOne({ _id: req.params.id }).populate('backlog').populate('owner', '_id username email').populate('participants', '_id username email role').exec(function (err, project) {
-//     if (err) { return handleError(res, err); }
-//     if (!project) { return res.status(404).send('Not Found'); }
-//     // Populate the stories with the user that is assigned to each story
-//     Story.populate(project.backlog, { path: 'user' }, function (err, storiesWithUsers) {
-//       project.backlog = storiesWithUsers;
-//       return res.json(project);
-//     });
-    // return res.json(project);
 
   });
 

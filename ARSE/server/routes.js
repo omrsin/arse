@@ -37,6 +37,10 @@ module.exports = function(app) {
   // The participants controller is restricted to POs only
   app.use('/api/projects/:project_id/participants', restrictToPO);
 
+  // Only POs may edit or delete projects
+  app.put('/api/projects/:project_id', restrictToPO);
+  app.delete('/api/projects/:project_id', restrictToPO);
+
   // Only POs may start or close/cancel a sprint
   app.use('/api/projects/:project_id/sprints/current/close', restrictToPO);
   app.use('/api/projects/:project_id/sprints/current/cancel', restrictToPO);
