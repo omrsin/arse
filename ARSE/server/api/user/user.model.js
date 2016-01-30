@@ -12,7 +12,8 @@ var UserSchema = new Schema({
   },
   password: String,
   provider: String,
-  salt: String
+  salt: String,
+  role: String
 });
 
 /**
