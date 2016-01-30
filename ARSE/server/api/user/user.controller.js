@@ -77,8 +77,7 @@ exports.show = function(req, res, next) {
 };
 
 // unassign user from all stories
-exports.unassign = function(req, res){
-  console.log("am here");
+exports.unassign = function(req, res){  
   // get stories, loop thru, set to null if username is equal
   User.findById({_id: req.params.id}, function(err, user){
     if (err) { return handleError(res, err); }
@@ -118,19 +117,24 @@ exports.editUser = function(req, res, next) {
   var oldPass = String(req.body.oldPassword);
   var newPass = String(req.body.newPassword);
 
+  console.log(req.body);
+
   User.findByIdAsync(userId)
     .then(function(user) {
       if (user.authenticate(oldPass)) {
-        user.username = username;
-        user.password = newPass;
-        return user.saveAsync()
-          .then(function() {
-            res.status(204).end();
-          })
-          .catch(validationError(res));
+        user.username = username;        
+        if (req.body.newPassword) {          
+          user.password = newPass;        
+        }
       } else {
-        return res.status(403).end();
-      }
+        return res.status(403).end();          
+      }    
+
+      return user.saveAsync()
+        .then(function() {
+          res.status(204).end();
+        })
+        .catch(validationError(res));
     });
 };
 

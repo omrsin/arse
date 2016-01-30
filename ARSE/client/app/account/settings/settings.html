@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <h1>Change Password</h1>
+      <h1>Edit Profile</h1>
     </div>
     <div class="col-sm-12">
       <form class="form" name="form" ng-submit="editUser(form)" novalidate>
@@ -9,29 +9,16 @@
         <div class="form-group">
           <label>Username</label>
 
-          <input type="text" name="username" class="form-control" ng-model="user.username"
-                 mongoose-error/>
-          <p class="help-block" ng-show="form.username.$error.mongoose">
-              {{ errors.other }}
-          </p>
+          <input type="text" name="username" class="form-control" ng-model="user.username" mongoose-error/>
         </div>
 
-        <div class="form-group">
-          <label>Current Password</label>
-
-          <input type="password" name="password" class="form-control" ng-model="user.oldPassword"
-                 mongoose-error/>
-          <p class="help-block" ng-show="form.password.$error.mongoose">
-              {{ errors.other }}
-          </p>
-        </div>
+        <p>Only fill this information if you wish to change your current password; leave empty otherwise.</p>
 
         <div class="form-group">
           <label>New Password</label>
 
           <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword"
-                 ng-minlength="3"
-                 required/>
+                 ng-minlength="3"/>
           <p class="help-block"
              ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
             Password must be at least 3 characters.
@@ -43,13 +30,25 @@
 
           <input type="password" name="confirmPassword" class="form-control" ng-model="user.confirmPassword"
                  match="user.newPassword"
-                 ng-minlength="3"
-                 required=""/>
+                 ng-minlength="3"/>
           <p class="help-block"
              ng-show="form.confirmPassword.$error.match && submitted">
             Passwords must match.
           </p>
+        </div>
 
+        <hr>
+
+        <p>Updating your profile requires a password confirmation. Please indicate your current password.</p>
+
+        <div class="form-group">
+          <label>Current Password</label>
+
+          <input type="password" name="password" class="form-control" ng-model="user.oldPassword"
+                 mongoose-error/>
+          <p class="help-block" ng-show="form.password.$error.mongoose">
+              {{ errors.other }}
+          </p>
         </div>
 
         <p class="help-block"> {{ message }} </p>
