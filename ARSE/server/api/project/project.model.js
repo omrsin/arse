@@ -27,6 +27,9 @@ var ProjectSchema = new Schema({
     type: [String],
     default: ["Feature", "Enhancement", "Fix"]
   },
+  story_statuses: {
+    type: [String]
+  },
   participants: ['Participant']
 }, {strict: false});
 ProjectSchema.index({'participants':1})

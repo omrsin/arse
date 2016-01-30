@@ -14,7 +14,7 @@ exports.index = function (req, res) {
     
     // Add the role if required
     if (req.query.role) {
-      for(var j = 0; j < projects.length; j++) {
+      for (var j = 0; j < projects.length; j++) {
         var role;
         // Loop through the participants
         for (var i = 0; i < projects[j].participants.length; i++) {
@@ -147,7 +147,7 @@ function handleError(res, err) {
 }
 
 // FUNCTIONS RELATED TO CONFIGURATION
-exports.addStoryType = function(req, res) {
+exports.addStoryType = function (req, res) {
   Project.findById(req.params.id, function (err, project) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send('Not Found'); }
@@ -161,17 +161,17 @@ exports.addStoryType = function(req, res) {
 };
 
 // TODO reasssign type of stories that have the deleted type to the first type in the list.
-exports.removeStoryType = function(req, res) {
+exports.removeStoryType = function (req, res) {
   Project.findById(req.params.id, function (err, project) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send('Not Found'); }
 
-    if(project.story_types.length == 1) {
+    if (project.story_types.length == 1) {
       return res.status(500).send("It is not allowed to remove the last story type.");
     }
 
     var index = project.story_types.indexOf(req.body.type);
-    if(index == -1) {
+    if (index == -1) {
       return res.status(404).send("Story type not found");
     }
     project.story_types.splice(index, 1);
@@ -181,3 +181,33 @@ exports.removeStoryType = function(req, res) {
     });
   });
 };
+
+//Adding statuses and removing.
+exports.addStoryStatus = function (req, res) {
+  Project.findById(req.params.id, function (err, project) {
+    if (err) { return handleError(res, err); }
+    if (!project) { return res.status(404).send('Not Found'); }
+    project.story_statuses.push(req.body.status);
+    project.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.status(200).json(project);
+    });
+  });
+};
+
+exports.removeStoryStatus = function (req,res) {
+    Project.findById(req.params.id, function (err, project) {
+    if (err) { return handleError(res, err); }
+    if (!project) { return res.status(404).send('Not Found'); }
+
+    var index = project.story_statuses.indexOf(req.body.status);
+    if (index == -1) {
+      return res.status(404).send("Status type not found");
+    }
+    project.story_statuses.splice(index, 1);
+    project.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.status(200).json(project);
+    });
+  });  
+}
