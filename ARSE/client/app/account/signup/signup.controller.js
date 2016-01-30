@@ -7,7 +7,7 @@ angular.module('arseApp')
 
     $scope.register = function(form) {
       $scope.submitted = true;
-
+      form.email.$setValidity('mongoose', true);
       if (form.$valid) {
         Auth.createUser({
           username: $scope.user.username,
@@ -30,6 +30,10 @@ angular.module('arseApp')
           });
         });
       }
+    };
+
+    $scope.changeEmail = function(form) {
+      form.email.$setValidity('mongoose', true);  
     };
 
   });
