@@ -22,8 +22,7 @@ angular.module('arseApp')
       $state.go("userManagement", { project_id: $stateParams.project_id });
     };
 
-    // TODO adjust this
     $scope.showConfiguration = function(){
-      $state.go("userManagement", { project_id: $stateParams.project_id });
+      $state.go("configuration", { project_id: $stateParams.project_id });
     };
   }]);
