@@ -1,0 +1,99 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = en_US
+
+\documentclass[
+	accentcolor=tud1a %Pick the color
+]{tudreport}
+
+% A couple of packages that may be useful
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{algorithm2e}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{subfigure}
+\usepackage[english]{babel}
+\usepackage{blindtext}
+
+% Defining JavaScript listings
+\definecolor{mygreen}{rgb}{0,0.3,0}
+\definecolor{myyellow}{rgb}{0.3,0.3,0}
+\definecolor{mygrey}{rgb}{0.9,0.9,0.9}
+
+\lstdefinelanguage{JavaScript}{
+  keywords={break, case, catch, continue, debugger, default, delete, do, else, false, finally, for, function, if, in, instanceof, new, null, return, switch, this, throw, true, try, typeof, var, void, while, with},
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  sensitive=true
+}
+
+\lstset{
+    frameround=fttt,
+    language=JavaScript,
+    numbers=left,
+    breaklines=true,
+    breakatwhitespace=true,
+    keywordstyle=\color{blue}\bfseries, 
+    basicstyle=\ttfamily\color{black},
+    numberstyle=\color{black},
+    stringstyle=\color{myyellow},
+    commentstyle=\color{mygreen},
+    backgroundcolor=\color{mygrey}
+    }
+\lstMakeShortInline[columns=fixed]|
+
+\begin{document}
+
+
+
+\title{ARSE: Agile Responsive Simple Environment}
+\subtitle{Team Echo: Project Report for the course Internet Praktikum TK in WS 2015/16}
+\subsubtitle{Elmi Faisal Ali \\
+Enkhtuul Gankhuyag \\
+Floriment Klinaku \\
+Masaud Yakubu Alhassan \\
+Omar Antonio Erminy Ugueto \\
+Satia Herfert
+}
+
+\maketitle
+
+\tableofcontents
+
+\chapter{Introduction}
+\label{ch:introduction}
+
+\blindtext
+
+\section{A section}
+\label{sec:section}
+
+
+\subsection{Algorithm}
+\label{sec:section_algo}
+
+Look, some JS code...
+
+\begin{lstlisting}[float,caption=Code Example,label=l:code_example]
+var a;
+console.log(a);
+if(a) {
+	// This is a comment
+	console.log('Yeah');
+}
+\end{lstlisting}
+
+\bibliographystyle{abbrvnat}
+\bibliography{references}
+\end{document}
