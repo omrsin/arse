@@ -3,6 +3,7 @@
 angular.module('arseApp')
   .controller('SprintBoardCtrl', ['$scope', '$stateParams', '$http', 'Modal', '$state', 'Story', 'project', 'Task', function ($scope, $stateParams, $http, Modal, $state, Story, project, Task) {
     $scope.project_id = $stateParams.project_id;
+    $scope.project = project;
     $scope.sprint;
     $scope.participants;
     $scope.statuses = [
@@ -12,7 +13,7 @@ angular.module('arseApp')
     ];
 
     // Set if we have the PO right
-    $scope.hasPORights = project.role === "PO";
+    $scope.hasPORights = $scope.project.role === "PO";
 
     $scope.showDetails = false;
     $scope.detailStory = {};
@@ -21,7 +22,7 @@ angular.module('arseApp')
 
     $scope.selectedParticpant = {};
     $scope.showAddParticipant = false;
-    $scope.participants = project.participants;
+    $scope.participants = $scope.project.participants;
     // Make unassign available on the drowpdown
     $scope.participants.splice(0, 0, {
       role: '',

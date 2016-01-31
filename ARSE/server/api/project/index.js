@@ -11,7 +11,11 @@ router.get('/:id', controller.show);
 router.put('/:id/reorder', controller.reorder);
 router.post('/', controller.create);
 router.put('/:id', controller.update);
-router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);
+
+
+// FUNCTIONS RELATED TO CONFIGURATION
+router.post('/:id/config/addStoryType', controller.addStoryType);
+router.post('/:id/config/removeStoryType', controller.removeStoryType);
 
 module.exports = router;

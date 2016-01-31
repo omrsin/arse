@@ -7,15 +7,11 @@ angular.module('arseApp')
       restrict: 'EA',
       link: function (scope, element, attrs) {
         scope.item = angular.fromJson(attrs.projectItem);
+        // Set if we have the PO right
+        scope.hasPORights =  scope.item.role === "PO";
 
         scope.deleteItem = function (item) {
-
-          Modal.open({}, 'components/confirmModal/confirmModal.html', 'ConfirmModalCtrl', { message: "Deleting a  project"}).result.then(function (res) {
-            console.log('Deleting Item');
-            $http.delete('/api/projects/' + item._id).then(function () {
-              scope.$emit('updateView');
-            });
-          });
+          scope.deleteProject(item);
         };
 
         scope.callOpenModal = function (item) {

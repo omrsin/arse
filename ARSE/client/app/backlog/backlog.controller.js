@@ -50,7 +50,9 @@ angular.module('arseApp')
 
     $scope.editStory = function (item) {
       $scope.failed = "";
-      Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', { story: item, participants: $scope.project.participants }).result.then(function (res) {
+      Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', 
+        { story: item, participants: $scope.project.participants, storyTypes: $scope.project.story_types })
+      .result.then(function (res) {
 
         // Show the updating icon
         $scope.$broadcast("storyUpdating", res);
@@ -72,7 +74,8 @@ angular.module('arseApp')
 
     $scope.addStory = function () {
       $scope.failed = "";
-      Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', { participants: $scope.project.participants, projectId: $stateParams.project_id })
+      Modal.open({}, 'app/backlog/storyForm.html', 'StoryFormCtrl', 
+        { participants: $scope.project.participants, projectId: $stateParams.project_id, storyTypes: $scope.project.story_types })
         .result.then(function (res) {
 
           res.$save(function (httpRes) {
@@ -80,6 +83,7 @@ angular.module('arseApp')
             console.log(httpRes);
             $scope.project.backlog.push(httpRes);
           }, function (err) {
+            console.log('Could not add story');
             $scope.failed = err.data;
           });
         });
@@ -192,7 +196,7 @@ angular.module('arseApp')
 angular.module('arseApp').controller('StoryFormCtrl',
   ['$scope', '$uibModalInstance', 'items', 'Story', function ($scope, $uibModalInstance, items, Story) {
 
-    $scope.storyTypes = ["Feature", "Enhancement", "Fix"];
+    $scope.storyTypes = items.storyTypes;
     $scope.availableSPs = [0, 1, 2, 3, 5, 8, 13, 20, 40, 100];
 
     $scope.story = {};

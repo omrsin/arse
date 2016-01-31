@@ -17,6 +17,7 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 // Component styles are injected through grunt
 // injector
 @import 'backlog/backlog.scss';
+@import 'configuration/configuration.scss';
 @import 'directives/project/project.scss';
 @import 'directives/story/story.scss';
 @import 'directives/storyDetail/storyDetail.scss';
@@ -52,6 +53,7 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
   }
   .content {
     margin-top: 20px;
+    margin-bottom: 20px;
     .link:hover {
       text-decoration: underline;
       cursor: pointer;
@@ -104,4 +106,40 @@ ul {
       background-color: #f9f9f9;
     }
   }
+}
+
+.story-type-0 {
+  background: #F2F199;
+}
+
+.story-type-1 {
+  background: #F2D8D0;
+}
+
+.story-type-2 {
+  background: #D0EAF2;
+}
+
+.story-type-3 {
+  background: #f29797;
+}
+
+.story-type-4 {
+  background: #baf297;
+}
+
+.story-type-5 {
+  background: #97e4f2;
+}
+
+.story-type-6 {
+  background: #97a8f2;
+}
+
+.story-type-7 {
+  background: #de97f2;
+}
+
+.story-type-8 {
+  background: #f297cc;
 }
