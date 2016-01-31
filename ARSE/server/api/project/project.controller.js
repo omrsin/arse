@@ -100,20 +100,31 @@ exports.reorder = function (req, res) {
     
     // oldindex get the item using the old 
     var item = project.backlog.splice(oldIndex, 1);
-    console.log('Removed item ' + item);
     //enter the item to the new index
     project.backlog.splice(newIndex, 0, item);
-    console.log('Projects after adding' + project.backlog);
     project.save(function (err) {
       if (err) {
         return handleError(res, err);
       }
-
-
     });
     return res.status(200).send('Reordered');
   });
 }
+
+// Updates the offset of an existing project in the DB.
+exports.setOffset = function (req, res) {
+  if (req.body._id) { delete req.body._id; }
+  Project.findById(req.params.id, function (err, project) {
+    if (err) { return handleError(res, err); }
+    if (!project) { return res.status(404).send('Not Found'); }
+    // Update the offset
+    project.offset = req.body.offset;
+    project.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.status(200).json(project);
+    });
+  });
+};
 
 
 // Updates an existing project in the DB.

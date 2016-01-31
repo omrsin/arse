@@ -158,11 +158,20 @@ angular.module('arseApp')
     // update offset on the backend
     var updateOffset = function (offset, projectId) {
       console.log("Updating the offset on the server to " + offset);
-      Project.update({ _id: projectId, offset: offset }, function (res) {
+      // Issue a PUT request on the server
+        $http.put('/api/projects/' + projectId + '/setOffset', {
+          offset: offset
+        }).then(function (res) {
+          $scope.allowReorder = true;
+        }, function (err) {
+          $scope.failed = err.data;
+        });
+
+ /*     Project.update({ _id: projectId, offset: offset }, function (res) {
         $scope.allowReorder = true;
       }, function (err) {
         $scope.failed = err.data;
-      });
+      });*/
     };
 
     // update order on the backend
