@@ -53,10 +53,16 @@
     }
 \lstMakeShortInline[columns=fixed]|
 
+%\begin{lstlisting}[float,caption=Code Example,label=l:code_example]
+%var a;
+%console.log(a);
+%if(a) {
+%	// This is a comment
+%	console.log('Yeah');
+%}
+%\end{lstlisting}
+
 \begin{document}
-
-
-
 \title{ARSE: Agile Responsive Simple Environment}
 \subtitle{Team Echo: Project Report for the course Internet Praktikum TK in WS 2015/16}
 \subsubtitle{Elmi Faisal Ali \\
@@ -76,23 +82,70 @@ Satia Herfert
 
 \blindtext
 
-\section{A section}
-\label{sec:section}
+\chapter{Architecture}
 
+\chapter{User documentation}
 
-\subsection{Algorithm}
-\label{sec:section_algo}
+\chapter{Done Product Backlog Items}
 
-Look, some JS code...
+In the following we list all the items from the original Product Backlog that were developed in this project. Certain stories have been moved to make the actions available to a different class of users, so that the product is more compatible with the idea of Scrum. The roles in our project are users, registered users, team members (of a project), and product owners (of a project). This list also contains stories that were modified or added to the original backlog.
 
-\begin{lstlisting}[float,caption=Code Example,label=l:code_example]
-var a;
-console.log(a);
-if(a) {
-	// This is a comment
-	console.log('Yeah');
-}
-\end{lstlisting}
+%TODO go through our modified backlog and see if we need to add more stories here.
+
+\begin{itemize}
+	\item As a user, I can
+	\begin{itemize}
+		\item register to the system with user name, email and password. (Unique usernames)
+		\begin{itemize}
+			\item Users can be assigned to different projects with different roles.
+		\end{itemize}
+		\item access the web application with different kinds of devices (mobile, tablet, pc ...).
+	\end{itemize}
+	
+	\item As a registered user, I can
+	\begin{itemize}
+		\item edit my profile (name, password).
+		\item see the list of projects I am a member of.
+		\item create new projects (name and description), and become automatically the product owner of these projects.
+	\end{itemize}
+
+	\item  As a team member of a project, I can
+	\begin{itemize}
+		\item access the Product Backlog
+		\item access the Sprint Board
+		\item access past Sprints which includes its name, time interval, and story points burnt.
+		\item copy backlog items to the Sprint backlog.
+		\item create new tasks in the task board (a task always belongs to a user story).
+		\item change tasks including their description as well as their status (New, in progress, done).
+		\item assign tasks to a team member.
+		\item add new product backlog items to the product backlog of a project
+		\begin{itemize}
+			\item product backlog items can have different statuses (new, in progress, done).
+			\item product backlog items can be of different types, e.g. feature, enhancement, fix
+		\end{itemize}
+		\item change the content of user stories
+		\item change the order (priority) of user stories in the product backlog
+		%\item chat with my team members
+		%\item access and search chat logs
+	\end{itemize}
+	
+	\item As a product owner of a project, I can
+	\begin{itemize}
+		\item create a new Sprint (a new Sprint cannot be created if there's one already running) with name, description, time-box and initial Sprint Backlog.
+		\item assign registered users to a project.
+		\item assign roles to project members (team member, product owner).
+		\item change the list of statuses assignable to product backlog items in the project settings.
+		\item change the list of types assignable to product backlog items in the project settings.
+		\item close a Sprint (all done stories will be removed).
+		\item cancel a Sprint
+	\end{itemize}
+\end{itemize}
+
+%TODO Include a list of undone stories (if we have any)
+%Bonus features
+%users must confirm their registration by clicking on a registration link sent via email
+%feature of burndown charts
+%use special interaction features with mobile devices like shaking
 
 \bibliographystyle{abbrvnat}
 \bibliography{references}
