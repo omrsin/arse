@@ -46,10 +46,10 @@
                 {{sprint.name}}
               </td>
               <td>
-                {{sprint.start_date}}
+                {{sprint.start_date | date: 'medium'}}
               </td>
               <td>
-                {{sprint.end_date}}
+                {{sprint.end_date | date: 'medium'}}
               </td>
               <td>
                 {{sprint.total_points}}

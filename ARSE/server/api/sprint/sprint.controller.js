@@ -118,6 +118,7 @@ exports.close = function (req, res) {
       //console.log("sprint found: " + JSON.stringify(sprint));
       //current_sprint = sprint;
       //console.log("current sprint: " + current_sprint);
+      
       project.past_sprints.push(project.current_sprint);
       project.current_sprint = null;
     
