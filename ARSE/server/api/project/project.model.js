@@ -19,6 +19,7 @@ var ProjectSchema = new Schema({
     type: Number, 
     default:0
   },
+  past_sprints: ['Sprint'],
   sprint_counter: {
     type: Number,
     default:0

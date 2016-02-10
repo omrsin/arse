@@ -20,9 +20,13 @@
       </div>
 
       <div class="content">          
-
-        <div class="row">
-          <table class="table table-hover table-striped">
+        <div ng-hide="project.past_sprints" class="row">
+          <h3 style="margin-left: 100px;">
+             No past sprints for this project
+          </h3>
+        </div>
+        <div class="row" style="margin: auto 0;">
+          <table class="table table-hover table-striped" ng-show="project.past_sprints">
             <tr class="table-header">
               <td>
                 <strong>Sprint Name</strong>
@@ -48,7 +52,7 @@
                 {{sprint.end_date}}
               </td>
               <td>
-                {{sprint.name}}
+                {{sprint.total_points}}
               </td>
             </tr>
           </table>
