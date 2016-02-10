@@ -7,7 +7,8 @@ angular.module('arseApp')
     // Error message if creating a project failed
     $scope.failed = "";
 
-    Project.query({role: true}, function (projects) {
+    
+    Project.query({role: true, pastsprints: true}, function (projects) {
       $scope.projects = projects;
     });
 

@@ -58,6 +58,9 @@ exports.show = function (req, res) {
         }
         project.set('role', role);
       }
+      if(req.query.pastsprints){
+        console.log("req.past sprints: " + req.query.pastsprints);
+      }
 
       Story.populate(project.backlog, { path: 'user' }, function (err, storiesWithUsers) {
         project.backlog = storiesWithUsers;
