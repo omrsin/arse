@@ -15,6 +15,13 @@
     </div>
   </div>
   <!-- ng-if instead of ng-show to make the last-child style working -->
+  
+  <div ng-if="hasPORights" class="row">
+    <div class="col-xs-12 option enabledLink">
+      <span title="Past Sprints" class="glyphicon glyphicon-signal" ng-click="showPastSprints()"></span>
+    </div>
+  </div>
+
   <div ng-if="hasPORights" class="row">
     <div class="col-xs-12 option enabledLink">
       <span title="Configuration" class="glyphicon glyphicon-wrench" ng-click="showConfiguration()"></span>

@@ -8,6 +8,9 @@
   <div ng-class="{'col-xs-3' : hasPORights, 'col-xs-4' : !hasPORights}" class="option enabledLink">
     <span title="Manage Users" class="glyphicon glyphicon-user" ng-click="showUserManagement()"></span>
   </div>
+  <div ng-class="{'col-xs-3' : hasPORights, 'col-xs-4' : !hasPORights}" class="option enabledLink">
+    <span title="Show Past Sprints" class="glyphicon glyphicon-icon" ng-click="showPastSprints()"></span>
+  </div>
   <div ng-if="hasPORights" class="col-xs-3 option enabledLink">
     <span title="Configuration" class="glyphicon glyphicon-wrench" ng-click="showConfiguration()"></span>
   </div> 

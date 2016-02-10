@@ -21,6 +21,10 @@ angular.module('arseApp')
     $scope.showUserManagement = function(){
       $state.go("userManagement", { project_id: $stateParams.project_id });
     };
+    
+    $scope.showPastSprints = function(){
+      $state.go("showPastSprints", {project_id: $stateParams.project_id});
+    };
 
     $scope.showConfiguration = function(){
       $state.go("configuration", { project_id: $stateParams.project_id });
