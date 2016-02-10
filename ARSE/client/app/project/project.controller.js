@@ -1,14 +1,27 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('ProjectCtrl', ['$scope', '$state', 'Project', 'Modal', '$http', function ($scope, $state, Project, Modal, $http) {
+  .controller('ProjectCtrl', ['$scope', '$state', 'Project', 'Modal', '$http', '$stateParams', function ($scope, $state, Project, Modal, $http, $stateParams) {
     
     $scope.projects = [];
     // Error message if creating a project failed
     $scope.failed = "";
+    
+    // check current state
+    console.log(JSON.stringify($state.current.name));
+    if($state.current.name === "showPastSprints"){
+      Project.get({id: $stateParams.project_id, pastsprints: true}, function (project) {
+          $scope.project = project;
+          console.log("projects with past sprints; " + JSON.stringify(project));
+     });
+    }
+    // require projects with past sprints if url ends with pastsprints
+    // var url = window.location.href;
+    // var withPastSprints = url.substr(url.lastIndexOf("/") + 1) == "pastsprints";
+    // console.log("with past sprints: " + withPastSprints + "stateparams id" + $stateParams.project_id);
 
     
-    Project.query({role: true, pastsprints: true}, function (projects) {
+    Project.query({role: true}, function (projects) {
       $scope.projects = projects;
     });
 

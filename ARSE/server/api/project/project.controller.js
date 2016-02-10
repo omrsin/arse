@@ -38,6 +38,7 @@ exports.show = function (req, res) {
   Project.findOne({ _id: req.params.id }).populate('backlog').populate('owner', '_id username email').exec(function (err, project) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send('Not Found'); }
+    
     // Populate the participants
     Project.populate(project, {
       path: 'participants.user',
@@ -60,6 +61,17 @@ exports.show = function (req, res) {
       }
       if(req.query.pastsprints){
         console.log("req.past sprints: " + req.query.pastsprints);
+        
+        Project.populate(project, {
+          path: 'past_sprints',
+          select: 'name start_date end_date',
+          model: 'Sprint'
+        }, function(err){
+          if(err){ return handleError(res, err); }    
+          console.log("after populating pro: " + JSON.stringify(project));
+          
+          // calculate total story points
+        });
       }
 
       Story.populate(project.backlog, { path: 'user' }, function (err, storiesWithUsers) {

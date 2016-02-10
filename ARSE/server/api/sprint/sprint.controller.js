@@ -113,10 +113,12 @@ exports.close = function (req, res) {
     project.current_sprint = null;
     
     // go through stories and remove story if status is "done".
+    //TODO: before removing story add points to related sprint
     var sprint_backlog = project.backlog.slice(0, project.offset);
     sprint_backlog.forEach(function (item, index, temp) {
       if(item.status==="Done") {
         // XXX if we need to access past sprints with their stories - this will not work any more
+        // add point to related sprint
         project.backlog.pull(item);
       }
     });

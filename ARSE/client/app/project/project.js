@@ -14,11 +14,5 @@ angular.module('arseApp')
         templateUrl: 'app/project/new.html',
         controller: 'ProjectCtrl',
         authenticate: true
-      })
-      .state('showPastSprints', {
-        url: '/projects/:project_id/pastsprints',
-        templateUrl: 'app/project/past_sprints.html',
-        controller: 'ProjectCtrl',
-        authenticate: true
       });
   });
