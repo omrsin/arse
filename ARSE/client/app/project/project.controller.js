@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('ProjectCtrl', ['$scope', '$state', 'Project', 'Modal', '$http', function ($scope, $state, Project, Modal, $http) {
+  .controller('ProjectCtrl', ['$scope', '$state', 'Project', 'Modal', '$http', '$stateParams', function ($scope, $state, Project, Modal, $http, $stateParams) {
     
     $scope.projects = [];
     // Error message if creating a project failed
     $scope.failed = "";
 
+    
     Project.query({role: true}, function (projects) {
       $scope.projects = projects;
     });

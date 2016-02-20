@@ -14,7 +14,7 @@
     <div class="form-group">
       <label for="storyDescription">Description</label>
       <textarea class="form-control" type="text" name="description" ng-model="story.description" id="storyDescription" placeholder="Description"
-      required="true" />
+      required="true"></textarea>
       <div ng-show="storyForm.$submitted || storyForm.description.$touched">
         <div ng-show="storyForm.description.$error.required" class="alert alert-warning" role="alert">Enter a description.</div>
       </div>

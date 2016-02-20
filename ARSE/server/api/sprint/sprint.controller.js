@@ -39,7 +39,7 @@ exports.show = function (req, res) {
             var sprint_backlog = projectWithBacklog.backlog;
             // Populate the stories with the user that is assigned to each story
             Story.populate(sprint_backlog, { path: 'user' }, function (err, sprintWithUsers) {
-                sprint.set('stories', sprint_backlog);
+              sprint.set('stories', sprint_backlog);
               return res.json(sprint);
             });
 
@@ -110,23 +110,39 @@ exports.close = function (req, res) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send("Project not Found"); }
 
-    project.current_sprint = null;
-    
-    // go through stories and remove story if status is "done".
-    var sprint_backlog = project.backlog.slice(0, project.offset);
-    sprint_backlog.forEach(function (item, index, temp) {
-      if(item.status==="Done") {
-        // XXX if we need to access past sprints with their stories - this will not work any more
-        project.backlog.pull(item);
-      }
-    });
-    // Reset the offset to 0
-    project.offset = 0;
+    Sprint.findById(project.current_sprint, function (err, sprint) {
+      if (err) { return handleError(res, err); }
+      if (!sprint) { return res.status(404).send("sprint not found"); }
+      
+      project.past_sprints.push(project.current_sprint);
+      project.current_sprint = null;
 
-    //after the project return the project with the new state.
-    project.save(function (err) {
-      if (err) { return res.status(500).send("could not close sprint"); }
-      res.status(200).send(project);
+      // Set the end date of the sprint to the current date
+      sprint.end_date = Date.now();
+    
+      // go through stories and remove story if status is "Done".
+      var sprint_backlog = project.backlog.slice(0, project.offset);
+      sprint_backlog.forEach(function (item, index, temp) {
+        if (item.status === "Done") {
+          // XXX if we need to access past sprints with their stories - this will not work any more
+          // add point to related sprint
+          // get current sprint from project
+          sprint.total_points += item.points;
+          project.backlog.pull(item);
+        }
+      });
+      sprint.save(function (err) {
+        if (err) { return handleError(res, err); }
+
+        // Reset the offset to 0
+        project.offset = 0;
+
+        //after the project return the project with the new state.
+        project.save(function (err) {
+          if (err) { return res.status(500).send("could not close sprint"); }
+          res.status(200).send(project);
+        });
+      });
     });
   });
 }
@@ -141,6 +157,8 @@ exports.cancel = function (req, res) {
     // Do not remove any stories
     // Reset the offset to 0
     project.offset = 0;
+    // Decrement counter, otherwise there will be a gap in the numbering
+    project.sprint_counter--;
 
     //after the project return the project with the new state.
     project.save(function (err) {
