@@ -109,21 +109,15 @@ exports.close = function (req, res) {
   Project.findById(req.params.project_id).populate('backlog').exec(function (err, project) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send("Project not Found"); }
-    console.log("before finding sprint: " + project.current_sprint);
-    // find sprint for later use
-    //var current_sprint = {};
+
     Sprint.findById(project.current_sprint, function (err, sprint) {
       if (err) { return handleError(res, err); }
       if (!sprint) { return res.status(404).send("sprint not found"); }
-      //console.log("sprint found: " + JSON.stringify(sprint));
-      //current_sprint = sprint;
-      //console.log("current sprint: " + current_sprint);
       
       project.past_sprints.push(project.current_sprint);
       project.current_sprint = null;
     
       // go through stories and remove story if status is "Done".
-      //TODO: before removing story add points to related sprint
       var sprint_backlog = project.backlog.slice(0, project.offset);
       sprint_backlog.forEach(function (item, index, temp) {
         if (item.status === "Done") {
@@ -161,6 +155,8 @@ exports.cancel = function (req, res) {
     // Do not remove any stories
     // Reset the offset to 0
     project.offset = 0;
+    // Decrement counter, otherwise there will be a gap in the numbering
+    project.sprint_counter--;
 
     //after the project return the project with the new state.
     project.save(function (err) {

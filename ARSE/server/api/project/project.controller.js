@@ -59,28 +59,26 @@ exports.show = function (req, res) {
         }
         project.set('role', role);
       }
-      if(req.query.pastsprints){
-        console.log("req.past sprints: " + req.query.pastsprints);
-        Project.populate(project, {
-           path: 'past_sprints',
-          select: 'name start_date end_date total_points',
-           model: 'Sprint'
-         }, function(err){
-           if(err){ return handleError(res, err); }    
-           console.log("after populating pro: " + JSON.stringify(project));
-           
-         });
-      }
 
       Story.populate(project.backlog, { path: 'user' }, function (err, storiesWithUsers) {
         project.backlog = storiesWithUsers;
-        console.log("project final: " + JSON.stringify(project)); 
-        return res.json(project);
+
+        if(req.query.pastsprints){
+          console.log("req.past sprints: " + req.query.pastsprints);
+          Project.populate(project, {
+            path: 'past_sprints',
+            select: 'name start_date end_date total_points',
+            model: 'Sprint'
+           }, function(err){
+             if(err){ return handleError(res, err); }
+             return res.json(project);
+           });
+        } else {
+          return res.json(project);
+        }
       });
     });
-
   });
-
 };
 
 // Creates a new project in the DB.
