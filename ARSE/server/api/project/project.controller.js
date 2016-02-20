@@ -14,7 +14,7 @@ exports.index = function (req, res) {
     
     // Add the role if required
     if (req.query.role) {
-      for(var j = 0; j < projects.length; j++) {
+      for (var j = 0; j < projects.length; j++) {
         var role;
         // Loop through the participants
         for (var i = 0; i < projects[j].participants.length; i++) {
@@ -170,7 +170,7 @@ function handleError(res, err) {
 }
 
 // FUNCTIONS RELATED TO CONFIGURATION
-exports.addStoryType = function(req, res) {
+exports.addStoryType = function (req, res) {
   Project.findById(req.params.id, function (err, project) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send('Not Found'); }
@@ -194,12 +194,12 @@ exports.removeStoryType = function(req, res) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send('Not Found'); }
 
-    if(project.story_types.length == 1) {
+    if (project.story_types.length == 1) {
       return res.status(500).send("It is not allowed to remove the last story type.");
     }
 
     var index = project.story_types.indexOf(req.body.type);
-    if(index == -1) {
+    if (index == -1) {
       return res.status(404).send("Story type not found");
     }
     project.story_types.splice(index, 1);
@@ -241,3 +241,64 @@ exports.removeStoryType = function(req, res) {
 
   });
 };
+
+//Adding statuses and removing.
+exports.addStoryStatus = function (req, res) {
+  Project.findById(req.params.id, function (err, project) {
+    if (err) { return handleError(res, err); }
+    if (!project) { return res.status(404).send('Not Found'); }
+    if(project.story_statuses.indexOf(req.body.status) > -1){
+      //the code 409 is used for resouorce conflict
+      return  res.status(409).send("This status already exists!");
+    }
+    project.story_statuses.push(req.body.status);
+    project.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.status(200).json(project);
+    });
+  });
+};
+
+exports.removeStoryStatus = function (req,res) {
+    Project.findById(req.params.id, function (err, project) {
+    if (err) { return handleError(res, err); }
+    if (!project) { return res.status(404).send('Not Found'); }
+
+    var index = project.story_statuses.indexOf(req.body.status);
+    if (index == -1) {
+      return res.status(404).send("Status type not found");
+    }
+    project.story_statuses.splice(index, 1);
+     // Populate the type of the stories
+    Project.populate(project, {
+      path: 'backlog',
+      select: 'inprogress_status',
+      model: 'Story'
+    }, function (err) {
+      if (err) { return handleError(res, err); }
+      
+      for(var i = 0; i < project.backlog.length; i++) {
+        if(project.backlog[i].inprogress_status === req.body.status) {
+          // Reset the type to the defualt (first in list)
+          console.log("Resetting the value");
+
+          Story.findOne({ '_id': project.backlog[i].id }).exec(function (err, story) {
+            if (err) { return handleError(res, err); }
+            if (!story) { return res.status(404).send('Not Found'); }
+            story.inprogress_status = null;
+            // Save the story
+            story.save(function (err) {
+              if (err) { return handleError(res, err); }
+            });
+          });
+
+        }
+      }
+      // Save the project
+      project.save(function (err) {
+        if (err) { return handleError(res, err); }
+        return res.status(200).json(project);
+      });
+    });
+  });  
+}

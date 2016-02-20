@@ -39,10 +39,10 @@
                         <div class="color-box" ng-class="'story-type-{{$index}}'"></div>
                       </div>
                       <div class="col-xs-2 col-sm-2">
-                        <div ng-show="project.story_types.length != 1" class="btn-group pull-right">    
+                        <div ng-show="project.story_types.length != 1" class="btn-group pull-right">
                           <a ng-click="deleteStoryType(type)" class="btn btn-danger">
                             <span class="glyphicon glyphicon-remove"></span>
-                          </a>    
+                          </a>
                         </div>
                       </div>
                     </div>
@@ -64,6 +64,59 @@
             </div>
             <div class="col-xs-4 col-sm-2">
               <a ng-click="addStoryType(storyTypeField)" class="btn btn-primary pull-right" ng-disabled="!storyTypeField">Add Story Type</a>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="content">
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-10">
+            <div ng-show="status_failed" class="alert alert-danger" role="alert">{{ status_failed }}</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <p>Configure the statuses available for stories that are In Progress.</p>
+            <div class="custom-table">
+              <div class="row">
+                <div class="table-header">
+                  <div class="col-xs-10">Status Name</div>
+                  <div class="col-xs-2"></div>
+                </div>
+              </div>
+              <div class="table-content">
+                <ul>
+                  <li class="table-row" ng-repeat="status in project.story_statuses">
+                    <div class="row">
+                      <div class="col-xs-10">{{ status }}</div>
+                      <div class="col-xs-2 col-sm-2">
+                        <div class="btn-group pull-right">
+                          <a ng-click="deleteStatus(status)" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="actions">
+        <form>
+          <div class="row">
+            <div class="col-xs-8 col-sm-10">
+              <input type="text" class="form-control" ng-model="statusToAdd" placeholder="Status Name">
+            </div>
+            <div class="col-xs-4 col-sm-2">
+              <a ng-click="addStatus(statusToAdd)" class="btn btn-primary pull-right" ng-disabled="!statusToAdd">Add Status</a>
             </div>
           </div>
         </form>
