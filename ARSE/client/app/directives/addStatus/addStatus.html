@@ -5,6 +5,7 @@ ng-change="assignUser(selectedUser)" >
   <option value="{{selectedUser}}">{{selectedUser.username}}</option>
 </select>-->
 
-<a  href="#" editable-select="status" buttons="no" e-ng-options="stat for stat in statuses" style="color:#428BCA">
+<a class="item" href="#" editable-select="status" buttons="no" e-ng-options="stat for stat in statuses" style="	color: #428BCA !important;
+	font-style: normal;">
     {{ showStatus() }}
   </a>
