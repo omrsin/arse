@@ -61,10 +61,6 @@ exports.show = function (req, res) {
       }
       if(req.query.pastsprints){
         console.log("req.past sprints: " + req.query.pastsprints);
-        // Project.populate(project, {path: 'past_sprints'}, function(err, projectWithPastSprints){
-        //   project.past_sprints = projectWithPastSprints;
-        //   console.log("project with past sprints: " + JSON.stringify(project));
-        // });
         Project.populate(project, {
            path: 'past_sprints',
           select: 'name start_date end_date total_points',
