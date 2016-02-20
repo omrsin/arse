@@ -7,7 +7,6 @@
         <div class="row">
           <div class="col-sm-12">
             <h1>Past Sprints</h1>
-            <p>from - till</p>
           </div>
 
         <!-- Use for debugging viewport size   -->
@@ -20,13 +19,15 @@
       </div>
 
       <div class="content">          
-        <div ng-hide="project.past_sprints" class="row">
-          <h3 style="margin-left: 100px;">
-             No past sprints for this project
-          </h3>
+        <div ng-hide="project.past_sprints.length != 0" class="row">
+          <div class="col-xs-12">
+            No past sprints for this project.
+          </div>
         </div>
-        <div class="row" style="margin: auto 0;">
-          <table class="table table-hover table-striped" ng-show="project.past_sprints">
+        <div class="row">
+          <div class="col-xs-12">
+          <!-- TODO a fucking table? Seriously!? -->
+          <table class="table table-hover table-striped" ng-show="project.past_sprints.length != 0">
             <tr class="table-header">
               <td>
                 <strong>Sprint Name</strong>
@@ -56,7 +57,7 @@
               </td>
             </tr>
           </table>
-          
+          </div>
         </div>                
       </div>    
     </div>    
