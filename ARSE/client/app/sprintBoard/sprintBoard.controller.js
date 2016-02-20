@@ -21,6 +21,11 @@ angular.module('arseApp')
 
     $scope.selectedParticpant = {};
     $scope.showAddParticipant = false;
+    
+    //statuses available
+    $scope.statuses_available = project.story_statuses;
+    $scope.statuses_available.splice(0, 0, "Not Set");
+
     $scope.participants = project.participants;
     // Make unassign available on the drowpdown
     $scope.participants.splice(0, 0, {
@@ -49,11 +54,11 @@ angular.module('arseApp')
           story.inColumn.push({ isWithin: story.status === $scope.statuses[j].name });
         }
         // Create 3 arrays for the tasks for the three statuses
-        story.tasksByStatus = [[],[],[]];
+        story.tasksByStatus = [[], [], []];
         for (var j = 0; j < $scope.sprint.stories[i].tasks.length; j++) {
           var task = $scope.sprint.stories[i].tasks[j];
           for (var k = 0; k < $scope.statuses.length; k++) {
-            if(task.status === $scope.statuses[k].name) {
+            if (task.status === $scope.statuses[k].name) {
               story.tasksByStatus[k].push(task);
             }
           }
@@ -182,12 +187,12 @@ angular.module('arseApp')
         task.status = $scope.statuses[1].name;
       }
       // save it in the array of the corresponding status
-      for(var i = 0; i < $scope.statuses.length; i++) {
-        if($scope.statuses[i].name === oldStatus) {
+      for (var i = 0; i < $scope.statuses.length; i++) {
+        if ($scope.statuses[i].name === oldStatus) {
           // remove
           story.tasksByStatus[i].splice(story.tasksByStatus[i].indexOf(task), 1);
         }
-        if($scope.statuses[i].name === task.status) {
+        if ($scope.statuses[i].name === task.status) {
           story.tasksByStatus[i].push(task);
         }
       }
@@ -204,12 +209,12 @@ angular.module('arseApp')
         task.status = $scope.statuses[2].name;
       }
       // save it in the array of the corresponding status
-      for(var i = 0; i < $scope.statuses.length; i++) {
-        if($scope.statuses[i].name === oldStatus) {
+      for (var i = 0; i < $scope.statuses.length; i++) {
+        if ($scope.statuses[i].name === oldStatus) {
           // remove
           story.tasksByStatus[i].splice(story.tasksByStatus[i].indexOf(task), 1);
         }
-        if($scope.statuses[i].name === task.status) {
+        if ($scope.statuses[i].name === task.status) {
           story.tasksByStatus[i].push(task);
         }
       }
@@ -218,10 +223,10 @@ angular.module('arseApp')
     }
 
     // Collapse and expand to see tasks of a story
-    $scope.expand = function(story) {
+    $scope.expand = function (story) {
       story.isExpanded = true;
     }
-    $scope.collapse = function(story) {
+    $scope.collapse = function (story) {
       story.isExpanded = false;
     }
 
@@ -229,14 +234,14 @@ angular.module('arseApp')
     $scope.changeStory = function (story, oldStatus) {
       $scope.failed = "";
       $scope.infoMessage = "";
-      if(story.status === "Done") {
+      if (story.status === "Done") {
         // TODO display a warning if there are tasks undone.
         // Check if there is a task which is not done
         console.log("Story:");
         console.log(story);
-        for(var i = 0; i < story.tasks.length; i++) {
+        for (var i = 0; i < story.tasks.length; i++) {
           console.log(story.tasks[i].status);
-          if(story.tasks[i].status !== "Done") {
+          if (story.tasks[i].status !== "Done") {
             $scope.infoMessage = "Please note that there are still tasks of this story, which are not done yet.";
             break;
           }
@@ -296,8 +301,8 @@ angular.module('arseApp')
           res.$save(function (httpRes) {
             story.tasks.push(httpRes);
             // save it in the array of the corresponding status
-            for(var i = 0; i < $scope.statuses.length; i++) {
-              if($scope.statuses[i].name === httpRes.status) {
+            for (var i = 0; i < $scope.statuses.length; i++) {
+              if ($scope.statuses[i].name === httpRes.status) {
                 story.tasksByStatus[i].push(httpRes);
               }
             }
@@ -312,7 +317,7 @@ angular.module('arseApp')
         });
     };
 
-    $scope.removeTask = function(task, story) {
+    $scope.removeTask = function (task, story) {
       $scope.failed = "";
       $scope.infoMessage = "";
 
@@ -325,8 +330,8 @@ angular.module('arseApp')
               console.log("Task deleted successfully");
               story.tasks.splice(story.tasks.indexOf(task), 1);
               // delete it in the array of the corresponding status
-              for(var i = 0; i < $scope.statuses.length; i++) {
-                if($scope.statuses[i].name === task.status) {
+              for (var i = 0; i < $scope.statuses.length; i++) {
+                if ($scope.statuses[i].name === task.status) {
                   story.tasksByStatus[i].splice(story.tasksByStatus[i].indexOf(task), 1);
                 }
               }
@@ -347,7 +352,7 @@ angular.module('arseApp')
           $http.put('/api/projects/' + $scope.project_id + '/stories/' + story._id + '/tasks/' + task._id, res)
             .success(function (data, status, headers, config) {
               console.log("Task updated successfully");
-              angular.copy(data,task);
+              angular.copy(data, task);
               // task = angular.copy(data);
             })
             .error(function (data, status, header, config) {
@@ -358,14 +363,14 @@ angular.module('arseApp')
           $scope.failed = err.data;
         });
     };
-    
-    $scope.countByStatus = function(tasks,stat) {
-      var filteredTasks = tasks.filter(function(elem){
+
+    $scope.countByStatus = function (tasks, stat) {
+      var filteredTasks = tasks.filter(function (elem) {
         return elem.status === stat;
       });
-      return filteredTasks.length > 0;  
+      return filteredTasks.length > 0;
     };
-    
+
   }]);
 
 angular.module('arseApp').controller('TaskFormCtrl',

@@ -17,6 +17,9 @@ var TaskSchema = new Schema({
     required: true,
     enum: ["New", "In progress", "Done"],
     default: "New"
+  },
+  inprogress_status: {
+    type: String
   }    
 });    
 
@@ -45,6 +48,9 @@ var StorySchema = new Schema({
     enum: ["New", "In progress", "Done"],
     default: "New"
   },
+  inprogress_status: {
+    type: String
+  },  
   points: {
     type: Number
   },
