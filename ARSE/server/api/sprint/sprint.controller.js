@@ -116,6 +116,9 @@ exports.close = function (req, res) {
       
       project.past_sprints.push(project.current_sprint);
       project.current_sprint = null;
+
+      // Set the end date of the sprint to the current date
+      sprint.end_date = Date.now();
     
       // go through stories and remove story if status is "Done".
       var sprint_backlog = project.backlog.slice(0, project.offset);
@@ -130,18 +133,17 @@ exports.close = function (req, res) {
       });
       sprint.save(function (err) {
         if (err) { return handleError(res, err); }
-      });
-      // Reset the offset to 0
-      project.offset = 0;
 
-      //after the project return the project with the new state.
-      project.save(function (err) {
-        if (err) { return res.status(500).send("could not close sprint"); }
-        res.status(200).send(project);
+        // Reset the offset to 0
+        project.offset = 0;
+
+        //after the project return the project with the new state.
+        project.save(function (err) {
+          if (err) { return res.status(500).send("could not close sprint"); }
+          res.status(200).send(project);
+        });
       });
     });
-
-
   });
 }
 
