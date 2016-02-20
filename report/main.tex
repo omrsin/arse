@@ -99,18 +99,18 @@ In this chapter we will roughly explain how to use our application. For each sta
 \label{sec:profile-mgmt}
 %Explain: Register, Login, Logout, change Profile
 
-\begin{figure}
-	\centering
-	\includegraphics[width=0.5\textwidth]{img/login}
-	\caption{The login screen.}
-	\label{fig:login}
-\end{figure}
-
 When first visiting the ARSE app, you will be asked to login or register. The screen you will see is displayed in figure \ref{fig:login}. Here you can pass the form to login or click \emph{Register} to switch to a different form, where you are asked to register providing your full name, email address and a password. Email addresses serve as usernames and must be unique in the system.
 
 After logging in, you can click your name in the upper right corner to access a page that allows to edit your profile. In that page you can adjust your name and password, but not your email address. The email address cannot be changed after the registration. Changes to your profile always require a password confirmation using your current password.
 
 In the upper right corner you will also find a button that logs you out from the system.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{img/login}
+	\caption{The login screen.}
+	\label{fig:login}
+\end{figure}
 
 \section{Project Management}
 \label{sec:project-mgmt}
@@ -122,7 +122,7 @@ In order to create a project, click the button \emph{Create a new project}. This
 
 The projects are listed with name and description. If you are product owner of a project, buttons are present, that you can use to delete or modify a project.
 
-\begin{figure}
+\begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{img/projects}
 	\caption{The project list screen.}
@@ -130,7 +130,7 @@ The projects are listed with name and description. If you are product owner of a
 \end{figure}
 
 %Explain: Project-navbar
-You can click the name of a project in the list to access the project page. When you click it, you are redirected to a project specific are, which includes a navigation bar to access the different views available for each project. On the left-hand side of figure \ref{fig:project-backlog}, the project navigation bar is displayed. It includes five icons, and the views linked to them are listed in the following.
+You can click the name of a project in the list to access the project page. When you click it, you are redirected to a project specific are, which includes a navigation bar to access the different views available for each project. On the left-hand side of figure \ref{fig:project-backlog}, the project navigation bar is displayed. On mobile devices, this navigation bar is displayed at the top instead. It includes five icons, and the views linked to them are listed in the following. Each view is explained in detail in the following subsections.
 \begin{description}
 	\item[Product Backlog:] A list of all stories of the project can be viewed here. Stories can be added, removed and edited. Furthermore, it is possible to start a new sprint in this view.
 	\item[Sprint Board:] This view can only be accessed if a sprint is currently running. Its purpose is to allow changing the status of stories, managing the tasks of stories, or to close or cancel a sprint.
@@ -145,7 +145,15 @@ You can click the name of a project in the list to access the project page. When
 
 Explain: Adding items, viewing/modifying/deleting items, reordering items, dragging sprint delimiter, starting sprint.
 
-\begin{figure}
+This view lists all stories of a project, in priority order. An example of how this can look is given in figure \ref{fig:project-backlog}. For each story, name, description, type, status and story points are given. Three buttons follow in each row of the table. The first two allow to delete or modify a story; the last displays more details about the story and the left side of the screen.
+
+In the top there is a button that can be used to add a new story. The required information are a name and a description, the number of story points, the story type and the assignee. For the latter, it is possible not to assign the story too a particular person. The form shown is the same form when editing stories.
+
+To change the order --and thereby the priority-- of stories, users can simply drag and drop the rows up or down in the table. There is one special row that is always present: the sprint delimiter. In the example screenshot, this is the third row. This delimiter separates the sprint backlog (above) from the product backlog (below). It can be dragged like any other row, effectively changing the scope of a sprint. This will issue a warning, if a sprint is currently running. The Sprint backlog is the subset of all stories are planned to be done by the end of the sprint.
+
+Finally, in the row of the sprint delimiter, product owners have the possibility to start a new sprint. In order to that, first the planned end date has to chosen and afterwards the button \emph{Start Sprint!} can be clicked.
+
+\begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{img/backlog}
 	\caption{The project backlog screen and the project navigation on the left-hand side.}
