@@ -93,7 +93,7 @@ In this chapter we will roughly explain how to use our application. For each sta
 %TODO include the last tasks (like chat) somewhere.
 
 %TODO cut the browser part of the screenshots
-%TODO augment the screenshots with numbers/text etc.
+%TODO augment the screenshots with numbers/text etc., and refer to these numbers in the explanatory text.
 
 \section{Profile Management}
 \label{sec:profile-mgmt}
@@ -108,7 +108,7 @@ In this chapter we will roughly explain how to use our application. For each sta
 
 When first visiting the ARSE app, you will be asked to login or register. The screen you will see is displayed in figure \ref{fig:login}. Here you can pass the form to login or click \emph{Register} to switch to a different form, where you are asked to register providing your full name, email address and a password. Email addresses serve as usernames and must be unique in the system.
 
-After logging in, you can click your name in the upper right corner to access a page that allows to edit your profile. In that page you can adjust your name and password, but not your email address. Changes to your profile always require a password confirmation using your current password.
+After logging in, you can click your name in the upper right corner to access a page that allows to edit your profile. In that page you can adjust your name and password, but not your email address. The email address cannot be changed after the registration. Changes to your profile always require a password confirmation using your current password.
 
 In the upper right corner you will also find a button that logs you out from the system.
 
@@ -118,11 +118,9 @@ In the upper right corner you will also find a button that logs you out from the
 
 After logging in, you will be redirected to a page that shows the projects you are a member of. If you just registered, this page will be empty. You can now create your own projects or ask colleagues to add you to their projects.
 
-In order to create a project, click the button \emph{Create a new project}. This will open a form where you need to fill out name and description of the project. After that, the project will appear in the list and will automatically become product owner of this project.
+In order to create a project, click the button \emph{Create a new project}. This will open a form where you need to fill out name and description of the project. After that, the project will appear in the list and you will automatically become product owner of this project. This gives you privileges that normal developers in a project do not have.
 
 The projects are listed with name and description. If you are product owner of a project, buttons are present, that you can use to delete or modify a project.
-
-You can click the name of a project in the list to access the project page.
 
 \begin{figure}
 	\centering
@@ -131,13 +129,28 @@ You can click the name of a project in the list to access the project page.
 	\label{fig:project-list}
 \end{figure}
 
+%Explain: Project-navbar
+You can click the name of a project in the list to access the project page. When you click it, you are redirected to a project specific are, which includes a navigation bar to access the different views available for each project. On the left-hand side of figure \ref{fig:project-backlog}, the project navigation bar is displayed. It includes five icons, and the views linked to them are listed in the following.
+\begin{description}
+	\item[Product Backlog:] A list of all stories of the project can be viewed here. Stories can be added, removed and edited. Furthermore, it is possible to start a new sprint in this view.
+	\item[Sprint Board:] This view can only be accessed if a sprint is currently running. Its purpose is to allow changing the status of stories, managing the tasks of stories, or to close or cancel a sprint.
+	\item[User management:] The participants of the project are displayed in this view. As a product owner, it is also possible to add or remove members, and to change their roles.
+	\item[Past Sprints:] This view simply lists all finished sprints, with their time-frames and the number of story points that was burnt in the sprint.
+	\item[Project configuration:] This view is only accessible by product owners and the icon will be hidden for developers. The view allows to define additional story types and statuses. These can then be used for every story of the project later on.
+\end{description}
 
-Explain: Project-navbar
 
 \subsection{Product Backlog}
 \label{sec:backlog}
 
 Explain: Adding items, viewing/modifying/deleting items, reordering items, dragging sprint delimiter, starting sprint.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\textwidth]{img/backlog}
+	\caption{The project backlog screen and the project navigation on the left-hand side.}
+	\label{fig:project-backlog}
+\end{figure}
 
 \subsection{Sprint Board}
 \label{sec:sprint-board}
