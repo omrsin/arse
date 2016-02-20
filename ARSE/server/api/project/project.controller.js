@@ -209,9 +209,36 @@ exports.removeStoryStatus = function (req,res) {
       return res.status(404).send("Status type not found");
     }
     project.story_statuses.splice(index, 1);
-    project.save(function (err) {
+     // Populate the type of the stories
+    Project.populate(project, {
+      path: 'backlog',
+      select: 'inprogress_status',
+      model: 'Story'
+    }, function (err) {
       if (err) { return handleError(res, err); }
-      return res.status(200).json(project);
+      
+      for(var i = 0; i < project.backlog.length; i++) {
+        if(project.backlog[i].inprogress_status === req.body.status) {
+          // Reset the type to the defualt (first in list)
+          console.log("Resetting the value");
+
+          Story.findOne({ '_id': project.backlog[i].id }).exec(function (err, story) {
+            if (err) { return handleError(res, err); }
+            if (!story) { return res.status(404).send('Not Found'); }
+            story.inprogress_status = null;
+            // Save the story
+            story.save(function (err) {
+              if (err) { return handleError(res, err); }
+            });
+          });
+
+        }
+      }
+      // Save the project
+      project.save(function (err) {
+        if (err) { return handleError(res, err); }
+        return res.status(200).json(project);
+      });
     });
   });  
 }
