@@ -9,8 +9,6 @@ angular.module('arseApp')
 
 		Project.get({ id: $stateParams.project_id, pastsprints: true }, function (project) {
 			$scope.project = project;
-			console.log("projects with past sprints:");
-			console.log(project);
 		});
 
 	}]);

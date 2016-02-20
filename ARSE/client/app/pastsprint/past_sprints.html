@@ -10,10 +10,10 @@
           </div>
 
         <!-- Use for debugging viewport size   -->
-        <!-- <div class="col-xs-1 hidden-sm hidden-md hidden-lg">XS</div> 
+        <div class="col-xs-1 hidden-sm hidden-md hidden-lg">XS</div> 
         <div class="col-sm-1 hidden-xs hidden-md hidden-lg">SM</div>
         <div class="col-md-1 hidden-sm hidden-xs hidden-lg">MD</div>  
-        <div class="col-lg-1 hidden-sm hidden-md hidden-xs">LG</div>   -->
+        <div class="col-lg-1 hidden-sm hidden-md hidden-xs">LG</div>
        
         </div>    
       </div>
@@ -26,37 +26,28 @@
         </div>
         <div class="row">
           <div class="col-xs-12">
-          <!-- TODO a fucking table? Seriously!? -->
-          <table class="table table-hover table-striped" ng-show="project.past_sprints.length != 0">
-            <tr class="table-header">
-              <td>
-                <strong>Sprint Name</strong>
-              </td>
-              <td>
-                <strong>Sprint Date</strong>
-              </td>
-              <td>
-                <strong>End Date</strong>
-              </td>
-              <td>
-                <strong>Points</strong>
-              </td>
-            </tr>
-            <tr class="table-content" ng-repeat="sprint in project.past_sprints">
-              <td>
-                {{sprint.name}}
-              </td>
-              <td>
-                {{sprint.start_date | date: 'medium'}}
-              </td>
-              <td>
-                {{sprint.end_date | date: 'medium'}}
-              </td>
-              <td>
-                {{sprint.total_points}}
-              </td>
-            </tr>
-          </table>
+            <div class="custom-table">
+              <div class="row">
+                <div class="table-header">
+                  <div class="col-xs-3 col-sm-2">Name</div>
+                  <div class="col-xs-3 col-sm-4">Start</div>
+                  <div class="col-xs-3 col-sm-4">End</div>
+                  <div class="col-xs-3 col-sm-2">Points</div>           
+                </div>
+              </div>
+              <div class="table-content">
+                <ul>
+                  <li class="table-row" ng-repeat="sprint in project.past_sprints">
+                    <div class="row">
+                      <div class="col-xs-3 col-sm-2">{{sprint.name}}</div>
+                      <div class="col-xs-3 col-sm-4">{{sprint.start_date | date: 'dd.MM.yyyy'}}</div>
+                      <div class="col-xs-3 col-sm-4">{{sprint.end_date | date: 'dd.MM.yyyy'}}</div>
+                      <div class="col-xs-3 col-sm-2">{{sprint.total_points}}</div>  
+                    </div>
+                  </li>
+                </ul>            
+              </div>          
+            </div>
           </div>
         </div>                
       </div>    
