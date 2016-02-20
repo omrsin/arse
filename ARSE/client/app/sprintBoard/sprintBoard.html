@@ -66,7 +66,7 @@
                         <add-participant participants="participants" current-story="story" is-updated-on-selection="true"></add-participant>
                       </div>
                     </div>
-                    <div ng-show="story.status === 'In progress'" class="row">
+                    <div ng-show="story.status === 'In progress' && statuses_available.length > 1" class="row">
                       <div class="col-xs-1 assignUserIcon">
                         <span class="glyphicon glyphicon-tag"></span>
                       </div>
