@@ -127,10 +127,24 @@
 }
 
 
-	.desktop-indicator {
-		position: absolute;
-		left: -5px;
-		top: -5px;
-		background: red;
-	}
+.desktop-indicator {
+	position: absolute;
+	left: -5px;
+	top: -5px;
+	background: red;
+}
+
+.load-more {
+	display: block;
+	width: 100%;
+	padding: 5px;
+	text-align: center;
+	color: white;
+	background: #C1D7DE;
+}
+
+.load-more:hover{
+	color: white;
+	text-decoration: none;
+}
 	

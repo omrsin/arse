@@ -1,7 +1,12 @@
 <div class="chat-widget-container hidden-xs">
 	<div ng-click="showChati()" class="chat-header"><span class="ion-chatboxes"></span> Project Chat <span ng-hide="isShownChat || counter < 1" class="badge label-danger desktop-indicator">{{counter}}</span>		<span ng-show="isShownChat" class="ion-minus-round pull-right"></span> <span ng-show="!isShownChat" class="ion-plus-round pull-right"></span></div>
-	<div ng-show="isShownChat" class="chat-body" scroll-bottom="messageLog">
+	<div ng-show="isShownChat" class="chat-body" scroll-bottom="fullChat">
 		<ul>
+			<li>
+				<a ng-hide="fullChat.length < loadLimit " href="" class="load-more" ng-click="loadMore()">
+					Load more..
+				</a>
+			</li>
 			<li ng-repeat="msg in messageLog">
 				<div class="chat-msg">
 					<div class="msg-header">{{msg.user}}</div>
@@ -18,8 +23,13 @@
 <!--For Mobile View-->
 <div class="chat-widget-container hidden-sm hidden-md hidden-lg" ng-class="{chatOpen: isShownChat}">
 	<div ng-click="showChati()" class="chat-header" ng-show="isShownChat">Project Chat <span ng-show="isShownChat" class="ion-minus-round pull-right"></span></div>
-	<div ng-show="isShownChat" class="chat-body" scroll-bottom="messageLog">
+	<div ng-show="isShownChat" class="chat-body" scroll-bottom="fullChat">
 		<ul>
+			<li>
+				<a ng-hide="fullChat.length < loadLimit " href="" class="load-more" ng-click="loadMore()">
+					Load more..
+				</a>
+			</li>
 			<li ng-repeat="msg in messageLog">
 				<div class="chat-msg">
 					<div class="msg-header">{{msg.user}}</div>

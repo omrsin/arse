@@ -116,7 +116,7 @@ exports.postMessage = function (req, res) {
   Project.findById({ _id: req.params.id }, function (err, project) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send('Not Found'); }
-    var message = { user: req.body.user, text: req.body.text };
+    var message = { user: req.body.user, text: req.body.text, date: Date.now() };
     project.chat.push(message);
     project.save(function (err) {
       if (err) {
