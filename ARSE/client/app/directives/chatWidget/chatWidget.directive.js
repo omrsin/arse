@@ -9,6 +9,7 @@ angular.module('arseApp')
         scope.isShownChat = $rootScope.chatState;
         scope.message = "";
         scope.loadLimit = 10;
+        scope.difference = -1;
         if ($rootScope.msgCounter === undefined) {
           $rootScope.msgCounter = [];
         }
@@ -39,8 +40,12 @@ angular.module('arseApp')
         scope.messageLog = scope.project.chat.slice(-scope.loadLimit);
         //  
         //           // Update array with any new or deleted items pushed from the socket
-        socket.syncUpdates('project' + $stateParams.project_id, scope.project.chat, function (evt, msg, chat) {
-          console.log(chat.length - msg.length);
+        socket.syncUpdates('project' + $stateParams.project_id, scope.project.chat, function (evt, msg, chat){ 
+
+          //handles project events that do not change the chat
+          if((msg.length - chat.length) === -1 || scope.difference == msg.length - chat.length) return;
+          scope.difference = msg.length - chat.length;
+
           scope.counter++;
           $rootScope.msgCounter[scope.project._id] = scope.counter;
           scope.$apply(function () {
