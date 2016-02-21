@@ -14,9 +14,9 @@
 \usepackage{xcolor}
 \usepackage{tikz}
 \usepackage{booktabs}
-\usepackage{subfigure}
 \usepackage[english]{babel}
 \usepackage{blindtext}
+\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
 
 % Defining JavaScript listings
 \definecolor{mygreen}{rgb}{0,0.3,0}
@@ -163,9 +163,9 @@ Finally, in the row of the sprint delimiter, product owners have the possibility
 \subsection{Sprint Board}
 \label{sec:sprint-board}
 
-Explain: Cancelling sprint, closing sprint, dragging stories, viewing stories, assigning a team member, adding tasks, changing tasks, dragging tasks, collapse/expand to view tasks, colors, selecting tag/status.
+%Explain: Cancelling sprint, closing sprint, dragging stories, viewing stories, assigning a team member, adding tasks, changing tasks, dragging tasks, collapse/expand to view tasks, colors, selecting tag/status.
 
-When a sprint has been started, this view becomes available. Given the big difference in screen sizes, the view is designed essentially different for desktop and mobile versions. In the following, first the desktop version is explained with all available features, and then the key differences to the mobile version are pointed out.
+When a sprint has been started, this view becomes available. Given the big difference in screen sizes, the view is designed essentially different for desktop and mobile versions. In the following, first the desktop version is explained with all available features, and then the key differences to the mobile version are pointed out. An example of the desktop version is given in figure \ref{fig:project-sprintboard-desktop}, and for the mobile version in figure \ref{fig:project-sprintboard-mobile}.
 
 \paragraph{Desktop version}
 In the top there are two buttons displayed for product owners. They can be used to cancel or close a sprint respectively. Canceling means that all stories are transferred back to product backlog, regardless of their status. When closing a sprint, only the stories not done are transferred back; the finished stories are deleted. Please note that this action is irreversible and data may be lost if clicking this by accident.
@@ -176,17 +176,30 @@ The color of the card and the upper left icon are chosen according to the its ty
 
 If tasks have been added to a story, they are displayed in gray cards below the story with title and description. Just as stories, they can be dragged to other columns to change their statuses. These gray cards also have icons to edit or delete the task. To show or hide the tasks of a story, the arrow pointing down or up on the story card can be clicked.
 
+\paragraph{Mobile version}
+
+On the small screens of mobile devices it is not possible to show all three columns simultaneously Therefore, the table has been replaced by a set of three tabs for the respective statuses. Now, all information is displayed on the cards, including the description, and no magnifying glass icon is available. To change the status of a story or task, right and left arrow icons have been added. Tasks are always displayed in the mobile version and cannot be hidden as in the desktop version. As it is possible, that a task is in a different tab as the story it belongs to (for example the task \emph{Browsing} in figure \ref{fig:project-sprintboard}), the name of the story is always displayed in the upper right corner of a task card. The controls to change assignees or tags, and the buttons to close or cancel a sprint have not been changed.
+
 \begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.5\textwidth]{img/sprintboard}
-	\caption{The sprint board in the desktop version.}
-	\label{fig:project-sprintboard}
+\centering
+\subfloat[]{\includegraphics[height=20EM]{img/sprintboard}%
+\label{fig:project-sprintboard-desktop}}
+\hfil
+\subfloat[]{\includegraphics[height=20EM]{img/sprintboard-mobile}%
+\label{fig:project-sprintboard-mobile}}
+\caption{The sprint board in its desktop and mobile versions.}
+\label{fig:project-sprintboard}
 \end{figure}
 
 \subsection{User Management}
 \label{sec:user-mgmt}
 
 Explain: List of members, assign role, remove members, add members with a certain role
+
+\subsection{Past Sprints}
+\label{sec:past-spints}
+
+Explain: Table of past sprints
 
 \subsection{Project Configuration}
 \label{sec:proj-config}
