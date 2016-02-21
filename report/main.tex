@@ -222,7 +222,18 @@ This view is solely informative and does not contain any controls. A table lists
 \subsection{Project Configuration}
 \label{sec:proj-config}
 
-Explain: Adding story types, removing story types, adding statuses, removing statuses
+%Explain: Adding story types, removing story types, adding statuses, removing statuses
+
+The project configuration view is only accessible by product owners. It basically has two purposes: managing story types and additional statuses (tags) of stories. For both, a list of the currently defined items is shown, and a button to remove a story type or status. The first table also displays the colors of the story types, that are used in the sprint board. Moreover, there are text fields and buttons to add new types or statuses. 
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[height=30EM]{img/configuration}
+	\caption{The project configuration.}
+	\label{fig:project-config}
+\end{figure}
+
+%TODO a subsection for the chat
 
 \chapter{Done Product Backlog Items}
 \label{ch:done-pbis}
@@ -250,20 +261,20 @@ In the following we list all the items from the original Product Backlog that we
 
 	\item  As a team member of a project, I can
 	\begin{itemize}
-		\item access the Product Backlog
-		\item access the Sprint Board
-		\item access past Sprints which includes its name, time interval, and story points burnt.
-		\item copy backlog items to the Sprint backlog.
-		\item create new tasks in the task board (a task always belongs to a user story).
-		\item change tasks including their description as well as their status (New, in progress, done).
-		\item assign tasks to a team member.
-		\item add new product backlog items to the product backlog of a project
+		\item access the Product Backlog.
+		\item access the Sprint Board.
+		\item access past sprints which includes their name, time interval, and story points burnt.
+		\item copy backlog items to the Sprint Backlog.
+		\item create new tasks in the Sprint Board (a task always belongs to a user story).
+		\item change product backlog items including their description as well as their status (New, in progress, done).
+		\item change tasks including their description as well as their status (New, in progress, done),
+		\item assign product backlog items to a team member.
+		\item add new product backlog items to the product backlog of a project.
 		\begin{itemize}
 			\item product backlog items can have different statuses (new, in progress, done).
-			\item product backlog items can be of different types, e.g. feature, enhancement, fix
+			\item product backlog items can be of different types, e.g. feature, enhancement, fix.
 		\end{itemize}
-		\item change the content of user stories
-		\item change the order (priority) of user stories in the product backlog
+		\item change the order (priority) of product backlog items in the product backlog.
 		%\item chat with my team members
 		%\item access and search chat logs
 	\end{itemize}
@@ -276,7 +287,7 @@ In the following we list all the items from the original Product Backlog that we
 		\item change the list of statuses assignable to product backlog items in the project settings.
 		\item change the list of types assignable to product backlog items in the project settings.
 		\item close a Sprint (all done stories will be removed).
-		\item cancel a Sprint
+		\item cancel a Sprint.
 	\end{itemize}
 \end{itemize}
 
