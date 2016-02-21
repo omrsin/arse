@@ -6,7 +6,7 @@ angular.module('arseApp')
       id: '@_id'
     },
     {
-      changePassword: {
+      editUser: {
         method: 'PUT',
         params: {
           controller:'password'

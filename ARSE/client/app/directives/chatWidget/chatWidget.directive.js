@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('arseApp')
-  .directive('chatWidget', function ($http, socket, $stateParams, Auth) {
+  .directive('chatWidget', function ($http, socket, $stateParams, Auth, $rootScope) {
     return {
       templateUrl: 'app/directives/chatWidget/chatWidget.html',
       restrict: 'EA',
       link: function (scope, element, attrs) {
-        scope.isShown = false;
+        scope.isShown =  $rootScope.chatState;
         scope.message = "";
 
         
@@ -15,6 +15,11 @@ angular.module('arseApp')
           if(evt.keyCode === 13) {
             scope.sendMessage(scope.message);
           }
+        };
+        
+        scope.showChati = function() {
+          scope.isShown = !scope.isShown;
+          $rootScope.chatState = scope.isShown;
         }
 
         $http.get('/api/projects/' + $stateParams.project_id).success(function (project) {

@@ -40,6 +40,10 @@ exports.create = function (req, res) {
         if (!project) {
           return res.status(404).send("Project not found");
         }
+        if(project.story_types.indexOf(req.body.type) == -1) {
+          // Not supported story type
+          return res.status(500).send('This story type is not allowed');
+        }
         // To check if the user is Unassigned
         if (!story.user) {
           var newUser = new User();
@@ -64,32 +68,44 @@ exports.create = function (req, res) {
 };
 
 // Updates an existing story in the DB.
-exports.update = function (req, res) {
-  console.log("update just called");
-  if (req.body._id) { delete req.body._id; }
+exports.update = function(req, res) {
+  // Remove things that should not be merged
+  if(req.body._id) { delete req.body._id; }
+  if(req.body.tasks) {delete req.body.tasks; }
+  
   Story.findById(req.params.id, function (err, story) {
     if (err) { return handleError(res, err); }
     if (!story) { return res.status(404).send('Not Found'); }
     // To check if unassigned then user is null
-    if (req.body.user.username === 'Unassigned') {
+    if (!req.body.user || req.body.user.username === 'Unassigned') {
       req.body.user = null;
     }
-    var updated = _.merge(story, req.body);
-    console.log(req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      // populate story with user
-      // TODO fix populate the story with user that has ONLY username
-      // To not populate if assignee is null
-      if (updated.user !== null) {
-        Story.populate(updated, { path: 'user' }, function (err2, storyWithUser) {
-          if (err2) { return handleError(res, err2); }
-          return res.status(200).json(storyWithUser);
-        });
-      } else {
-        return res.status(200).json(updated);
+
+    // Check if the story type is supported
+    Project.findById(req.params.project_id, function (project_find_error, project) {
+      if (project_find_error) { return handleError(res, project_find_error); }
+      if(project.story_types.indexOf(req.body.type) == -1) {
+        // Not supported
+        return res.status(500).send('This story type is not allowed');
       }
 
+      var updated = _.merge(story, req.body);
+      console.log(updated);
+      updated.save(function (err) {
+        if (err) { return handleError(res, err); }
+        // populate story with user
+        // TODO fix populate the story with user that has ONLY username
+        // To not populate if assignee is null
+        if (updated.user !== null) {
+          Story.populate(updated, { path: 'user' }, function (err2, storyWithUser) {
+            if (err2) { return handleError(res, err2); }
+            return res.status(200).json(storyWithUser);
+          });
+        } else {
+          return res.status(200).json(updated);
+        }
+
+      });
     });
   });
 };

@@ -19,7 +19,6 @@ angular.module('arseApp')
         // Display the user working on the current story
         scope.$watch('assigned', function (value) {
           if (value.user != null) {
-            console.log('Value changed');
             scope.assignUser(scope.assigned.user);
           }
         });
@@ -30,7 +29,6 @@ angular.module('arseApp')
               
         // assign user to story based on the selection
         scope.assignUser = function (selected) {
-          console.log('Selected user is:' + JSON.stringify(selected));
           var user = selected;
           var story = scope.currentStory;
           var uid = 0;
@@ -42,7 +40,6 @@ angular.module('arseApp')
             story._id + '/assign/' + uid)
             .then(function (res) {
               scope.currentStory.user = user;
-              console.log('upadated the story');
             });
         };
 

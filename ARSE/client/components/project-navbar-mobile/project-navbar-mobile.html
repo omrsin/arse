@@ -1,14 +1,23 @@
 <div class="row hidden-sm hidden-md hidden-lg project-navbar-mobile">
-  <div class="col-xs-3 option enabledLink" >
+  <div ng-if="hasPORights" class="col-xs-1 option">
+    <span class="glyphicon"></span>
+  </div>
+  <div ng-class="{'col-xs-2' : hasPORights, 'col-xs-3' : !hasPORights}" class="option enabledLink" >
     <span title="Product Backlog" class="glyphicon glyphicon-list-alt" ng-click="showProductBacklog()"></span>
   </div>
-  <div class="col-xs-3 option" ng-class="{'disabledLink' : !nav_project.current_sprint, 'enabledLink' : nav_project.current_sprint}">
+  <div ng-class="{'col-xs-2' : hasPORights, 'col-xs-3' : !hasPORights}" class="option" ng-class="{'disabledLink' : !nav_project.current_sprint, 'enabledLink' : nav_project.current_sprint}">
     <span title="Sprint Board" class="glyphicon glyphicon-tasks" ng-click="showSprintBoard()"></span>
   </div>
-  <div class="col-xs-3 option enabledLink">
+  <div ng-class="{'col-xs-2' : hasPORights, 'col-xs-3' : !hasPORights}" class="option enabledLink">
     <span title="Manage Users" class="glyphicon glyphicon-user" ng-click="showUserManagement()"></span>
   </div>
-  <div class="col-xs-3 option enabledLink">
+  <div ng-class="{'col-xs-2' : hasPORights, 'col-xs-3' : !hasPORights}" class="option enabledLink">
+    <span title="Show Past Sprints" class="glyphicon glyphicon-signal" ng-click="showPastSprints()"></span>
+  </div>
+  <div ng-if="hasPORights" class="col-xs-2 option enabledLink">
     <span title="Configuration" class="glyphicon glyphicon-wrench" ng-click="showConfiguration()"></span>
   </div> 
+  <div ng-if="hasPORights" class="col-xs-1 option">
+    <span class="glyphicon"></span>
+  </div>
 </div>

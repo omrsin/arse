@@ -38,13 +38,22 @@ var ProjectSchema = new Schema({
     type: Number,
     default: 0
   },
+  past_sprints: ['Sprint'],
   sprint_counter: {
     type: Number,
     default: 0
   },
-  participants: ['Participant'],
-  chat: [Chat]
+  story_types: {
+    type: [String],
+    default: ["Feature", "Enhancement", "Fix"]
+  },
+  story_statuses: {
+    type: [String]
+  },
+  chat: [Chat],
+  participants: ['Participant']
 }, { strict: false });
 ProjectSchema.index({ 'participants': 1 })
+
 
 module.exports = mongoose.model('Project', ProjectSchema);

@@ -1,5 +1,5 @@
 <div class="chat-widget-container">
-	<div ng-click="isShown = !isShown" class="chat-header">Project Chat <span ng-show="isShown" class="ion-minus-round pull-right"></span> <span ng-show="!isShown" class="ion-plus-round pull-right"></span></div>
+	<div ng-click="showChati()" class="chat-header">Project Chat <span ng-show="isShown" class="ion-minus-round pull-right"></span> <span ng-show="!isShown" class="ion-plus-round pull-right"></span></div>
 	<div ng-show="isShown" class="chat-body">
 		<ul>
 			<li ng-repeat="msg in messageLog">

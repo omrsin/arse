@@ -1,15 +1,23 @@
 'use strict';
 
 angular.module('arseApp')
-  .controller('SettingsCtrl', function($scope, User, Auth) {
+  .controller('SettingsCtrl', function($scope, User, Auth, $state, $window) {
     $scope.errors = {};
 
-    $scope.changePassword = function(form) {
+    // TODO don't bring the password
+    $scope.user = User.get();
+    console.log($scope.user);
+
+    $scope.editUser = function(form) {
       $scope.submitted = true;
+      form.password.$setValidity('mongoose', true);
+      form.newPassword.$setValidity('mongoose', true);
+      form.confirmPassword.$setValidity('mongoose', true);
       if (form.$valid) {
-        Auth.changePassword($scope.user.oldPassword, $scope.user.newPassword)
+        Auth.editUser($scope.user.username, $scope.user.oldPassword, $scope.user.newPassword)
           .then(function() {
-            $scope.message = 'Password successfully changed.';
+            $scope.message = 'User successfully edited.';
+            $window.location.assign($state.href('project'));
           })
           .catch(function() {
             form.password.$setValidity('mongoose', false);

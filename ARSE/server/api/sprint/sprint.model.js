@@ -17,6 +17,10 @@ var SprintSchema = new Schema({
   updated_at: {
     type: Date,
     default: Date.now
+  },
+  total_points: {
+    type: Number,
+    default: 0
   }
 }, {strict: false});
 
