@@ -9,7 +9,11 @@ angular.module('arseApp')
         scope.isShownChat = $rootScope.chatState;
         scope.message = "";
         scope.loadLimit = 10;
-        scope.counter = $rootScope.msgCounter;
+        if (!$rootScope.msgCounter) {
+          scope.counter = 0;
+        } else {
+          scope.counter = $rootScope.msgCounter;
+        }
         scope.fullChat = scope.project.chat;
 
 
