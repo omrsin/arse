@@ -1,12 +1,12 @@
-<div class="chat-widget-container">
-	<div ng-click="showChati()" class="chat-header">Project Chat <span ng-show="isShownChat" class="ion-minus-round pull-right"></span> <span ng-show="!isShownChat" class="ion-plus-round pull-right"></span></div>
+<div class="chat-widget-container hidden-xs">
+	<div ng-click="showChati()" class="chat-header">Project Chat <span ng-hide="isShownChat || counter < 1" class="badge label-danger desktop-indicator">{{counter}}</span>		<span ng-show="isShownChat" class="ion-minus-round pull-right"></span> <span ng-show="!isShownChat" class="ion-plus-round pull-right"></span></div>
 	<div ng-show="isShownChat" class="chat-body" scroll-bottom="messageLog">
 		<ul>
 			<li ng-repeat="msg in messageLog">
 				<div class="chat-msg">
 					<div class="msg-header">{{msg.user}}</div>
 					<div class="msg-body">{{msg.text}}</div>
-					<div class="msg-footer">{{msg.date}}</div>
+					<div class="msg-footer">{{msg.date | date: 'dd.MM.yyyy HH:mm' }}</div>
 				</div>
 			</li>
 		</ul>
@@ -15,3 +15,27 @@
 		<input ng-keypress="enterMessage($event)" type="text" placeholder="Type the message ..." ng-model="message">
 	</div>
 </div>
+<!--For Mobile View-->
+<div class="chat-widget-container hidden-sm hidden-md hidden-lg" ng-class="{chatOpen: isShownChat}">
+	<div ng-click="showChati()" class="chat-header" ng-show="isShownChat">Project Chat <span ng-show="isShownChat" class="ion-minus-round pull-right"></span></div>
+	<div ng-show="isShownChat" class="chat-body" scroll-bottom="messageLog">
+		<ul>
+			<li ng-repeat="msg in messageLog">
+				<div class="chat-msg">
+					<div class="msg-header">{{msg.user}}</div>
+					<div class="msg-body">{{msg.text}}</div>
+					<div class="msg-footer">{{msg.date | date: 'dd.MM.yyyy HH:mm' }}</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div ng-show="isShownChat" class="chat-input-area">
+		<input ng-keypress="enterMessage($event)" type="text" placeholder="Type the message ..." ng-model="message">
+	</div>
+</div>
+
+<div class="fab-chat hidden-sm hidden-md hidden-lg" ng-click="showChati()" ng-hide="isShownChat">
+	<span class="ion-chatboxes"></span>
+	<span ng-hide="isShownChat || counter < 1" class="badge badge-danger mobile-indicator">{{counter}}</span>
+</div>
+<div class="chat-spacer hidden-sm hidden-md hidden-lg"></div>
