@@ -9,6 +9,7 @@
 	-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
 	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
 	z-index: 1000;
+
 }
 
 .chat-header {
@@ -26,8 +27,11 @@
 }
 
 .chat-body {
+	display: block;
+	width: 100%;
 	padding: 15px;
-	
+	max-height: 600px;
+	overflow-y: scroll;
 	li {
 		margin-bottom: 10px;
 	}
@@ -54,6 +58,7 @@
 }
 
 .chat-input-area{
+	display: block;
 	width: 100%;
 	input {
 		width: 100%;
