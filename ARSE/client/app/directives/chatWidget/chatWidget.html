@@ -1,5 +1,5 @@
 <div class="chat-widget-container hidden-xs">
-	<div ng-click="showChati()" class="chat-header">Project Chat <span ng-hide="isShownChat || counter < 1" class="badge label-danger desktop-indicator">{{counter}}</span>		<span ng-show="isShownChat" class="ion-minus-round pull-right"></span> <span ng-show="!isShownChat" class="ion-plus-round pull-right"></span></div>
+	<div ng-click="showChati()" class="chat-header"><span class="ion-chatboxes"></span> Project Chat <span ng-hide="isShownChat || counter < 1" class="badge label-danger desktop-indicator">{{counter}}</span>		<span ng-show="isShownChat" class="ion-minus-round pull-right"></span> <span ng-show="!isShownChat" class="ion-plus-round pull-right"></span></div>
 	<div ng-show="isShownChat" class="chat-body" scroll-bottom="messageLog">
 		<ul>
 			<li ng-repeat="msg in messageLog">
