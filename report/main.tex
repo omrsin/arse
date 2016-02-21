@@ -17,6 +17,8 @@
 \usepackage[english]{babel}
 \usepackage{blindtext}
 \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+\usepackage{wrapfig}
+
 
 % Defining JavaScript listings
 \definecolor{mygreen}{rgb}{0,0.3,0}
@@ -90,8 +92,6 @@ Satia Herfert
 
 In this chapter we will roughly explain how to use our application. For each state or thematic group of our application, there is a section that explains the graphical layout and the possible ways to interact with the application.
 
-%TODO include the last tasks (like chat) somewhere.
-
 %TODO cut the browser part of the screenshots
 %TODO augment the screenshots with numbers/text etc., and refer to these numbers in the explanatory text.
 
@@ -99,35 +99,35 @@ In this chapter we will roughly explain how to use our application. For each sta
 \label{sec:profile-mgmt}
 %Explain: Register, Login, Logout, change Profile
 
+\begin{wrapfigure}{R}{0.5\textwidth}
+  	\centering
+	\includegraphics[width=0.48\textwidth]{img/login}
+	\caption{The login screen.}
+	\label{fig:login}
+\end{wrapfigure}
+
 When first visiting the ARSE app, you will be asked to login or register. The screen you will see is displayed in figure \ref{fig:login}. Here you can pass the form to login or click \emph{Register} to switch to a different form, where you are asked to register providing your full name, email address and a password. Email addresses serve as usernames and must be unique in the system.
 
 After logging in, you can click your name in the upper right corner to access a page that allows to edit your profile. In that page you can adjust your name and password, but not your email address. The email address cannot be changed after the registration. Changes to your profile always require a password confirmation using your current password.
 
 In the upper right corner you will also find a button that logs you out from the system.
 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.5\textwidth]{img/login}
-	\caption{The login screen.}
-	\label{fig:login}
-\end{figure}
-
 \section{Project Management}
 \label{sec:project-mgmt}
 %Explain: List of projects, create project, modify/delete project.
+
+\begin{wrapfigure}{R}{0.5\textwidth}
+	\centering
+	\includegraphics[width=0.48\textwidth]{img/projects}
+	\caption{The project list screen.}
+	\label{fig:project-list}
+\end{wrapfigure}
 
 After logging in, you will be redirected to a page that shows the projects you are a member of. If you just registered, this page will be empty. You can now create your own projects or ask colleagues to add you to their projects.
 
 In order to create a project, click the button \emph{Create a new project}. This will open a form where you need to fill out name and description of the project. After that, the project will appear in the list and you will automatically become product owner of this project. This gives you privileges that normal developers in a project do not have.
 
 The projects are listed with name and description. If you are product owner of a project, buttons are present, that you can use to delete or modify a project.
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.5\textwidth]{img/projects}
-	\caption{The project list screen.}
-	\label{fig:project-list}
-\end{figure}
 
 %Explain: Project-navbar
 You can click the name of a project in the list to access the project page. When you click it, you are redirected to a project specific are, which includes a navigation bar to access the different views available for each project. On the left-hand side of figure \ref{fig:project-backlog}, the project navigation bar is displayed. On mobile devices, this navigation bar is displayed at the top instead. It includes five icons, and the views linked to them are listed in the following. Each view is explained in detail in the following subsections.
@@ -145,6 +145,13 @@ You can click the name of a project in the list to access the project page. When
 
 %Explain: Adding items, viewing/modifying/deleting items, reordering items, dragging sprint delimiter, starting sprint.
 
+\begin{wrapfigure}{R}{0.5\textwidth}
+	\centering
+	\includegraphics[width=0.48\textwidth]{img/backlog}
+	\caption{The project backlog screen with the project navigation bar on the left-hand side.}
+	\label{fig:project-backlog}
+\end{wrapfigure}
+
 This view lists all stories of a project, in priority order. An example of how this can look is given in figure \ref{fig:project-backlog}. For each story, name, description, type, status and story points are given. Three buttons follow in each row of the table. The first two allow to delete or modify a story; the last displays more details about the story and the left side of the screen.
 
 In the top there is a button that can be used to add a new story. The required information are a name and a description, the number of story points, the story type and the assignee. For the latter, it is possible not to assign the story too a particular person. The form shown is the same form when editing stories.
@@ -152,13 +159,6 @@ In the top there is a button that can be used to add a new story. The required i
 To change the order --and thereby the priority-- of stories, users can simply drag and drop the rows up or down in the table. There is one special row that is always present: the sprint delimiter. In the example screenshot, this is the third row. This delimiter separates the sprint backlog (above) from the product backlog (below). It can be dragged like any other row, effectively changing the scope of a sprint. This will issue a warning, if a sprint is currently running. The Sprint backlog is the subset of all stories are planned to be done by the end of the sprint.
 
 Finally, in the row of the sprint delimiter, product owners have the possibility to start a new sprint. In order to that, first the planned end date has to be chosen and afterwards the button \emph{Start Sprint!} can be clicked.
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.5\textwidth]{img/backlog}
-	\caption{The project backlog screen and the project navigation on the left-hand side.}
-	\label{fig:project-backlog}
-\end{figure}
 
 \subsection{Sprint Board}
 \label{sec:sprint-board}
@@ -194,15 +194,24 @@ On the small screens of mobile devices it is not possible to show all three colu
 \subsection{User Management}
 \label{sec:user-mgmt}
 
-The user management view lists all participants of the project. All developers can see the names, email addresses and roles of their project colleagues. As a product owner, it is also possible to change the role of other participants, or to remove users from the project.
+The user management view lists all participants of the project. All developers can see the names, email addresses and roles of their project colleagues. As a product owner, it is also possible to change the role of other participants, or to remove users from the project. Figure \ref{fig:project-user-management} shows the view.
 
 Product owners also see another set of controls below, that allows them to add new participants to the project. A text field can be used to search for usernames or email addresses. By clicking the corresponding row in the search results, a user is chosen to be added. Finally, the role of the new user can be chosen between \emph{Developer} and \emph{PO} (product owner), before clicking the \emph{Add user} button.
 
 \begin{figure}[ht]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  	\includegraphics[height=15EM]{img/usermgmt}
+  	\captionof{figure}{The user management of a project.}
+  	\label{fig:project-user-management}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
 	\centering
-	\includegraphics[width=0.5\textwidth]{img/usermgmt}
-	\caption{The user management of a project.}
-	\label{fig:project-user-management}
+	\includegraphics[height=15EM]{img/pastsprints}
+	\captionof{figure}{The past sprints of a project.}
+	\label{fig:project-past-sprints}
+\end{minipage}
 \end{figure}
 
 \subsection{Past Sprints}
@@ -210,28 +219,23 @@ Product owners also see another set of controls below, that allows them to add n
 
 %Explain: Table of past sprints
 
-This view is solely informative and does not contain any controls. A table lists all past sprints with their respective start and end dates, and the amount of story points that were burned in the sprint. This is the sum of th story points of stories that were finished in the sprint.
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.5\textwidth]{img/pastsprints}
-	\caption{The past sprints of a project.}
-	\label{fig:project-past-sprints}
-\end{figure}
+This view is solely informative and does not contain any controls. A table lists all past sprints with their respective start and end dates, and the amount of story points that were burned in the sprint. This is the sum of the story points of stories that were finished in the sprint. An example can be seen in figure \ref{fig:project-past-sprints}.
 
 \subsection{Project Configuration}
 \label{sec:proj-config}
 
 %Explain: Adding story types, removing story types, adding statuses, removing statuses
 
-The project configuration view is only accessible by product owners. It basically has two purposes: managing story types and additional statuses (tags) of stories. For both, a list of the currently defined items is shown, and a button to remove a story type or status. The first table also displays the colors of the story types, that are used in the sprint board. Moreover, there are text fields and buttons to add new types or statuses. 
-
-\begin{figure}[ht]
+\begin{wrapfigure}{R}{0.5\textwidth}
 	\centering
 	\includegraphics[height=30EM]{img/configuration}
 	\caption{The project configuration.}
 	\label{fig:project-config}
-\end{figure}
+\end{wrapfigure}
+
+The project configuration view is only accessible by product owners. It basically has two purposes: managing story types and additional statuses (tags) of stories. For both, a list of the currently defined items is shown, and a button to remove a story type or status. The first table also displays the colors of the story types, that are used in the sprint board. Moreover, there are text fields and buttons to add new types or statuses. 
+
+
 
 %TODO a subsection for the chat
 
