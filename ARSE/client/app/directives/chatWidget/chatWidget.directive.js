@@ -9,7 +9,10 @@ angular.module('arseApp')
         scope.isShownChat = $rootScope.chatState;
         scope.message = "";
         scope.loadLimit = 10;
-        scope.counter = $rootScope.msgCounter;
+        if($rootScope.msgCounter === undefined){
+          $rootScope.msgCounter = [];
+        }
+        scope.counter = $rootScope.msgCounter[scope.project._id];
         scope.fullChat = scope.project.chat;
 
 
@@ -24,7 +27,7 @@ angular.module('arseApp')
           scope.isShownChat = !scope.isShownChat;
           $rootScope.chatState = scope.isShownChat;
           scope.counter = 0;
-          $rootScope.msgCounter = scope.counter;
+          $rootScope.msgCounter[scope.project._id] = scope.counter;
         }
 
         //         $http.get('/api/projects/' + $stateParams.project_id).success(function (project) {
@@ -35,7 +38,7 @@ angular.module('arseApp')
         socket.syncUpdates('project' + $stateParams.project_id, scope.project.chat, function (evt, msg, chat) {
           console.log(chat.length - msg.length);
           scope.counter++;
-          $rootScope.msgCounter = scope.counter;
+          $rootScope.msgCounter[scope.project._id] = scope.counter;
           scope.$apply(function () {
             scope.fullChat = msg;
             scope.messageLog = msg.slice(-scope.loadLimit);
