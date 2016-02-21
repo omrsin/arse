@@ -6,7 +6,7 @@ angular.module('arseApp')
       templateUrl: 'app/directives/chatWidget/chatWidget.html',
       restrict: 'EA',
       link: function (scope, element, attrs) {
-        scope.isShown =  $rootScope.chatState;
+        scope.isShownChat =  $rootScope.chatState;
         scope.message = "";
 
         
@@ -18,22 +18,22 @@ angular.module('arseApp')
         };
         
         scope.showChati = function() {
-          scope.isShown = !scope.isShown;
-          $rootScope.chatState = scope.isShown;
+          scope.isShownChat = !scope.isShownChat;
+          $rootScope.chatState = scope.isShownChat;
         }
 
-        $http.get('/api/projects/' + $stateParams.project_id).success(function (project) {
-          scope.project = project;
-          scope.messageLog = project.chat.slice(-10);
- 
-          // Update array with any new or deleted items pushed from the socket
+//         $http.get('/api/projects/' + $stateParams.project_id).success(function (project) {
+          // scope.project = project;
+          scope.messageLog = scope.project.chat.slice(-10);
+//  
+//           // Update array with any new or deleted items pushed from the socket
           socket.syncUpdates('project' + $stateParams.project_id, scope.project.chat, function (evt, msg, chat) {
             console.log(chat.length - msg.length);
             scope.$apply(function () {
               scope.messageLog = msg.slice(-10);
             });
           });
-        });
+//         });
 
         scope.sendMessage = function (message) {
           Auth.getCurrentUser(function (user) {

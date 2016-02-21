@@ -7,6 +7,11 @@ angular.module('arseApp')
         url: '/projects/:project_id/pastsprints',
         templateUrl: 'app/pastsprint/past_sprints.html',
         controller: 'PastSprintCtrl',
-        authenticate: true
+        authenticate: true,
+        resolve: {
+          project: function (Project, $stateParams) {
+            return Project.get({ id: $stateParams.project_id, role: true }).$promise;
+          }
+        }
       });
   });

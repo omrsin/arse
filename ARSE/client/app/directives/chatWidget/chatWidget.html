@@ -1,6 +1,6 @@
 <div class="chat-widget-container">
-	<div ng-click="showChati()" class="chat-header">Project Chat <span ng-show="isShown" class="ion-minus-round pull-right"></span> <span ng-show="!isShown" class="ion-plus-round pull-right"></span></div>
-	<div ng-show="isShown" class="chat-body">
+	<div ng-click="showChati()" class="chat-header">Project Chat <span ng-show="isShownChat" class="ion-minus-round pull-right"></span> <span ng-show="!isShownChat" class="ion-plus-round pull-right"></span></div>
+	<div ng-show="isShownChat" class="chat-body" scroll-bottom="messageLog">
 		<ul>
 			<li ng-repeat="msg in messageLog">
 				<div class="chat-msg">
@@ -11,7 +11,7 @@
 			</li>
 		</ul>
 	</div>
-	<div ng-show="isShown" class="chat-input-area">
+	<div ng-show="isShownChat" class="chat-input-area">
 		<input ng-keypress="enterMessage($event)" type="text" placeholder="Type the message ..." ng-model="message">
 	</div>
 </div>
