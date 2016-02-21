@@ -143,7 +143,7 @@ You can click the name of a project in the list to access the project page. When
 \subsection{Product Backlog}
 \label{sec:backlog}
 
-Explain: Adding items, viewing/modifying/deleting items, reordering items, dragging sprint delimiter, starting sprint.
+%Explain: Adding items, viewing/modifying/deleting items, reordering items, dragging sprint delimiter, starting sprint.
 
 This view lists all stories of a project, in priority order. An example of how this can look is given in figure \ref{fig:project-backlog}. For each story, name, description, type, status and story points are given. Three buttons follow in each row of the table. The first two allow to delete or modify a story; the last displays more details about the story and the left side of the screen.
 
@@ -151,7 +151,7 @@ In the top there is a button that can be used to add a new story. The required i
 
 To change the order --and thereby the priority-- of stories, users can simply drag and drop the rows up or down in the table. There is one special row that is always present: the sprint delimiter. In the example screenshot, this is the third row. This delimiter separates the sprint backlog (above) from the product backlog (below). It can be dragged like any other row, effectively changing the scope of a sprint. This will issue a warning, if a sprint is currently running. The Sprint backlog is the subset of all stories are planned to be done by the end of the sprint.
 
-Finally, in the row of the sprint delimiter, product owners have the possibility to start a new sprint. In order to that, first the planned end date has to chosen and afterwards the button \emph{Start Sprint!} can be clicked.
+Finally, in the row of the sprint delimiter, product owners have the possibility to start a new sprint. In order to that, first the planned end date has to be chosen and afterwards the button \emph{Start Sprint!} can be clicked.
 
 \begin{figure}[ht]
 	\centering
@@ -163,7 +163,25 @@ Finally, in the row of the sprint delimiter, product owners have the possibility
 \subsection{Sprint Board}
 \label{sec:sprint-board}
 
-Explain: Cancelling sprint, closing sprint, dragging stories, viewing stories, assigning a team member, adding tasks, changing tasks, dragging tasks, collapse/expand to view tasks.
+Explain: Cancelling sprint, closing sprint, dragging stories, viewing stories, assigning a team member, adding tasks, changing tasks, dragging tasks, collapse/expand to view tasks, colors, selecting tag/status.
+
+When a sprint has been started, this view becomes available. Given the big difference in screen sizes, the view is designed essentially different for desktop and mobile versions. In the following, first the desktop version is explained with all available features, and then the key differences to the mobile version are pointed out.
+
+\paragraph{Desktop version}
+In the top there are two buttons displayed for product owners. They can be used to cancel or close a sprint respectively. Canceling means that all stories are transferred back to product backlog, regardless of their status. When closing a sprint, only the stories not done are transferred back; the finished stories are deleted. Please note that this action is irreversible and data may be lost if clicking this by accident.
+
+Below that, there is a table that resembles a physical sprint board in agile projects. There are three columns, for new, started, and finished stories. Each story has its own row in the table and is displayed in a colored card providing essential information about it. The cards can be dragged and dropped into other columns to change the status of the story.
+
+The color of the card and the upper left icon are chosen according to the its type. In addition, you can see the name of the story, and the associated story points. The plus icon allows to add tasks to the story, which are explained below. The magnifying glass shows all details of the story on the right-hand side of the screen, in the same way as in the product backlog view. The person assigned to a story is displayed in a second line on each card, and it can also be changed in-place. Moreover, stories that are in progress (second column), allow to have an additional status assigned. This is kind of a tag, that can be used if the three status do not suffice. Product owners can configure these tags in the project configuration. This modifiable tag is displayed in a third line, if tags have been defined.
+
+If tasks have been added to a story, they are displayed in gray cards below the story with title and description. Just as stories, they can be dragged to other columns to change their statuses. These gray cards also have icons to edit or delete the task. To show or hide the tasks of a story, the arrow pointing down or up on the story card can be clicked.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{img/sprintboard}
+	\caption{The sprint board in the desktop version.}
+	\label{fig:project-sprintboard}
+\end{figure}
 
 \subsection{User Management}
 \label{sec:user-mgmt}
