@@ -27,8 +27,6 @@ exports.show = function (req, res) {
     
       // get stories if stories param set to true
       if (req.query.stories) {
-        console.log(req.query.stories);
-
         if (project.offset == 0) {
           sprint.set('stories', []);
           return res.json(sprint);
@@ -55,7 +53,6 @@ exports.show = function (req, res) {
 // Creates a new sprint in the DB.
 // Modified: Get the project first, and then add a new sprint and correlate 
 exports.create = function (req, res) {
-  console.log(req.params.project_id);
   Project.findById(req.params.project_id, function (err, project) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send('Project Not Found'); }

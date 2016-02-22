@@ -31,7 +31,6 @@ exports.index = function (req, res) {
 };
 
 // Get a single project
-
 // in addition, add the role of the logged in user to the project
 // ?role=true or false : default= false
 exports.show = function (req, res) {
@@ -64,7 +63,6 @@ exports.show = function (req, res) {
         project.backlog = storiesWithUsers;
 
         if(req.query.pastsprints){
-          console.log("req.past sprints: " + req.query.pastsprints);
           Project.populate(project, {
             path: 'past_sprints',
             select: 'name start_date end_date total_points',
@@ -240,9 +238,7 @@ exports.removeStoryType = function(req, res) {
       
       for(var i = 0; i < project.backlog.length; i++) {
         if(project.backlog[i].type === req.body.type) {
-          // Reset the type to the defualt (first in list)
-          console.log("Resetting the value");
-
+          // Reset the type to the default (first in list)
           Story.findOne({ '_id': project.backlog[i].id }).exec(function (err, story) {
             if (err) { return handleError(res, err); }
             if (!story) { return res.status(404).send('Not Found'); }
@@ -305,9 +301,7 @@ exports.removeStoryStatus = function (req,res) {
       
       for(var i = 0; i < project.backlog.length; i++) {
         if(project.backlog[i].inprogress_status === req.body.status) {
-          // Reset the type to the defualt (first in list)
-          console.log("Resetting the value");
-
+          // Reset the type to the default (first in list)
           Story.findOne({ '_id': project.backlog[i].id }).exec(function (err, story) {
             if (err) { return handleError(res, err); }
             if (!story) { return res.status(404).send('Not Found'); }

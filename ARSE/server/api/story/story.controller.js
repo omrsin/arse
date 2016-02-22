@@ -15,7 +15,6 @@ exports.index = function (req, res) {
 
 // Get a single story
 exports.show = function (req, res) {
-  console.log("before show");
   Story.findOne({ '_id': req.params.id }).populate('user').exec(function (err, story) {
     if (err) { return handleError(res, err); }
     if (!story) { return res.status(404).send('Not Found'); }
@@ -90,14 +89,12 @@ exports.update = function(req, res) {
       }
 
       var updated = _.merge(story, req.body);
-      console.log(updated);
       updated.save(function (err) {
         if (err) { return handleError(res, err); }
         // populate story with user
-        // TODO fix populate the story with user that has ONLY username
         // To not populate if assignee is null
         if (updated.user !== null) {
-          Story.populate(updated, { path: 'user' }, function (err2, storyWithUser) {
+          Story.populate(updated, { path: 'user', select: '_id username email', model: 'User' }, function (err2, storyWithUser) {
             if (err2) { return handleError(res, err2); }
             return res.status(200).json(storyWithUser);
           });
@@ -125,11 +122,8 @@ exports.assign = function (req, res) {
       story.user = new User();
     }
 
-    console.log("story; " + JSON.stringify(story));
-
     story.save(function (err) {
       if (err) { return handleError(res, err); }
-      console.log("updated story; " + JSON.stringify(story));
       return res.status(200).json(story);
     });
   });

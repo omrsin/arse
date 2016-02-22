@@ -31,10 +31,9 @@ function respondWith(res, statusCode) {
 /**
  * Get list of users
  * restriction: 'admin'
- TODO This restriction should be changed somehow!?
  */
 exports.index = function(req, res) {
-  User.findAsync({}, {"_id": true, "username": true, "email": true, "role": true}, '-salt -hashedPassword')
+  User.findAsync({}, {"_id": true, "username": true, "email": true, "role": true}, '-salt -password')
     .then(function(users) {
       res.status(200).json(users);
     })
@@ -116,8 +115,6 @@ exports.editUser = function(req, res, next) {
   var username = req.body.username;
   var oldPass = String(req.body.oldPassword);
   var newPass = String(req.body.newPassword);
-
-  console.log(req.body);
 
   User.findByIdAsync(userId)
     .then(function(user) {
