@@ -5,6 +5,9 @@ angular.module('arseApp')
     return {
       templateUrl: 'components/project-navbar/project-navbar.html',
       restrict: 'E',
+      scope: {
+        theproject: '='
+      },
       controller: 'ProjectNavbarCtrl'
     };
   });

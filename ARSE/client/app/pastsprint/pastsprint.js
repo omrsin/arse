@@ -10,7 +10,7 @@ angular.module('arseApp')
         authenticate: true,
         resolve: {
           project: function (Project, $stateParams) {
-            return Project.get({ id: $stateParams.project_id, pastsprints: true}).$promise;
+            return Project.get({ id: $stateParams.project_id, role:true, pastsprints: true}).$promise;
           }
         }
       });
