@@ -226,18 +226,37 @@ This view is solely informative and does not contain any controls. A table lists
 
 %Explain: Adding story types, removing story types, adding statuses, removing statuses
 
-\begin{wrapfigure}{R}{0.5\textwidth}
-	\centering
-	\includegraphics[height=30EM]{img/configuration}
-	\caption{The project configuration.}
-	\label{fig:project-config}
-\end{wrapfigure}
+
 
 The project configuration view is only accessible by product owners. It basically has two purposes: managing story types and additional statuses (tags) of stories. For both, a list of the currently defined items is shown, and a button to remove a story type or status. The first table also displays the colors of the story types, that are used in the sprint board. Moreover, there are text fields and buttons to add new types or statuses. 
+\begin{figure}[ht]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+	\includegraphics[height=28EM]{img/configuration}
+	\caption{The project configuration.}
+	\label{fig:project-config}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+	\centering
+	\includegraphics[height=28EM]{img/chat}
+	\caption{The Chat Window.}
+	\label{fig:chat}
+\end{minipage}
+\begin{minipage}{.5\textwidth}
+	\centering
+	\includegraphics[width=0.6\textwidth]{img/chatNotification}
+	\caption{The Chat Window minimized.}
+	\label{fig:chat-notification}
+\end{minipage}
+\end{figure}
 
+\subsection{Chat}
+\label{sec:chat}
+ARSE also offers a group chat. Each project has its own group chat, where members of that specific project can discuss issues related to the project. The chat is displayed in the bottom-right corner and it is shown in each sub-page of the project (e.g. Sprint Board, Backlog, ...). The chat window is collapsible, it can be in two different states: shown (Figure \ref{fig:chat}) and minimized or hidden (Figure \ref{fig:chat-notification}). 
 
+When the chat window is minimized, each time a new message arrives there is a red indicator displaying the number of new unseen messages. When displayed, it shows the 10 most recent messages, offering also the possibility to search through older messages by clicking the 'Load more' button which appears on top of these messages. By clicking the button, 10 more messages are loaded. The chat is also mobile-friendly, where in the same corner a floating action button appears. Through this button the chat window can be collapsed and minimized. The messaages exchanged per project are persistent. 
 
-%TODO a subsection for the chat
 
 \chapter{Done Product Backlog Items}
 \label{ch:done-pbis}
