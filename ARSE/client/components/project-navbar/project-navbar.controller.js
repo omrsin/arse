@@ -1,5 +1,5 @@
 'use strict';
-
+//TODO pass the project instead of fetching it!
 angular.module('arseApp')
   .controller('ProjectNavbarCtrl', ['$scope', '$stateParams', '$state', "Project", function ($scope, $stateParams, $state, Project) {
     

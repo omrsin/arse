@@ -36,7 +36,6 @@ angular.module('arseApp')
     $scope.detailStory = {};
     // Error message if creating/editing a story failed
     $scope.failed = "";
-    $scope.updateView();
 
     $scope.showStoryDetails = function (item) {
       if ($scope.detailStory._id == item._id) {
