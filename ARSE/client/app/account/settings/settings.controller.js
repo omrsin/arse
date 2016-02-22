@@ -3,10 +3,7 @@
 angular.module('arseApp')
   .controller('SettingsCtrl', function($scope, User, Auth, $state, $window) {
     $scope.errors = {};
-
-    // TODO don't bring the password
     $scope.user = User.get();
-    console.log($scope.user);
 
     $scope.editUser = function(form) {
       $scope.submitted = true;
