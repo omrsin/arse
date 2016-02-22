@@ -35,11 +35,8 @@ angular.module('arseApp')
           $rootScope.msgCounter[scope.project._id] = scope.counter;
         }
 
-        //         $http.get('/api/projects/' + $stateParams.project_id).success(function (project) {
-        // scope.project = project;
         scope.messageLog = scope.project.chat.slice(-scope.loadLimit);
-        //  
-        //           // Update array with any new or deleted items pushed from the socket
+        // Update array with any new or deleted items pushed from the socket
         socket.syncUpdates('project' + $stateParams.project_id, scope.project.chat, function (evt, msg, chat){ 
 
           //handles project events that do not change the chat
@@ -52,8 +49,6 @@ angular.module('arseApp')
             scope.fullChat = msg;
             scope.messageLog = msg.slice(-scope.loadLimit);
           });
-
-
         });
 
         scope.loadMore = function () {
@@ -63,15 +58,12 @@ angular.module('arseApp')
 
         scope.sendMessage = function (message) {
           Auth.getCurrentUser(function (user) {
-            console.log(user);
             $http.put('/api/projects/' + $stateParams.project_id + '/post', { user: user.username, text: message }).success(function (res) {
-              console.log(res);
               scope.message = '';
             });
-
           });
-
         };
+
       }
     };
   });

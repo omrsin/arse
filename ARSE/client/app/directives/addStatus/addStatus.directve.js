@@ -38,20 +38,7 @@ angular.module('arseApp')
             scope.currentElement.__v = httpRes.__v;
           }, function (err) {
             console.log("Update failed");
-            // $scope.failed = err.data;
           });
-
-          // TODO create the endpoint API and modify this code.
-          // var uid = 0;
-          // // if Unassigned set the id to 0
-          // if (selected.username !== 'Unassigned') {
-          //   uid = user._id;
-          // }
-          // $http.put('/api/projects/' + story.project + '/stories/' +
-          //   story._id + '/assign/' + uid)
-          //   .then(function (res) {
-          //     scope.currentStory.user = user;
-          //   });
         };
 
       }

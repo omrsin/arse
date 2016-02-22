@@ -153,7 +153,6 @@ angular.module('arseApp')
         story.inColumn[2] = story.inColumn[1];
         story.inColumn[1] = temp;
       }
-      console.log(story.inColumn);
 
 
       $scope.changeStory(story, oldStatus);
@@ -236,12 +235,8 @@ angular.module('arseApp')
       $scope.failed = "";
       $scope.infoMessage = "";
       if (story.status === "Done") {
-        // TODO display a warning if there are tasks undone.
         // Check if there is a task which is not done
-        console.log("Story:");
-        console.log(story);
         for (var i = 0; i < story.tasks.length; i++) {
-          console.log(story.tasks[i].status);
           if (story.tasks[i].status !== "Done") {
             $scope.infoMessage = "Please note that there are still tasks of this story, which are not done yet.";
             break;
@@ -249,7 +244,6 @@ angular.module('arseApp')
         }
       }
 
-      console.log(story);
       Story.update(story, function (httpRes) {
         console.log("Update succeeded");
         story.__v = httpRes.__v;
@@ -310,7 +304,6 @@ angular.module('arseApp')
             // Expand story in desktop view to see the task
             $scope.expand(story);
             // Switch to "New" tab in mobile view to see the task
-            console.log($scope.statuses);
             $scope.statuses[0].active = true;
           }, function (err) {
             $scope.failed = err.data;
