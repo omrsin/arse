@@ -57,24 +57,14 @@ angular.module('arseApp')
         }
 
         scope.sendMessage = function (message) {
-<<<<<<< HEAD
-          Auth.getCurrentUser(function (user) {
-            $http.put('/api/projects/' + $stateParams.project_id + '/post', { user: user.username, text: message }).success(function (res) {
-              scope.message = '';
-            });
-          });
-=======
           if (message !== '') {
             Auth.getCurrentUser(function (user) {
               console.log(user);
               $http.put('/api/projects/' + $stateParams.project_id + '/post', { user: user.username, text: message }).success(function (res) {
-                console.log(res);
                 scope.message = '';
               });
             });
           }
-
->>>>>>> develop
         };
 
       }
