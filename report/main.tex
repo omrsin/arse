@@ -82,15 +82,15 @@ Satia Herfert
 \chapter{Introduction}
 \label{ch:introduction}
 
-Nowadays, agile development is usually complemented by an online tool to share the overall progress of the project and to collaborate. ARSE (Agile Responsive Simple Environment) is a web application that assist teams who use SCRUM as a development methodology. 
+Nowadays, agile development is usually complemented by an online tool to manage, collaborate and share the overall progress of a project. ARSE (Agile Responsive Simple Environment) is a web application that assists teams who use Scrum as a development methodology. 
 
-ARSE app offers the capability to manage projects with all related SCRUM abstractions. After creating a project, users of ARSE, can define their Backlog. Whenever the scope is set a Sprint can be started. ARSE presents an interactive Sprint Board. Besides the standard functionalities of creating tasks and assinging user stories to project developers, the functionality of changing the status of stories is done with a drag \& drop feature. This is one of the flavors that describes the fact that ARSE is developed considering user experience as an important factor!
+ARSE offers the capability to manage projects with all the abstractions related to Scrum. After creating a project, the users of the application can define their Product Backlog. Furthermore, they can set the scope of a sprint in the form of a sprint backlog and, later on, the sprint can be started. 
 
-ARSE is developed during the course TK Internet Praktikum in WS 2015/16 at Tachnische Universitat Darmstadt. In the future ARSE can be an open-source tool to be used from teams around the world. 
+The tool we introduce presents an interactive sprint board. Besides the standard functionalities of creating tasks and assigning user stories to project developers, the user updates the status of stories via a drag \& drop feature. This is one of the neat features that portrays how ARSE was developed considering user experience as an important factor!
 
-This report describes ARSE in both technical implementations and also from the user point of view.
+ARSE was developed during the course TK Internet Praktikum in WS 2015/16 at TU Darmstadt. In the future, ARSE can be an open-source tool that teams all over the world could use and improve. 
 
-The structure of this report continue as follow: the next section describes the Architecture in technical terms. User Documentation describes the application in terms of features that are offered for end-users. The report is concluded with the done Product Backlog Items given in project specification. 
+The following report describes ARSE in both, its technical implementation as well as its use cases. The next section describes the architecture in technical terms. The user documentation describes the application in terms of the features that are offered to end-users. We conclude with the product backlog items that we included in ARSE as explained in the project specification. 
 
 
 \chapter{Architecture}
@@ -103,10 +103,10 @@ The structure of this report continue as follow: the next section describes the 
 ARSE is built with the MEAN stack. The MEAN stack consists of \textbf{MongoDb}, \textbf{Express.js}, \textbf{Angular.js} and \textbf{Node.js}.  
 
 \begin{itemize}
-\item \textbf{Node.js} is javascript runtime built on Chrome's V8 JavaScript engine. Node.js is used for building server side javascript web applications.
-\item \textbf{Express.js} is web application framework for Node.js. It's the backend part of the application, handling such things as API endpoints, controllers and wit mongoose database access.
-\item \textbf{Mongodb} is the database part of the application. It's a document oriented database where data is structured in JSON like documents.
-\item \textbf{Angular.js} is a web application framework that provides client side model-view-controller(MVC). Angular.js is the front end part of the app.
+\item \textbf{Node.js} is JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js is used for building server side JavaScript web applications.
+\item \textbf{Express.js} is web application framework for Node.js. It represents the backend of the application, handling aspects as API endpoints, controllers and database access via Mongoose (an object modelling mapper for MongoDb).
+\item \textbf{MongoDb} is the database part of the application. It is a document oriented database where data is organized in JSON-like documents. MongoDb is particularly efficient when dealing with unstructured data.
+\item \textbf{Angular.js} is a web application framework that provides client-side model-view-controller(MVC). Angular.js is the front end part of the application.
 
 \end{itemize}
 
@@ -116,7 +116,7 @@ ARSE is built with the MEAN stack. The MEAN stack consists of \textbf{MongoDb}, 
 \chapter{User Documentation}
 \label{ch:use-documentation}
 
-In this chapter we will roughly explain how to use our application. For each state or thematic group of our application, there is a section that explains the graphical layout and the possible ways to interact with the application.
+In this chapter we will briefly explain how to use the main features of our application. For each state or thematic group of use cases, we present a section that explains the graphical layout and the possible ways to interact with the tool.
 
 %TODO cut the browser part of the screenshots
 %TODO augment the screenshots with numbers/text etc., and refer to these numbers in the explanatory text.
@@ -132,11 +132,7 @@ In this chapter we will roughly explain how to use our application. For each sta
 	\label{fig:login}
 \end{wrapfigure}
 
-When first visiting the ARSE app, you will be asked to login or register. The screen you will see is displayed in figure \ref{fig:login}. Here you can pass the form to login or click \emph{Register} to switch to a different form, where you are asked to register providing your full name, email address and a password. Email addresses serve as usernames and must be unique in the system.
-
-After logging in, you can click your name in the upper right corner to access a page that allows to edit your profile. In that page you can adjust your name and password, but not your email address. The email address cannot be changed after the registration. Changes to your profile always require a password confirmation using your current password.
-
-In the upper right corner you will also find a button that logs you out from the system.
+When first visiting ARSE, you will be asked to login or register. The screen you will see is displayed in figure \ref{fig:login}. Here you can input the right information to login (1) or click \emph{Register} (2) to switch to a different form where you are asked to register providing your full name, email address and a password. Email addresses serve as usernames and must be unique in the system.
 
 \section{Project Management}
 \label{sec:project-mgmt}
@@ -149,20 +145,22 @@ In the upper right corner you will also find a button that logs you out from the
 	\label{fig:project-list}
 \end{wrapfigure}
 
-After logging in, you will be redirected to a page that shows the projects you are a member of. If you just registered, this page will be empty. You can now create your own projects or ask colleagues to add you to their projects.
+After logging in, you will be redirected to a page that shows the projects you are a member of, as depicted in figure \ref{fig:project-list}. You can click on your name in the upper right corner of the navigation bar in order to access a page that allows you to edit your profile (1). In that page you can adjust your name and password, but not your email address. The email address cannot be changed after the registration. Changes to your profile always require a password confirmation using your current password. In the upper right corner you will also find a button that logs you out from the system (2).
 
-In order to create a project, click the button \emph{Create a new project}. This will open a form where you need to fill out name and description of the project. After that, the project will appear in the list and you will automatically become product owner of this project. This gives you privileges that normal developers in a project do not have.
+If you just registered in the application, the projects page will be empty. You can now create your own projects or ask colleagues to add you to their projects.
 
-The projects are listed with name and description. If you are product owner of a project, buttons are present, that you can use to delete or modify a project.
+In order to create a project, click the button \emph{Create a new project} (3). This will open a form where you need to fill out name and description of the project. After that, the project will appear in the list (4) and you will automatically become product owner of this project. This gives you privileges that normal developers in a project do not have.
+
+The projects are listed with name and description. If you are product owner of a project, some control buttons will be available (5); you can use them to delete or modify a project.
 
 %Explain: Project-navbar
-You can click the name of a project in the list to access the project page. When you click it, you are redirected to a project specific are, which includes a navigation bar to access the different views available for each project. On the left-hand side of figure \ref{fig:project-backlog}, the project navigation bar is displayed. On mobile devices, this navigation bar is displayed at the top instead. It includes five icons, and the views linked to them are listed in the following. Each view is explained in detail in the following subsections.
+You can click the name of a project in the list to access the project page. When you click it, you are redirected to a project specific space, which includes a navigation bar to access the different views available for each project. On the left-hand side of figure \ref{fig:project-backlog}, the project navigation bar is displayed (1). On mobile devices, this navigation bar is displayed at the top instead. It includes five icons that trigger different project-related views. Each view is explained in detail in the following subsections.
 \begin{description}
 	\item[Product Backlog:] A list of all stories of the project can be viewed here. Stories can be added, removed and edited. Furthermore, it is possible to start a new sprint in this view.
 	\item[Sprint Board:] This view can only be accessed if a sprint is currently running. Its purpose is to allow changing the status of stories, managing the tasks of stories, or to close or cancel a sprint.
-	\item[User management:] The participants of the project are displayed in this view. As a product owner, it is also possible to add or remove members, and to change their roles.
-	\item[Past Sprints:] This view simply lists all finished sprints, with their time-frames and the number of story points that was burnt in the sprint.
-	\item[Project configuration:] This view is only accessible by product owners and the icon will be hidden for developers. The view allows to define additional story types and statuses. These can then be used for every story of the project later on.
+	\item[User management:] The participants of the project are displayed in this view. As a product owner, it is also possible to add or remove members as well as to change their roles in the project.
+	\item[Past Sprints:] This view simply lists all finished sprints, with their time-frames and the number of story points that were burnt in the sprint.
+	\item[Project configuration:] This view is only accessible by product owners; the icon will be hidden for developers. The view allows you to define additional story types and statuses. These can then be used on every story of the project later on.
 \end{description}
 
 
@@ -178,33 +176,33 @@ You can click the name of a project in the list to access the project page. When
 	\label{fig:project-backlog}
 \end{wrapfigure}
 
-This view lists all stories of a project, in priority order. An example of how this can look is given in figure \ref{fig:project-backlog}. For each story, name, description, type, status and story points are given. Three buttons follow in each row of the table. The first two allow to delete or modify a story; the last displays more details about the story and the left side of the screen.
+This view lists all stories of a project, in priority order (2). An example of how this can look is given in figure \ref{fig:project-backlog}. For each story, name, description, type, status and story points are given. Three buttons follow in each row of the table (3). The first two allow to delete or modify a story; the last displays more details about the story on the left side of the screen.
 
-In the top there is a button that can be used to add a new story. The required information are a name and a description, the number of story points, the story type and the assignee. For the latter, it is possible not to assign the story too a particular person. The form shown is the same form when editing stories.
+In the top there is a button that can be used to add a new story (4). The required information is a name and a description, the number of story points, the story type and the assignee. It is possible to leave a story without an assignee. The form shown has the same layout as when editing stories.
 
-To change the order --and thereby the priority-- of stories, users can simply drag and drop the rows up or down in the table. There is one special row that is always present: the sprint delimiter. In the example screenshot, this is the third row. This delimiter separates the sprint backlog (above) from the product backlog (below). It can be dragged like any other row, effectively changing the scope of a sprint. This will issue a warning, if a sprint is currently running. The Sprint backlog is the subset of all stories are planned to be done by the end of the sprint.
+To change the order --and thereby the priority-- of stories, users can simply drag and drop the rows up or down in the table. There is one special row that is always present: the sprint delimiter (5). In the example screenshot, this is the third row. This delimiter separates the sprint backlog (above) from the product backlog (below). It can be dragged like any other row, effectively changing the scope of a sprint. This will issue a warning, if a sprint is currently active. The sprint backlog is the subset of all stories that are expected to be done by the end of the sprint.
 
-Finally, in the row of the sprint delimiter, product owners have the possibility to start a new sprint. In order to that, first the planned end date has to be chosen and afterwards the button \emph{Start Sprint!} can be clicked.
+Finally, in the row of the sprint delimiter, product owners have the possibility to start a new sprint. In order to that, first the planned end date has to be chosen and afterwards the button \emph{Start Sprint!} can be clicked (6).
 
 \subsection{Sprint Board}
 \label{sec:sprint-board}
 
 %Explain: Cancelling sprint, closing sprint, dragging stories, viewing stories, assigning a team member, adding tasks, changing tasks, dragging tasks, collapse/expand to view tasks, colors, selecting tag/status.
 
-When a sprint has been started, this view becomes available. Given the big difference in screen sizes, the view is designed essentially different for desktop and mobile versions. In the following, first the desktop version is explained with all available features, and then the key differences to the mobile version are pointed out. An example of the desktop version is given in figure \ref{fig:project-sprintboard-desktop}, and for the mobile version in figure \ref{fig:project-sprintboard-mobile}.
+This view becomes available after a sprint has been started. Given the big difference in screen sizes, the view is designed differently for desktop and mobile versions. In the following, first the desktop version is explained with all available features, and then the key differences to the mobile version are pointed out. An example of the desktop version is given in figure \ref{fig:project-sprintboard-desktop}, and for the mobile version in figure \ref{fig:project-sprintboard-mobile}.
 
 \paragraph{Desktop version}
-In the top there are two buttons displayed for product owners. They can be used to cancel or close a sprint respectively. Canceling means that all stories are transferred back to product backlog, regardless of their status. When closing a sprint, only the stories not done are transferred back; the finished stories are deleted. Please note that this action is irreversible and data may be lost if clicking this by accident.
+In the top there are two buttons displayed for product owners. They can be used to cancel or close a sprint respectively (1). Canceling means that all stories are transferred back to product backlog, regardless of their status. When closing a sprint, only the stories not done are transferred back; the finished stories are deleted. Please note that this action is irreversible and data may be lost if clicking this by accident.
 
-Below that, there is a table that resembles a physical sprint board in agile projects. There are three columns, for new, started, and finished stories. Each story has its own row in the table and is displayed in a colored card providing essential information about it. The cards can be dragged and dropped into other columns to change the status of the story.
+Below that, there is a table that resembles a physical sprint board in agile projects (2). There are three columns, for new, started, and finished stories. Each story has its own row in the table and is displayed in a colored card providing essential information about it (3). The cards can be dragged and dropped into other columns to change the status of the story.
 
-The color of the card and the upper left icon are chosen according to the its type. In addition, you can see the name of the story, and the associated story points. The plus icon allows to add tasks to the story, which are explained below. The magnifying glass shows all details of the story on the right-hand side of the screen, in the same way as in the product backlog view. The person assigned to a story is displayed in a second line on each card, and it can also be changed in-place. Moreover, stories that are in progress (second column), allow to have an additional status assigned. This is kind of a tag, that can be used if the three status do not suffice. Product owners can configure these tags in the project configuration. This modifiable tag is displayed in a third line, if tags have been defined.
+The color of the card and the upper left icon are chosen according to the its type. In addition, you can see the name of the story, and the associated story points. The plus icon allows to add tasks to the story, which are explained below. The magnifying glass shows all details of the story on the right-hand side of the screen, in the same way as in the product backlog view. The person assigned to a story is displayed in a second line on each card, and it can also be changed in-place. Moreover, stories that are in progress (second column), allow to have an additional status assigned. This is a tag that can be used if the three statuses do not suffice. Product owners can configure these tags in the project configuration. This modifiable tag is displayed in a third line, if tags have been defined.
 
-If tasks have been added to a story, they are displayed in gray cards below the story with title and description. Just as stories, they can be dragged to other columns to change their statuses. These gray cards also have icons to edit or delete the task. To show or hide the tasks of a story, the arrow pointing down or up on the story card can be clicked.
+If tasks have been added to a story, they are displayed in gray cards below the story with title and description (4). Just as stories, they can be dragged to other columns to change their statuses. These gray cards also have icons to edit or delete the task. To show or hide the tasks of a story, the arrow pointing down or up on the story card can be clicked.
 
 \paragraph{Mobile version}
 
-On the small screens of mobile devices it is not possible to show all three columns simultaneously Therefore, the table has been replaced by a set of three tabs for the respective statuses. Now, all information is displayed on the cards, including the description, and no magnifying glass icon is available. To change the status of a story or task, right and left arrow icons have been added. Tasks are always displayed in the mobile version and cannot be hidden as in the desktop version. As it is possible, that a task is in a different tab as the story it belongs to (for example the task \emph{Browsing} in figure \ref{fig:project-sprintboard}), the name of the story is always displayed in the upper right corner of a task card. The controls to change assignees or tags, and the buttons to close or cancel a sprint have not been changed.
+On the small screens of mobile devices it is not possible to show all three columns simultaneously Therefore, the table has been replaced by a set of three tabs for the respective statuses (5). Now, all information is displayed on the cards, including the description, and no magnifying glass icon is available. To change the status of a story or task, right and left arrow icons have been added (6). Tasks are always displayed in the mobile version and cannot be hidden as in the desktop version. As it is possible that a task is in a different tab as the story it belongs to (for example the task \emph{Browsing} in figure \ref{fig:project-sprintboard}), the name of the story is always displayed in the upper right corner of a task card. The controls to change assignees or tags, and the buttons to close or cancel a sprint have not been changed.
 
 \begin{figure}[ht]
 \centering
@@ -220,9 +218,9 @@ On the small screens of mobile devices it is not possible to show all three colu
 \subsection{User Management}
 \label{sec:user-mgmt}
 
-The user management view lists all participants of the project. All developers can see the names, email addresses and roles of their project colleagues. As a product owner, it is also possible to change the role of other participants, or to remove users from the project. Figure \ref{fig:project-user-management} shows the view.
+The user management view, depicted in Figure \ref{fig:project-user-management}, lists all participants of the project. All developers can see the names, email addresses and roles of their project colleagues. As a product owner, it is also possible to change the role of other participants, or to remove users from the project (1).
 
-Product owners also see another set of controls below, that allows them to add new participants to the project. A text field can be used to search for usernames or email addresses. By clicking the corresponding row in the search results, a user is chosen to be added. Finally, the role of the new user can be chosen between \emph{Developer} and \emph{PO} (product owner), before clicking the \emph{Add user} button.
+Product owners also see another set of controls below, that allows them to add new participants to the project (2). A text field can be used to search for usernames or email addresses. By clicking the corresponding row in the search results, a user is chosen to be added. Finally, the role of the new user can be chosen between \emph{Developer} and \emph{PO} (product owner), before clicking the \emph{Add user} button.
 
 \begin{figure}[ht]
 \centering
@@ -245,16 +243,14 @@ Product owners also see another set of controls below, that allows them to add n
 
 %Explain: Table of past sprints
 
-This view is solely informative and does not contain any controls. A table lists all past sprints with their respective start and end dates, and the amount of story points that were burned in the sprint. This is the sum of the story points of stories that were finished in the sprint. An example can be seen in figure \ref{fig:project-past-sprints}.
+This view is solely informative and does not contain any controls; an example can be seen in figure \ref{fig:project-past-sprints}. A table lists all past sprints with their respective start and end dates, and the amount of story points that were burned in the sprint. This is the sum of the story points of stories that were finished in the sprint.
 
 \subsection{Project Configuration}
 \label{sec:proj-config}
 
 %Explain: Adding story types, removing story types, adding statuses, removing statuses
 
-
-
-The project configuration view is only accessible by product owners. It basically has two purposes: managing story types and additional statuses (tags) of stories. For both, a list of the currently defined items is shown, and a button to remove a story type or status. The first table also displays the colors of the story types, that are used in the sprint board. Moreover, there are text fields and buttons to add new types or statuses. 
+The project configuration view is only accessible by product owners; it is depicted in \ref{fig:project-config}. It has two purposes: managing story types and additional statuses (tags) of stories. For both, a list of the currently defined items is shown, and a button to remove a story type or status (1)(2). The first table also displays the colors of the story types that are used in the sprint board (3). Moreover, there are text fields and buttons to add new types or statuses (4)(5). 
 \begin{figure}[ht]
 \centering
 \begin{minipage}{.5\textwidth}
@@ -279,15 +275,15 @@ The project configuration view is only accessible by product owners. It basicall
 
 \subsection{Chat}
 \label{sec:chat}
-ARSE also offers a group chat. Each project has its own group chat, where members of that specific project can discuss issues related to the project. The chat is displayed in the bottom-right corner and it is shown in each sub-page of the project (e.g. Sprint Board, Backlog, ...). The chat window is collapsible, it can be in two different states: shown (Figure \ref{fig:chat}) and minimized or hidden (Figure \ref{fig:chat-notification}). 
+ARSE also offers a group chat. Each project has its own group chat, where members of that specific project can discuss about issues relevant to that space. The chat is displayed in the bottom-right corner and it is shown in each view of the project (e.g. Sprint Board, Backlog, ...). The chat window is collapsible, it can be in two different states: shown (Figure \ref{fig:chat}) and minimized or hidden (Figure \ref{fig:chat-notification}). 
 
-When the chat window is minimized, each time a new message arrives there is a red indicator displaying the number of new unseen messages. When displayed, it shows the 10 most recent messages, offering also the possibility to search through older messages by clicking the 'Load more' button which appears on top of these messages. By clicking the button, 10 more messages are loaded. The chat is also mobile-friendly, where in the same corner a floating action button appears. Through this button the chat window can be collapsed and minimized. The messaages exchanged per project are persistent. 
+When the chat window is minimized, each time a new message arrives there is a red indicator displaying the number of new unseen messages. When displayed, it shows the 10 most recent messages, offering also the possibility to search through older messages by clicking the ``Load more'' button which appears on top of these messages. By clicking the button, 10 more messages are loaded. The chat is also mobile-friendly, where in the same corner a floating action button appears. Through this button the chat window can be collapsed and minimized. The messages exchanged per project are persistent. 
 
 
 \chapter{Done Product Backlog Items}
 \label{ch:done-pbis}
 
-In the following we list all the items from the original Product Backlog that were developed in this project. Certain stories have been moved to make the actions available to a different class of users, so that the product is more compatible with the idea of Scrum. The roles in our project are users, registered users, team members (of a project), and product owners (of a project). This list also contains stories that were modified or added to the original backlog.
+In the following we list all the items from the original product backlog that were developed in this project. Certain stories have been moved to make the actions available to a different class of users, so that the product is more compatible with the idea of Scrum. The roles in our project are users, registered users, team members (of a project), and product owners (of a project). This list also contains stories that were modified or added to the original backlog.
 
 %TODO go through our modified backlog and see if we need to add more stories here.
 
