@@ -18,6 +18,7 @@
 \usepackage{blindtext}
 \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
 \usepackage{wrapfig}
+\usepackage[hyphens]{url}
 
 
 % Defining JavaScript listings
@@ -84,9 +85,9 @@ Satia Herfert
 
 Nowadays, agile development is usually complemented by an online tool to manage, collaborate and share the overall progress of a project. ARSE (Agile Responsive Simple Environment) is a web application that assists teams who use Scrum as a development methodology. 
 
-ARSE offers the capability to manage projects with all the abstractions related to Scrum. After creating a project, the users of the application can define their Product Backlog. Furthermore, they can set the scope of a sprint in the form of a sprint backlog and, later on, the sprint can be started. 
+ARSE offers the capability to manage projects with all the abstractions related to Scrum. After creating a project, the users of the application can define their product backlog. Furthermore, they can set the scope of a sprint in the form of a sprint backlog and, later on, the sprint can be started. 
 
-The tool we introduce presents an interactive sprint board. Besides the standard functionalities of creating tasks and assigning user stories to project developers, the user updates the status of stories via a drag \& drop feature. This is one of the neat features that portrays how ARSE was developed considering user experience as an important factor!
+The tool we introduce presents an interactive sprint board. Besides the standard functionalities of creating tasks and assigning user stories to project developers, the user updates the status of stories via a drag \& drop feature. This is one of the neat features that portrays how ARSE was developed considering user experience as an important factor.
 
 ARSE was developed during the course TK Internet Praktikum in WS 2015/16 at TU Darmstadt. In the future, ARSE can be an open-source tool that teams all over the world could use and improve. 
 
@@ -94,32 +95,64 @@ The following report describes ARSE in both, its technical implementation as wel
 
 
 \chapter{Architecture}
+\label{ch:architecture}
+
 \begin{wrapfigure}{R}{0.5\textwidth}
   \centering
-  	\includegraphics[height=20EM]{img/architecture}
-  	\captionof{figure}{The architecture of ARSE}
-  	\label{fig:project-user-management}
+    \includegraphics[height=19EM]{img/architecture}
+    \captionof{figure}{The architecture of ARSE}
+    \label{fig:architecture}
 \end{wrapfigure}
-ARSE is built with the MEAN stack. The MEAN stack consists of \textbf{MongoDb}, \textbf{Express.js}, \textbf{Angular.js} and \textbf{Node.js}.  
+ARSE is built with the MEAN stack. The MEAN stack consists of \textbf{MongoDb}, \textbf{Express.js}, \textbf{Angular.js} and \textbf{Node.js}. Figure \ref{fig:architecture} illustrates the general architecture of an application built on top of the MEAN stack.
 
 \begin{itemize}
-\item \textbf{Node.js} is JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js is used for building server side JavaScript web applications.
-\item \textbf{Express.js} is web application framework for Node.js. It represents the backend of the application, handling aspects as API endpoints, controllers and database access via Mongoose (an object modelling mapper for MongoDb).
-\item \textbf{MongoDb} is the database part of the application. It is a document oriented database where data is organized in JSON-like documents. MongoDb is particularly efficient when dealing with unstructured data.
-\item \textbf{Angular.js} is a web application framework that provides client-side model-view-controller(MVC). Angular.js is the front end part of the application.
+\item \textbf{Node.js} is JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js is used for building server side JavaScript web applications \cite{NJS}.
+\item \textbf{Express.js} is web application framework for Node.js. It represents the backend of the application, handling aspects as API endpoints, controllers and database access via Mongoose (an object modelling mapper for MongoDb) \cite{EXJS}.
+\item \textbf{MongoDb} is the database part of the application. It is a document oriented database where data is organized in JSON-like documents. MongoDb is particularly efficient when dealing with unstructured data \cite{MDB}.
+\item \textbf{Angular.js} is a web application framework that provides client-side model-view-controller(MVC). Angular.js is the front end part of the application \cite{AJS}.
 
 \end{itemize}
 
+Figure \ref{fig:class-diagram} shows a class diagram of ARSE that explains the main entities used in the application as well as their relationships. In the next section explains the main responsibilities of each class. 
 
-\label{ch:architecture}
+\begin{itemize}
+
+\item \textbf{Project}: It represents the most important class in the application. The whole functionality of ARSE revolves around the creation and management of projects. A project has a name and a description that identify it. It contains a list of participants that can have access to the project's information; participants can execute different actions depending on their role in the project. A project belongs to a user that, by default, is the user that created it. Moreover, each project has a backlog that consists of a list of user stories. The backlog defines all the requirements of the product or service that is being built. During its lifetime, a project will have several sprints; a list of all past sprints is maintained as well as a reference to the current active sprint if any. Finally, each project has a private chat where all the participants can communicate.
+
+Additionally, each project can maintain a list of additional story types and statuses that will be valid only for that project. These new configuration values can be added by the product owner of the project.
+
+\item \textbf{Participant}: It represents an abstraction of a user inside the project. The product owner of a project can add or remove participants to a project with a particular role. The roles available are ``Product Owner'' and ``Developer''. A reference to the application user is kept in order to access identification attributes such as name and email.
+
+\item \textbf{User}: It represents a user of the application. A new entry is created every time someone registers in ARSE. This class was modeled using the authentication framework of the ``AngularJS Full-stack Generator'' \cite{AFSG} and it serves as our main authentication and authorization mechanisms. It provides basic security features, as password encryption and session persistence via cookies.  
+
+\item \textbf{Story}: It represents the user stories that belong to a project. User stories conform the building blocks of Scrum as they allow the product owner to guide the development process by prioritizing the features to be developed. A Story contains a brief summary and a detailed description, also, the estimated story points. During a sprint, stories undergo multiple status updates that indicate the development progress in that feature. A set of statuses is defined by default, however, the product owner can customize it to the team's needs by adding or removing statuses; this augmented list of statuses can only be used when the story is in the status ``In progress''. A similar situation occurs with the story types, although they can be set at any point. Moreover, a story can contain a list of tasks that breaks down the user story into particular activities. 
+
+\item \textbf{Task}: It represent a detailed activity that is part of a user story. A tasks has no meaning by itself as it has to be associated with a user story. It contains a summary and a description of the activity to be done, as well as a status the describe its progress. However, the extended list of statues available in the project does not apply to tasks.
+
+\item \textbf{Sprint}: It represents the execution and outcome of a sprint in the project. During its lifetime, a project will undergo multiple sprints. A sprint is defined by its starting date, its ending date and the total number of story points burnt. Some of these attributes might be empty if the sprint has not finished.
+
+\item \textbf{Chat}: It represents the chat messages exchanged by the participants of a project. Every message is stored so it could be browsed again later on. A chat message is defined by the user who posted it, the text content of the message and the date when it was sent.
+
+\end{itemize}
+
+\begin{wrapfigure}{H}{\textwidth}
+  \centering
+    \includegraphics[height=20EM]{img/class-diagram}
+    \captionof{figure}{Class Diagram. Relationships marked with an ``(E)'' indicate that the information of the incoming class is embedded in the outgoing class. The remaining relationships are reference-based.}
+    \label{fig:class-diagram}
+\end{wrapfigure}
+
+% TODO Add additional interesting features
+% Use of embedded objects
+% Use of middleware in express
+% Use Angular directives
+% Use of socket.io
+% Use of bootstrap and css preprocessors (mention also responsiveness)
 
 \chapter{User Documentation}
 \label{ch:use-documentation}
 
 In this chapter we will briefly explain how to use the main features of our application. For each state or thematic group of use cases, we present a section that explains the graphical layout and the possible ways to interact with the tool.
-
-%TODO cut the browser part of the screenshots
-%TODO augment the screenshots with numbers/text etc., and refer to these numbers in the explanatory text.
 
 \section{Profile Management}
 \label{sec:profile-mgmt}
@@ -339,7 +372,7 @@ In the following we list all the items from the original product backlog that we
 %TODO Include a list of undone stories (if we have any)
 %Bonus features
 %users must confirm their registration by clicking on a registration link sent via email
-%feature of burndown charts
+%feature of burntdown charts
 %use special interaction features with mobile devices like shaking
 
 \bibliographystyle{abbrvnat}
