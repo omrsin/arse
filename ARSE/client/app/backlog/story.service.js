@@ -1,8 +1,3 @@
-/**
- * Created by massoud on 11/4/15.
- */
-
-
 var module = angular.module('arseApp');
 
 module.factory('Story', function($resource){

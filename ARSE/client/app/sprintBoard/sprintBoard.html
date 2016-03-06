@@ -1,6 +1,6 @@
-<project-navbar-mobile></project-navbar-mobile>
+<project-navbar-mobile theproject="project"></project-navbar-mobile>
 <div class="row">
-  <project-navbar class="hidden-xs"></project-navbar>
+  <project-navbar theproject="project" class="hidden-xs"></project-navbar>
   <div class="col-xs-12 col-sm-11">
     <div class="main-container">
 
@@ -66,26 +66,34 @@
                         <add-participant participants="participants" current-story="story" is-updated-on-selection="true"></add-participant>
                       </div>
                     </div>
+                    <div ng-show="story.status === 'In progress' && statuses_available.length > 1" class="row">
+                      <div class="col-xs-1 assignUserIcon">
+                        <span class="glyphicon glyphicon-tag"></span>
+                      </div>
+                      <div class="col-xs-11">
+                        <!--Status-->
+                        <add-status statuses="statuses_available" current-element="story" is-updated-on-selection="true"></add-status>
+                      </div>
+                    </div>
                   </div>
                   <label ng-hide="column.isWithin"></label>
                 </li>
               </ul>
 
               <div class="clearfix"></div>
-              <div ng-show="story.isExpanded" >
+              <div ng-show="story.isExpanded">
                 <div ng-repeat="i in [0,1,2]" class="col-xs-4">
                   <!-- dynamic ID to identify the column later when dropping -->
-                  <ul ng-attr-id="{{ i }}" as-sortable="sprintBoardTaskOptions" ng-model="story.tasksByStatus[i]" class="taskColumnContainer"> 
+                  <ul ng-attr-id="{{ i }}" as-sortable="sprintBoardTaskOptions" ng-model="story.tasksByStatus[i]" class="taskColumnContainer">
                     <li data-as-sortable-item ng-repeat="task in story.tasksByStatus[i]">
                       <div class="storyItem task">
                         <div class="row">
                           <div class="col-xs-7">
                             <label data-as-sortable-item-handle>{{task.name}}</label>
                           </div>
-                          <!-- TODO find out smallest we can get this col -->
                           <div class="col-xs-5 story-actions">
-                            <span class="glyphicon glyphicon-edit pull-right" ng-click="editTask(task,story)"></span>  
-                            <span class="glyphicon glyphicon-remove pull-right" ng-click="removeTask(task,story)"></span>               
+                            <span class="glyphicon glyphicon-edit pull-right" ng-click="editTask(task,story)"></span>
+                            <span class="glyphicon glyphicon-remove pull-right" ng-click="removeTask(task,story)"></span>
                           </div>
                         </div>
                         <div class="row">
@@ -103,7 +111,7 @@
               <div class="col-xs-4">
               </div>
 
-              
+
 
             </div>
           </div>
@@ -140,6 +148,15 @@
                         <add-participant participants="participants" current-story="story" is-updated-on-selection="true"></add-participant>
                       </div>
                     </div>
+                    <div ng-show="story.status === 'In progress' && statuses_available.length > 1" class="row">
+                      <div class="col-xs-1 assignUserIcon">
+                        <span class="glyphicon glyphicon-tag"></span>
+                      </div>
+                      <div class="col-xs-11">
+                        <!--Status-->
+                        <add-status statuses="statuses_available" current-element="story" is-updated-on-selection="true"></add-status>
+                      </div>
+                    </div>
                     <div class="row">
                       <div class="col-xs-1"></div>
                       <div class="col-xs-11 description">
@@ -159,44 +176,44 @@
                     </div>
                   </div>
                   <div ng-show="countByStatus(story.tasks,stat.name)" class="taskContainer">
-                  <div ng-repeat="task in story.tasks | filter:{ status: stat.name }" class="taskItem task">
-                    <div ng-show="$first" class="row">
-                      <div class="col-xs-1">
+                    <div ng-repeat="task in story.tasks | filter:{ status: stat.name }" class="taskItem task">
+                      <div ng-show="$first" class="row">
+                        <div class="col-xs-1">
+                        </div>
+                        <div class="col-xs-10">
+                        </div>
+                        <div class="col-xs-1">
+                          <span class="badge pull-right badge-task" ng-class="'story-type-{{project.story_types.indexOf(story.type)}}'">{{story.name | limitTo: 20}}</span>
+                        </div>
                       </div>
-                      <div class="col-xs-10">
+                      <div class="row">
+                        <div class="col-xs-1">
+                        </div>
+                        <div class="col-xs-10">
+                          <label>{{task.name}}</label>
+                        </div>
+                        <div class="col-xs-1">
+                        </div>
                       </div>
-                      <div class="col-xs-1">
-                        <span  class="badge pull-right badge-task" ng-class="{feature: story.type === 'Feature', fix: story.type === 'Fix', enhancement: story.type === 'Enhancement'}">{{story.name | limitTo: 20}}</span>
+                      <div class="row">
+                        <div class="col-xs-1"></div>
+                        <div class="col-xs-11 description">
+                          <p>{{task.description}}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xs-2">
+                          <a ng-show="task.status !== 'New'" ng-click="moveTaskLeft(task,story)" class="btn"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                        </div>
+                        <div class="col-xs-8 center-button-placeholder">
+                          <a ng-click="editTask(task,story)" class="btn"><span class="glyphicon glyphicon-edit"></span></a>
+                          <a ng-click="removeTask(task,story)" class="btn"><span class="glyphicon glyphicon-remove"></span></a>
+                        </div>
+                        <div class="col-xs-2">
+                          <a ng-show="task.status !== 'Done'" ng-click="moveTaskRight(task,story)" class="btn pull-right"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                        </div>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-xs-1">
-                      </div>
-                      <div class="col-xs-10">
-                        <label>{{task.name}}</label>
-                      </div>
-                      <div class="col-xs-1">
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-xs-1"></div>
-                      <div class="col-xs-11 description">
-                        <p>{{task.description}}</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-xs-2">
-                        <a ng-show="task.status !== 'New'" ng-click="moveTaskLeft(task,story)" class="btn"><span class="glyphicon glyphicon-chevron-left"></span></a>
-                      </div>
-                      <div class="col-xs-8 center-button-placeholder">
-                        <a ng-click="editTask(task,story)" class="btn"><span class="glyphicon glyphicon-edit"></span></a>
-                        <a ng-click="removeTask(task,story)" class="btn"><span class="glyphicon glyphicon-remove"></span></a>
-                      </div>
-                      <div class="col-xs-2">
-                        <a ng-show="task.status !== 'Done'" ng-click="moveTaskRight(task,story)" class="btn pull-right"><span class="glyphicon glyphicon-chevron-right"></span></a>
-                      </div>
-                    </div>
-                  </div>
                   </div>
                 </div>
               </uib-tab>
@@ -209,3 +226,4 @@
 
   </div>
 </div>
+<chat-widget></chat-widget>

@@ -58,13 +58,11 @@ angular.module('arseApp')
             // loop through stories and set to Unassigned where current participant is assigned
             console.log("doing unassignment");
             $http.put('/api/users/' + participant.user._id + '/unassign').then(function(res){
-                console.log("response after unassigning " + res);        
-            }, function(err){
-                console.log("error unassigning");
+            }, function(error){
+                error.data;
             });
             
             $scope.project = res.data;
-            console.log($scope.project);
             defineAvailableUsers();            
             $scope.failed = "";
             $scope.success = "The participant was deleted";

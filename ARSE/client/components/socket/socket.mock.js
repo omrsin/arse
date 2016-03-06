@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('socketMock', [])
+angular.module('arseApp', [])
   .factory('socket', function() {
     return {
       socket: {

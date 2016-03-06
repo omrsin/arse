@@ -15,8 +15,7 @@ angular.module('arseApp')
           password: $scope.user.password
         })
         .then(function(token) {
-          // Account created, redirect to home
-          // TODO: create user scope, also delete on logout, show logout after login          
+          // Account created, redirect to home        
           $window.location.assign($state.href('project'));
         })
         .catch(function(err) {

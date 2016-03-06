@@ -1,6 +1,6 @@
-<project-navbar-mobile></project-navbar-mobile>
+<project-navbar-mobile theproject="project"></project-navbar-mobile>
 <div class="row">  
-  <project-navbar class="hidden-xs"></project-navbar>
+  <project-navbar theproject="project" class="hidden-xs"></project-navbar>
   <div class="col-xs-12 col-sm-11">
     <div class="main-container">
       <div class="header">
@@ -17,7 +17,7 @@
             No past sprints for this project.
           </div>
         </div>
-        <div class="row">
+        <div ng-show="project.past_sprints.length != 0"  class="row">
           <div class="col-xs-12">
             <div class="custom-table">
               <div class="row">
@@ -47,3 +47,4 @@
     </div>    
   </div>  
 </div>
+<chat-widget></chat-widget>

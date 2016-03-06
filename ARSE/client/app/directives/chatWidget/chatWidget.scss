@@ -1,0 +1,150 @@
+.chat-widget-container {
+	display: block;
+	position: fixed;
+	width: 300px;
+	bottom: 0;
+	right: 30px;
+	background: #fefefe;
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.4);
+	-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.4);
+	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.4);
+	z-index: 1000;
+	
+	@media (max-width: 786px) {
+		width: 100%;	
+		right: 0;
+		bottom: 0;
+	 }
+
+}
+.chatOpen {
+	height: 100%;
+}
+
+.chat-header {
+
+	height: 50px;
+	width: 100%;
+	background: #70A7BA;
+	border-bottom: 1px solid #e7e7e7;
+	color: white;
+	font-weight: bold;
+	padding: 15px;
+	cursor: pointer;
+	
+
+}
+
+.chat-body {
+	display: block;
+	width: 100%;
+	padding: 15px;
+	max-height: 600px;
+	min-height: 300px;
+	overflow-y: scroll;
+	@media (max-width: 786px) {
+		height: 80%;
+
+	 }
+	li {
+		margin-bottom: 10px;
+	}
+}
+
+.chat-msg {
+	
+	.msg-header {
+		font-weight: bold;
+		color: gray;
+	}
+	
+	.msg-body {
+		background: #f8f8f8;
+		padding:10px;
+		border-radius: 10px;
+	}
+	
+	.msg-footer {
+		font-size: 10px;
+		float:right;
+		color: lightgray;
+	}
+}
+
+.chat-input-area{
+	display: block;
+	width: 100%;
+	@media (max-width: 786px) {
+		height: 20%;
+
+	 }
+	input {
+		width: 100%;
+		border: none;
+		padding: 10px;
+		border-top: 1px solid lightgray;
+		
+	}
+}
+
+.fab-chat {
+	display: block;
+	position: fixed;
+	width: 60px;
+	height: 60px;
+	bottom: 10px;
+	right: 10px;
+	background: #70A7BA;
+	z-index: 1000;
+	border-radius: 50%;
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	text-align: center;
+	span {
+		color: white;
+		font-size: 25px;
+		position: relative;
+        top: 25%;
+       -webkit-transform: translateY(-25%);
+		-ms-transform: translateY(-25%);
+		transform: translateY(-25%);
+	}
+		.mobile-indicator {
+		position: absolute;
+		background:red;
+		left:0px;
+		top: 0px;
+		font-size: 16px;
+
+	}
+	
+}
+.chat-spacer {
+	display: block;
+	width: 100%;
+	height: 100px;
+}
+
+
+.desktop-indicator {
+	position: absolute;
+	left: -5px;
+	top: -5px;
+	background: red;
+}
+
+.load-more {
+	display: block;
+	width: 100%;
+	padding: 5px;
+	text-align: center;
+	color: white;
+	background: #C1D7DE;
+}
+
+.load-more:hover{
+	color: white;
+	text-decoration: none;
+}
+	

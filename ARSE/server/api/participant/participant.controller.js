@@ -4,23 +4,6 @@ var _ = require('lodash');
 var User = require('../user/user.model');
 var Project = require('../project/project.model'); 
 
-// Get list of participants
-// exports.index = function(req, res) {
-//   Participant.find(function (err, participants) {
-//     if(err) { return handleError(res, err); }
-//     return res.status(200).json(participants);
-//   });
-// };
-
-// Get a single participant
-// exports.show = function(req, res) {
-//   Participant.findById(req.params.id, function (err, participant) {
-//     if(err) { return handleError(res, err); }
-//     if(!participant) { return res.status(404).send('Not Found'); }
-//     return res.json(participant);
-//   });
-// };
-
 // Creates a new participant in the DB.
 exports.create = function(req, res) {  
   Project.findById(req.params.project_id, function(err, project){
@@ -81,7 +64,6 @@ exports.update = function(req, res) {
       return res.status(500).send("User is not assgined to the project");
     }
 
-    console.log(req.user._id + " vs " + req.params.id);
     if(req.user._id == req.params.id) {
       return res.status(500).send("You cannot change your own role.");
     }
@@ -171,7 +153,6 @@ function changeRole(participants, userid, role){
   for(var i = 0; i < participants.length; i++){    
     if(userid == participants[i].user) {
       participants[i].role = role;
-      console.log(participants[i]);
       return i;      
     }
   }

@@ -36,7 +36,6 @@ angular.module('arseApp')
         scope.$on('orderChanged', function () {
           scope.item.orderId = scope.item.$index;
           $http.put('/api/projects/' + scope.item.project + '/stories/' + scope.item._id, scope.item).then(function (res) {
-            console.log(res)
           });
         });
 
@@ -65,12 +64,9 @@ angular.module('arseApp')
         };
 
         scope.startSprint = function() {
-          console.log(scope.endDate);
           $http.post('/api/projects/' + scope.item.project + '/sprints', {end_date: scope.endDate}).then(function (res) {
-            console.log(res);
             $state.go('sprintBoard', {project_id:scope.item.project});
           }, function(error) {
-            console.log(error.data);
             scope.errorMessage = error.data;
           });
         };
@@ -89,7 +85,6 @@ angular.module('arseApp')
         });
 
         scope.$on('storyUpdateFailed', function (event, id, err) {
-          console.log(id);
           if (scope.item._id == id) {
             scope.isRefreshing = false;
             scope.hasUpdateFailed = true;

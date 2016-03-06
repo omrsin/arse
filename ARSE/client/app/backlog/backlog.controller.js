@@ -36,7 +36,6 @@ angular.module('arseApp')
     $scope.detailStory = {};
     // Error message if creating/editing a story failed
     $scope.failed = "";
-    $scope.updateView();
 
     $scope.showStoryDetails = function (item) {
       if ($scope.detailStory._id == item._id) {
@@ -79,8 +78,6 @@ angular.module('arseApp')
         .result.then(function (res) {
 
           res.$save(function (httpRes) {
-            console.log('The result with the user is:')
-            console.log(httpRes);
             $scope.project.backlog.push(httpRes);
           }, function (err) {
             console.log('Could not add story');
@@ -166,12 +163,6 @@ angular.module('arseApp')
         }, function (err) {
           $scope.failed = err.data;
         });
-
- /*     Project.update({ _id: projectId, offset: offset }, function (res) {
-        $scope.allowReorder = true;
-      }, function (err) {
-        $scope.failed = err.data;
-      });*/
     };
 
     // update order on the backend
@@ -211,7 +202,6 @@ angular.module('arseApp').controller('StoryFormCtrl',
     $scope.story = {};
     $scope.participants = [];
     angular.copy(items.participants, $scope.participants);
-    console.log('before slicing: ' + JSON.stringify($scope.participants));
     $scope.participants.splice(0, 0, {
       role: '',
       user: {
@@ -219,7 +209,6 @@ angular.module('arseApp').controller('StoryFormCtrl',
       }
     });
 
-    console.log('after slicing: ' + JSON.stringify($scope.participants));
     if (items.story) {
       $scope.create = false;
       angular.copy(items.story, $scope.story);
@@ -258,7 +247,6 @@ angular.module('arseApp').controller('StoryFormCtrl',
     };
 
     $scope.createStory = function () {
-      console.log('Story with user: ' + JSON.stringify($scope.story));
 
       $scope.story = new Story({
         name: $scope.story.name,

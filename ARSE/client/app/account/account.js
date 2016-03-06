@@ -17,7 +17,7 @@ angular.module('arseApp')
                           $state.current.referrer ||
                           'login';
           Auth.logout();
-          $window.location.assign($state.href(referrer));          
+          $window.location.assign($state.href('login'));          
         }
       })
       .state('signup', {

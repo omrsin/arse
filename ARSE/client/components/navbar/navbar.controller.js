@@ -3,7 +3,6 @@
 angular.module('arseApp')
   .controller('NavbarCtrl', ['$scope', 'Modal', 'Auth', '$cookies', '$http', function ($scope, Modal, Auth, $cookies, $http) {
 
-    //TODO: exclude password from info
     $scope.currentUser = {};
     if($cookies.get('token')){
       $http.get('api/users/me').then(function(response){
