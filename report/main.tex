@@ -135,19 +135,28 @@ Additionally, each project can maintain a list of additional story types and sta
 
 \end{itemize}
 
-\begin{wrapfigure}{H}{\textwidth}
+\begin{figure}[ht]
   \centering
     \includegraphics[height=20EM]{img/class-diagram}
     \captionof{figure}{Class Diagram. Relationships marked with an ``(E)'' indicate that the information of the incoming class is embedded in the outgoing class. The remaining relationships are reference-based.}
     \label{fig:class-diagram}
-\end{wrapfigure}
+\end{figure}
 
-% TODO Add additional interesting features
-% Use of embedded objects
-% Use of middleware in express
-% Use Angular directives
-% Use of socket.io
-% Use of bootstrap and css preprocessors (mention also responsiveness)
+Besides the general explanation provided before, here are some relevant technical aspects of ARSE that influenced the most important design decisions.
+
+\begin{itemize}
+
+\item The use of embedded documents inside Mongo collections, for example in the case of tasks being contained inside stories. This allows to keep the information close together to the portions of data that have joint semantic meaning, as well as improving the performance of database queries.
+
+\item The so called Express middlewares in endpoint routes that pipeline requests through common actions, for example authentication and authorization. Reusability and maintainability were improved significantly.
+
+\item Angular directives also helped with the reusability of front-end code. Modal windows were used in several places throughout the application although the concept of the modal was implemented only once.
+
+\item Socket.io allowed the asynchronous communication of events pushed by the server to all the clients. It enabled the inclusion of real-time functionality such as the chat \cite{SIO}.
+
+\item Twitter bootstrap and CSS preprocessors provided the means for constructing a platform focused primarily in the user experience both in mobile devices and desktop environments \cite{BOOT}.
+
+\end{itemize}
 
 \chapter{User Documentation}
 \label{ch:use-documentation}
