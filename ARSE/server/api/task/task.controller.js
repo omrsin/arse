@@ -34,7 +34,13 @@ exports.destroy = function(req, res) {
       return res.status(404).send("Story not found");
     }
 
-    story.tasks.id(req.params.id).remove();    
+    var task = story.tasks.id(req.params.id);
+    if(!task) {
+      return res.status(404).send("The task does not exist.");
+    }
+
+
+    task.remove();    
     
     story.save(function (error_on_save) {
       if(error_on_save) { 
@@ -56,7 +62,11 @@ exports.update = function(req, res) {
       return res.status(404).send("Story not found");
     }
 
-    _.merge(story.tasks.id(req.params.id), req.body);
+    var task = story.tasks.id(req.params.id);
+    if(!task) {
+      return res.status(404).send("The task does not exist.");
+    }
+    _.merge(task, req.body);
 
     story.save(function (error_on_save) {
       if(error_on_save) { 
