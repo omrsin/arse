@@ -22,7 +22,7 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
   https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-14-04
   here is the updated version of the modifications to the '.bashrc' file:
     
-	egit clone git://github.com/sstephenson/rbenv.git .rbenv
+	git clone git://github.com/sstephenson/rbenv.git .rbenv
 	echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
 	echo 'eval "$(rbenv init -)"' >> ~/.bashrc
 
@@ -58,13 +58,11 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 
 4. Run `grunt serve` to start the development server. It should automatically open the client in your browser when ready.
 
+
 ## Build & development
 
 Run `grunt build` for building and `grunt serve` for preview.
 
-## Testing
-
-Running `npm test` will run the unit tests with karma.
 
 ## Possible errors
 
