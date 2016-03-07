@@ -8,3 +8,5 @@
 *.fls
 *.toc
 .directory
+*-blx.bib
+*.run.xml
