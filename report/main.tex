@@ -20,6 +20,22 @@
 \usepackage{wrapfig}
 \usepackage[hyphens]{url}
 
+\usepackage[%
+  backend=bibtex      % biber or bibtex
+%,style=authoryear    % Alphabeticalsch
+ ,style=numeric-comp  % numerical-compressed
+ ,sorting=none        % no sorting
+ ,sortcites=true      % some other example options ...
+ ,block=none
+ ,indexing=false
+ ,citereset=none
+ ,isbn=true
+ ,url=true
+ ,doi=true            % prints doi
+ ,natbib=true         % if you need natbib functions
+]{biblatex}
+\addbibresource{references.bib}
+
 
 % Defining JavaScript listings
 \definecolor{mygreen}{rgb}{0,0.3,0}
@@ -55,15 +71,6 @@
     backgroundcolor=\color{mygrey}
     }
 \lstMakeShortInline[columns=fixed]|
-
-%\begin{lstlisting}[float,caption=Code Example,label=l:code_example]
-%var a;
-%console.log(a);
-%if(a) {
-%	// This is a comment
-%	console.log('Yeah');
-%}
-%\end{lstlisting}
 
 \begin{document}
 \title{ARSE: Agile Responsive Simple Environment}
@@ -105,35 +112,35 @@ The following report describes ARSE in both, its technical implementation as wel
 \end{wrapfigure}
 ARSE is built with the MEAN stack. The MEAN stack consists of \textbf{MongoDb}, \textbf{Express.js}, \textbf{Angular.js} and \textbf{Node.js}. Figure \ref{fig:architecture} illustrates the general architecture of an application built on top of the MEAN stack.
 
-\begin{itemize}
-\item \textbf{Node.js} is JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js is used for building server side JavaScript web applications \cite{NJS}.
-\item \textbf{Express.js} is web application framework for Node.js. It represents the backend of the application, handling aspects as API endpoints, controllers and database access via Mongoose (an object modelling mapper for MongoDb) \cite{EXJS}.
-\item \textbf{MongoDb} is the database part of the application. It is a document oriented database where data is organized in JSON-like documents. MongoDb is particularly efficient when dealing with unstructured data \cite{MDB}.
-\item \textbf{Angular.js} is a web application framework that provides client-side model-view-controller(MVC). Angular.js is the front end part of the application \cite{AJS}.
+\begin{description}
+\item[\textbf{Node.js}] is JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js is used for building server side JavaScript web applications \cite{NJS}.
+\item[\textbf{Express.js}] is web application framework for Node.js. It represents the backend of the application, handling aspects as API endpoints, controllers and database access via Mongoose (an object modelling mapper for MongoDb) \cite{EXJS}.
+\item[\textbf{MongoDb}] is the database part of the application. It is a document oriented database where data is organized in JSON-like documents. MongoDb is particularly efficient when dealing with unstructured data \cite{MDB}.
+\item[\textbf{Angular.js}] is a web application framework that provides client-side model-view-controller(MVC). Angular.js is the front end part of the application \cite{AJS}.
 
-\end{itemize}
+\end{description}
 
-Figure \ref{fig:class-diagram} shows a class diagram of ARSE that explains the main entities used in the application as well as their relationships. In the next section explains the main responsibilities of each class. 
+Figure \ref{fig:class-diagram} shows a class diagram of ARSE that explains the main entities used in the application as well as their relationships. In the next section we explain the main responsibilities of each class. 
 
-\begin{itemize}
+\begin{description}
 
-\item \textbf{Project}: It represents the most important class in the application. The whole functionality of ARSE revolves around the creation and management of projects. A project has a name and a description that identify it. It contains a list of participants that can have access to the project's information; participants can execute different actions depending on their role in the project. A project belongs to a user that, by default, is the user that created it. Moreover, each project has a backlog that consists of a list of user stories. The backlog defines all the requirements of the product or service that is being built. During its lifetime, a project will have several sprints; a list of all past sprints is maintained as well as a reference to the current active sprint if any. Finally, each project has a private chat where all the participants can communicate.
+\item[\textbf{Project}:] It represents the most important class in the application. The whole functionality of ARSE revolves around the creation and management of projects. A project has a name and a description that identify it. It contains a list of participants that can have access to the project's information; participants can execute different actions depending on their role in the project. Moreover, each project has a backlog that consists of a list of user stories. Using an offset this ordered backlog is split into the Sprint backlog and the remaining stories. The backlog defines all the requirements of the product or service that is being built. During its lifetime, a project will have several sprints; a list of all past sprints is maintained as well as a reference to the current active sprint if any. Finally, each project has a private chat where all the participants can communicate.
 
 Additionally, each project can maintain a list of additional story types and statuses that will be valid only for that project. These new configuration values can be added by the product owner of the project.
 
-\item \textbf{Participant}: It represents an abstraction of a user inside the project. The product owner of a project can add or remove participants to a project with a particular role. The roles available are ``Product Owner'' and ``Developer''. A reference to the application user is kept in order to access identification attributes such as name and email.
+\item[\textbf{Participant}:] It represents an abstraction of a user inside the project. The product owner of a project can add or remove participants to a project with a particular role. The roles available are ``Product Owner'' and ``Developer''. A reference to the application user is kept in order to access identification attributes such as name and email.
 
-\item \textbf{User}: It represents a user of the application. A new entry is created every time someone registers in ARSE. This class was modeled using the authentication framework of the ``AngularJS Full-stack Generator'' \cite{AFSG} and it serves as our main authentication and authorization mechanisms. It provides basic security features, as password encryption and session persistence via cookies.  
+\item[\textbf{User}:] It represents a user of the application. A new entry is created every time someone registers in ARSE. This class was modeled using the authentication framework of the ``AngularJS Full-stack Generator'' \cite{AFSG} and it serves as our main authentication and authorization mechanisms. It provides basic security features, as password encryption and session persistence via cookies.  
 
-\item \textbf{Story}: It represents the user stories that belong to a project. User stories conform the building blocks of Scrum as they allow the product owner to guide the development process by prioritizing the features to be developed. A Story contains a brief summary and a detailed description, also, the estimated story points. During a sprint, stories undergo multiple status updates that indicate the development progress in that feature. A set of statuses is defined by default, however, the product owner can customize it to the team's needs by adding or removing statuses; this augmented list of statuses can only be used when the story is in the status ``In progress''. A similar situation occurs with the story types, although they can be set at any point. Moreover, a story can contain a list of tasks that breaks down the user story into particular activities. 
+\item[\textbf{Story}:] It represents the user stories that belong to a project. User stories conform the building blocks of Scrum as they allow the product owner to guide the development process by prioritizing the features to be developed. A Story contains a brief summary and a detailed description, as well as the estimated story points. During a sprint, stories undergo multiple status updates that indicate the development progress in that feature. A set of statuses is defined by default, however, the product owner can customize it to the team's needs by adding or removing statuses. This augmented list of statuses can only be used when the story is in the status ``In progress''. A similar situation occurs with the story types, although they can be set at any point. Moreover, a story can contain a list of tasks that breaks down the user story into particular activities. 
 
-\item \textbf{Task}: It represent a detailed activity that is part of a user story. A tasks has no meaning by itself as it has to be associated with a user story. It contains a summary and a description of the activity to be done, as well as a status the describe its progress. However, the extended list of statues available in the project does not apply to tasks.
+\item[\textbf{Task}:] It represent a detailed activity that is part of a user story. A tasks has no meaning by itself as it has to be associated with a user story. It contains a summary and a description of the activity to be done, as well as a status that describes its progress. However, the extended list of statues available in the project does not apply to tasks.
 
-\item \textbf{Sprint}: It represents the execution and outcome of a sprint in the project. During its lifetime, a project will undergo multiple sprints. A sprint is defined by its starting date, its ending date and the total number of story points burnt. Some of these attributes might be empty if the sprint has not finished.
+\item[\textbf{Sprint}:] It represents the execution and outcome of a sprint in the project. During its lifetime, a project will undergo multiple sprints. A sprint is defined by its starting date, its ending date and the total number of story points burnt. Some of these attributes might be empty if the sprint has not finished.
 
-\item \textbf{Chat}: It represents the chat messages exchanged by the participants of a project. Every message is stored so it could be browsed again later on. A chat message is defined by the user who posted it, the text content of the message and the date when it was sent.
+\item[\textbf{Chat}:] It represents the chat messages exchanged by the participants of a project. Every message is stored so it could be browsed again later on. A chat message is defined by the user who posted it, the text content of the message and the date when it was sent.
 
-\end{itemize}
+\end{description}
 
 \begin{figure}[ht]
   \centering
@@ -198,11 +205,11 @@ The projects are listed with name and description. If you are product owner of a
 %Explain: Project-navbar
 You can click the name of a project in the list to access the project page. When you click it, you are redirected to a project specific space, which includes a navigation bar to access the different views available for each project. On the left-hand side of figure \ref{fig:project-backlog}, the project navigation bar is displayed (1). On mobile devices, this navigation bar is displayed at the top instead. It includes five icons that trigger different project-related views. Each view is explained in detail in the following subsections.
 \begin{description}
-	\item[Product Backlog:] A list of all stories of the project can be viewed here. Stories can be added, removed and edited. Furthermore, it is possible to start a new sprint in this view.
-	\item[Sprint Board:] This view can only be accessed if a sprint is currently running. Its purpose is to allow changing the status of stories, managing the tasks of stories, or to close or cancel a sprint.
-	\item[User management:] The participants of the project are displayed in this view. As a product owner, it is also possible to add or remove members as well as to change their roles in the project.
-	\item[Past Sprints:] This view simply lists all finished sprints, with their time-frames and the number of story points that were burnt in the sprint.
-	\item[Project configuration:] This view is only accessible by product owners; the icon will be hidden for developers. The view allows you to define additional story types and statuses. These can then be used on every story of the project later on.
+	\item[\textbf{Product Backlog}:] A list of all stories of the project can be viewed here. Stories can be added, removed and edited. Furthermore, it is possible to start a new sprint in this view.
+	\item[\textbf{Sprint Board}:] This view can only be accessed if a sprint is currently running. Its purpose is to allow changing the status of stories, managing the tasks of stories, or to close or cancel a sprint.
+	\item[\textbf{User management}:] The participants of the project are displayed in this view. As a product owner, it is also possible to add or remove members as well as to change their roles in the project.
+	\item[\textbf{Past Sprints}:] This view simply lists all finished sprints, with their time-frames and the number of story points that were burnt in the sprint.
+	\item[\textbf{Project configuration}:] This view is only accessible by product owners; the icon will be hidden for developers. The view allows you to define additional story types and statuses. These can then be used on every story of the project later on.
 \end{description}
 
 
@@ -319,7 +326,7 @@ The project configuration view is only accessible by product owners; it is depic
 \label{sec:chat}
 ARSE also offers a group chat. Each project has its own group chat, where members of that specific project can discuss about issues relevant to that space. The chat is displayed in the bottom-right corner and it is shown in each view of the project (e.g. Sprint Board, Backlog, ...). The chat window is collapsible, it can be in two different states: shown (Figure \ref{fig:chat}) and minimized or hidden (Figure \ref{fig:chat-notification}). 
 
-When the chat window is minimized, each time a new message arrives there is a red indicator displaying the number of new unseen messages. When displayed, it shows the 10 most recent messages, offering also the possibility to search through older messages by clicking the ``Load more'' button which appears on top of these messages. By clicking the button, 10 more messages are loaded. The chat is also mobile-friendly, where in the same corner a floating action button appears. Through this button the chat window can be collapsed and minimized. The messages exchanged per project are persistent. 
+When the chat window is minimized, each time a new message arrives, there is a red indicator displaying the number of new unseen messages. When displayed, it shows the 10 most recent messages, offering also the possibility to search through older messages by clicking the ``Load more'' button which appears on top of these messages. By clicking the button, 10 more messages are loaded. The chat is also mobile-friendly, where in the same corner a floating action button appears. Through this button the chat window can be collapsed and minimized. The messages exchanged per project are persistent. 
 
 
 \chapter{Done Product Backlog Items}
@@ -327,8 +334,11 @@ When the chat window is minimized, each time a new message arrives there is a re
 
 In the following we list all the items from the original product backlog that were developed in this project. Certain stories have been moved to make the actions available to a different class of users, so that the product is more compatible with the idea of Scrum. The roles in our project are users, registered users, team members (of a project), and product owners (of a project). This list also contains stories that were modified or added to the original backlog.
 
-%TODO go through our modified backlog and see if we need to add more stories here.
+All mandatory features of the original product backlog have been implemented. The bonus features (email confirmation, burndown charts) were not addressed, however, we focused on some features for a good user experience that were not required. This includes using drag and drop to change the priority of stories and a very responsive application with complete mobile compatibility.
 
+
+{
+\small
 \begin{itemize}
 	\item As a user, I can
 	\begin{itemize}
@@ -336,7 +346,7 @@ In the following we list all the items from the original product backlog that we
 		\begin{itemize}
 			\item Users can be assigned to different projects with different roles.
 		\end{itemize}
-		\item access the web application with different kinds of devices (mobile, tablet, pc ...).
+		\item access the web application with different kinds of devices (mobile, tablet, pc \ldots).
 	\end{itemize}
 	
 	\item As a registered user, I can
@@ -352,18 +362,24 @@ In the following we list all the items from the original product backlog that we
 		\item access the Sprint Board.
 		\item access past sprints which includes their name, time interval, and story points burnt.
 		\item copy backlog items to the Sprint Backlog.
-		\item create new tasks in the Sprint Board (a task always belongs to a user story).
-		\item change product backlog items including their description as well as their status (New, in progress, done).
-		\item change tasks including their description as well as their status (New, in progress, done),
 		\item assign product backlog items to a team member.
 		\item add new product backlog items to the product backlog of a project.
 		\begin{itemize}
 			\item product backlog items can have different statuses (new, in progress, done).
 			\item product backlog items can be of different types, e.g. feature, enhancement, fix.
 		\end{itemize}
+		\item see more details of a particular product backlog item.
 		\item change the order (priority) of product backlog items in the product backlog.
-		%\item chat with my team members
-		%\item access and search chat logs
+		\begin{itemize}
+			\item reorder the product backlog items using drag and drop.
+			\item change the scope of a running Sprint by dragging items into or out of the Sprint scope.
+		\end{itemize}
+		\item change product backlog items including their description as well as their status (New, in progress, done).
+		\item create new tasks in the Sprint Board (a task always belongs to a user story).
+		\item change tasks including their description as well as their status (New, in progress, done).
+		\item chat with my team members.
+		\item get a notification if a new chat message is received.
+		\item access and search chat logs.
 	\end{itemize}
 	
 	\item As a product owner of a project, I can
@@ -377,13 +393,7 @@ In the following we list all the items from the original product backlog that we
 		\item cancel a Sprint.
 	\end{itemize}
 \end{itemize}
+}
 
-%TODO Include a list of undone stories (if we have any)
-%Bonus features
-%users must confirm their registration by clicking on a registration link sent via email
-%feature of burntdown charts
-%use special interaction features with mobile devices like shaking
-
-\bibliographystyle{abbrvnat}
-\bibliography{references}
+\printbibliography
 \end{document}
