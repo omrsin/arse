@@ -92,7 +92,7 @@ exports.update = function(req, res) {
       updated.save(function (err) {
         if (err) { return handleError(res, err); }
         // populate story with user
-        // To not populate if assignee is null
+        // Do not populate if assignee is null
         if (updated.user !== null) {
           Story.populate(updated, { path: 'user', select: '_id username email', model: 'User' }, function (err2, storyWithUser) {
             if (err2) { return handleError(res, err2); }
