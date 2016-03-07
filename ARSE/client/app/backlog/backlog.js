@@ -4,13 +4,14 @@ angular.module('arseApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('backlog', {
-        url: '/backlog/:project_id',
+        url: '/projects/:project_id/backlog',
         templateUrl: 'app/backlog/backlog.html',
-        controller: 'BacklogCtrl'
-       /* resolve:  {
-        	projects: function(){
-        		return 
-        	}
-        }*/
+        controller: 'BacklogCtrl',
+        authenticate: true,
+        resolve: {
+          project: function(Project, $stateParams){
+            return Project.get({ id: $stateParams.project_id, role: true }).$promise;        
+          }
+        }
       });
   });

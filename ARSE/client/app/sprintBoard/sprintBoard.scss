@@ -1,0 +1,179 @@
+.as-sortable-story, .as-sortable-placeholder {
+  display: inline-block;
+  float: left;
+}
+
+.as-sortable-placeholder {
+  border: 1px dashed #777;
+}
+
+.as-sortable-story {
+  width: 33.33%;
+
+}
+
+.storyItem {
+   border: 1px solid #e7e7e7;
+   border-radius: 2px;
+   margin: 5px;
+   padding: 5px;
+   
+   .assignUserIcon {
+      span {
+  
+      }
+   } 
+   .row {
+      margin: 0;
+      padding: 2px;
+      
+      .col-xs-1, .col-xs-2,.col-xs-3, .col-xs-5 {
+        padding: 0;
+        margin: 0;
+      }
+    }
+    label {
+      margin: 0;
+      padding:0;
+    }
+
+    .story-actions {
+      span {
+        margin: 0 3px;
+      }
+      .glyphicon {
+        cursor: pointer;        
+      }
+    }
+    
+    .description {
+      font-size: 9pt;
+    }
+    
+  }
+
+
+.as-sortable-dragging {
+     .storyItem {
+        display: block;
+        min-width: 200px;
+        opacity: 0.8;
+            
+      }
+  
+    .feature {
+      background: #F2F199;
+    }
+
+    .fix {
+      background: #F2D8D0;
+    }
+    
+    .enhancement {
+      background: #D0EAF2;
+    }
+    
+
+  
+  }
+
+.taskColumnContainer {
+  min-height: 10px;
+}
+
+.sprintBoardHeader{
+   
+   padding:0;
+   margin:0;
+   h1 {
+      padding:0;
+      margin:0;
+      font-size: 14pt;
+      color: #777;
+     }
+   .sprintHeader {
+     padding: 10px;
+     margin: 0;
+     text-align: center;
+     background-color: #f8f8f8;
+     border: 1px solid #e7e7e7;
+     border-right: 0;
+    
+     &:last-child {
+        border-right:1px solid #e7e7e7;
+     }
+   }     
+}
+
+.storyItemContainer {
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+ 
+  margin: 0;
+  border: 1px solid #e7e7e7;
+  border-top: 0;
+  color: #777;
+}
+
+.feature {
+  background: #F2F199;
+}
+
+.fix {
+  background: #F2D8D0;
+}
+
+.enhancement {
+  background: #D0EAF2;
+}
+
+.task {     
+  background: #D0D0D0;
+}
+
+.badge-task {
+  color: black;
+}
+
+.center-button-placeholder{
+  text-align: center;
+}
+.taskContainer {
+  margin:5px;
+  border-radius: 2px;
+     border: 1px solid #e7e7e7;
+} 
+  
+.taskItem {
+   border: 1px solid #e7e7e7;
+
+   .row {
+      margin: 0;
+      padding: 2px;
+      
+      .col-xs-1, .col-xs-2,.col-xs-3, .col-xs-5 {
+        padding: 0;
+        margin: 0;
+      }
+    }
+    label {
+      margin: 0;
+      padding:0;
+    }
+
+    .story-actions {
+      span {
+        margin: 0 3px;
+      }
+      .glyphicon {
+        cursor: pointer;        
+      }
+    }
+    
+    .description {
+      font-size: 9pt;
+    }
+    
+  }

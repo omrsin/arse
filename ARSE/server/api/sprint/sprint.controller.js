@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var Sprint = require('./sprint.model');
 var Project = require('../project/project.model');
+var Story = require('../story/story.model');
 
 // Get list of sprints
 exports.index = function (req, res) {
@@ -16,33 +17,42 @@ exports.index = function (req, res) {
 // in addition, add the stories to the sprint
 // ?=stories=true or false : default= false
 exports.show = function (req, res) {
-  Sprint.findById(req.params.id, function (err, sprint) {
+  Project.findById(req.params.project_id, function (err, project) {
     if (err) { return handleError(res, err); }
-    if (!sprint) { return res.status(404).send('Not Found'); }
+    if (!project) { return res.status(404).send('Project Not Found'); }
+
+    Sprint.findById(project.current_sprint, function (err2, sprint) {
+      if (err2) { return handleError(res, err2); }
+      if (!sprint) { return res.status(404).send('Not Found'); }
     
-    // get stories if stories param set to true
-    if (req.query.stories) {
-      console.log(req.query.stories);
-      Project.findById(req.params.project_id).populate('backlog').exec(function (err, project) {
-        if (err) { return handleError(res, err); }
-        if (!project) { return res.status(404).send('could not get stories'); }
-        console.log(project.backlog);
-        var sprint_backlog = project.backlog.slice(0, project.offset);
-        console.log(sprint_backlog);
-        sprint.set('stories', sprint_backlog);
-        console.log(sprint);
+      // get stories if stories param set to true
+      if (req.query.stories) {
+        if (project.offset == 0) {
+          sprint.set('stories', []);
+          return res.json(sprint);
+        } else {
+          Project.populate(project, { path: 'backlog', options: { limit: project.offset } }, function (err3, projectWithBacklog) {
+            if (err3) { return handleError(res, err3); }
+            if (!projectWithBacklog) { return res.status(404).send('could not get stories'); }
+            var sprint_backlog = projectWithBacklog.backlog;
+            // Populate the stories with the user that is assigned to each story
+            Story.populate(sprint_backlog, { path: 'user' }, function (err, sprintWithUsers) {
+              sprint.set('stories', sprint_backlog);
+              return res.json(sprint);
+            });
+
+          });
+        }
+      } else {
         return res.json(sprint);
-      });
-    }else{
-     return res.json(sprint); 
-    }
+      }
+    });
   });
 };
 
 // Creates a new sprint in the DB.
 // Modified: Get the project first, and then add a new sprint and correlate 
 exports.create = function (req, res) {
-  console.log(req.params.project_id);
   Project.findById(req.params.project_id, function (err, project) {
     if (err) { return handleError(res, err); }
     if (!project) { return res.status(404).send('Project Not Found'); }
@@ -52,7 +62,7 @@ exports.create = function (req, res) {
       project.current_sprint = sprint;
       project.sprint_counter++;
       project.save(function (err) {
-        if (err) { return res.status(500).send("could not create sprints"); }
+        if (err) { return res.status(500).send("could not create sprint"); }
       });
       sprint.name = "Sprint " + project.sprint_counter;
       sprint.save(function (err) {
@@ -93,20 +103,66 @@ exports.destroy = function (req, res) {
 
 // close sprint and update current sprint in project
 exports.close = function (req, res) {
-  Sprint.findById(req.params.id, function (err, sprint) {
+  Project.findById(req.params.project_id).populate('backlog').exec(function (err, project) {
     if (err) { return handleError(res, err); }
-    if (!sprint) { return res.status(404).send("Sprint not Found"); }
-    Project.findById(req.params.project_id, function (err, project) {
-      if (err) { return handleError(res, err); }
-      if (!project) { return res.status(404).send("Project not Found"); }
-      project.current_sprint = null;
-      project.save(function (err) {
-        if (err) { return res.status(404).send("could not close sprint"); }
-      });
+    if (!project) { return res.status(404).send("Project not Found"); }
 
+    Sprint.findById(project.current_sprint, function (err, sprint) {
+      if (err) { return handleError(res, err); }
+      if (!sprint) { return res.status(404).send("sprint not found"); }
+      
+      project.past_sprints.push(project.current_sprint);
+      project.current_sprint = null;
+
+      // Set the end date of the sprint to the current date
+      sprint.end_date = Date.now();
+    
+      // go through stories and remove story if status is "Done".
+      var sprint_backlog = project.backlog.slice(0, project.offset);
+      sprint_backlog.forEach(function (item, index, temp) {
+        if (item.status === "Done") {
+          // XXX if we need to access past sprints with their stories - this will not work any more
+          // add point to related sprint
+          // get current sprint from project
+          sprint.total_points += item.points;
+          project.backlog.pull(item);
+        }
+      });
+      sprint.save(function (err) {
+        if (err) { return handleError(res, err); }
+
+        // Reset the offset to 0
+        project.offset = 0;
+
+        //after the project return the project with the new state.
+        project.save(function (err) {
+          if (err) { return res.status(500).send("could not close sprint"); }
+          res.status(200).send(project);
+        });
+      });
+    });
+  });
+}
+
+// cancel sprint and update current sprint in project
+exports.cancel = function (req, res) {
+  Project.findById(req.params.project_id).populate('backlog').exec(function (err, project) {
+    if (err) { return handleError(res, err); }
+    if (!project) { return res.status(404).send("Project not Found"); }
+
+    project.current_sprint = null;
+    // Do not remove any stories
+    // Reset the offset to 0
+    project.offset = 0;
+    // Decrement counter, otherwise there will be a gap in the numbering
+    project.sprint_counter--;
+
+    //after the project return the project with the new state.
+    project.save(function (err) {
+      if (err) { return res.status(500).send("could not cancel sprint"); }
       res.status(200).send(project);
     });
-  })
+  });
 }
 
 function handleError(res, err) {

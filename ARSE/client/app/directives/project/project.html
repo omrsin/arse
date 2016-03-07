@@ -2,7 +2,7 @@
 <div class="link col-xs-5 col-sm-3" ng-click="show(item)">{{item.name | limitTo: 40}}{{item.name.length > 40 ? '...' : '' }}</div>
 <div class="hidden-xs col-sm-6">{{item.description | limitTo: 40}}{{item.description.length > 40 ? '...' : '' }}</div>
 <div class="col-xs-6 col-sm-2">
-  <div class="btn-group pull-right">
+  <div ng-show="hasPORights" class="btn-group pull-right">
     <a ng-click="deleteItem(item)" class="btn btn-danger">
       <span class="glyphicon glyphicon-remove"></span>
     </a>

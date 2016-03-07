@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('arseApp')
-  .directive('story', function ($http, Project, $uibModal, Modal, $location) {
+  .directive('story', function ($http, Project, $uibModal, Modal, $state) {
     return {
       templateUrl: 'app/directives/story/story.html',
       restrict: 'EA',
@@ -9,7 +9,8 @@ angular.module('arseApp')
         storyItem:'@',
         showDetails:'@',
         editCallback:'&',
-        viewCallback:'&'
+        viewCallback:'&',
+        hasporights: '='   
       },
       link: function (scope, element, attrs) {
         attrs.$observe('storyItem', function(value){
@@ -35,7 +36,6 @@ angular.module('arseApp')
         scope.$on('orderChanged', function () {
           scope.item.orderId = scope.item.$index;
           $http.put('/api/projects/' + scope.item.project + '/stories/' + scope.item._id, scope.item).then(function (res) {
-            console.log(res)
           });
         });
 
@@ -64,17 +64,12 @@ angular.module('arseApp')
         };
 
         scope.startSprint = function() {
-          console.log(scope.endDate);
           $http.post('/api/projects/' + scope.item.project + '/sprints', {end_date: scope.endDate}).then(function (res) {
-            console.log(res);
-            $location.path('/sprintBoard/' + scope.item.project + "/" + res.data._id);
+            $state.go('sprintBoard', {project_id:scope.item.project});
+          }, function(error) {
+            scope.errorMessage = error.data;
           });
         };
-        
-        scope.viewSprint = function() {
-           $location.path('/sprintBoard/' + scope.project._id + "/" + scope.project.current_sprint);
-        };
-
 
         scope.$on('storyUpdating', function (event, story) {
           if (scope.item._id == story._id) {
@@ -90,7 +85,6 @@ angular.module('arseApp')
         });
 
         scope.$on('storyUpdateFailed', function (event, id, err) {
-          console.log(id);
           if (scope.item._id == id) {
             scope.isRefreshing = false;
             scope.hasUpdateFailed = true;

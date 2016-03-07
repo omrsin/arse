@@ -1,0 +1,50 @@
+<project-navbar-mobile theproject="project"></project-navbar-mobile>
+<div class="row">  
+  <project-navbar theproject="project" class="hidden-xs"></project-navbar>
+  <div class="col-xs-12 col-sm-11">
+    <div class="main-container">
+      <div class="header">
+        <div class="row">
+          <div class="col-sm-12">
+            <h1>Past Sprints</h1>
+          </div>
+        </div>    
+      </div>
+
+      <div class="content">          
+        <div ng-hide="project.past_sprints.length != 0" class="row">
+          <div class="col-xs-12">
+            No past sprints for this project.
+          </div>
+        </div>
+        <div ng-show="project.past_sprints.length != 0"  class="row">
+          <div class="col-xs-12">
+            <div class="custom-table">
+              <div class="row">
+                <div class="table-header">
+                  <div class="col-xs-3 col-sm-2">Name</div>
+                  <div class="col-xs-3 col-sm-4">Start</div>
+                  <div class="col-xs-3 col-sm-4">End</div>
+                  <div class="col-xs-3 col-sm-2">Points</div>           
+                </div>
+              </div>
+              <div class="table-content">
+                <ul>
+                  <li class="table-row" ng-repeat="sprint in project.past_sprints">
+                    <div class="row">
+                      <div class="col-xs-3 col-sm-2">{{sprint.name}}</div>
+                      <div class="col-xs-3 col-sm-4">{{sprint.start_date | date: 'dd.MM.yyyy'}}</div>
+                      <div class="col-xs-3 col-sm-4">{{sprint.end_date | date: 'dd.MM.yyyy'}}</div>
+                      <div class="col-xs-3 col-sm-2">{{sprint.total_points}}</div>  
+                    </div>
+                  </li>
+                </ul>            
+              </div>          
+            </div>
+          </div>
+        </div>                
+      </div>    
+    </div>    
+  </div>  
+</div>
+<chat-widget></chat-widget>

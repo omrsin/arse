@@ -1,0 +1,30 @@
+<div class="col-xs-1 project-navbar">
+  <div class="row">
+    <div class="col-xs-12 option enabledLink">
+      <span title="Product Backlog" class="glyphicon glyphicon-list-alt" ng-click="showProductBacklog()"></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 option" ng-class="{'disabledLink' : !project.current_sprint, 'enabledLink' : project.current_sprint}">
+      <span title="Sprint Board" class="glyphicon glyphicon-tasks" ng-click="showSprintBoard()"></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 option enabledLink">
+      <span title="Manage Users" class="glyphicon glyphicon-user" ng-click="showUserManagement()"></span>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-xs-12 option enabledLink">
+      <span title="Past Sprints" class="glyphicon glyphicon-signal" ng-click="showPastSprints()"></span>
+    </div>
+  </div>
+
+  <!-- ng-if instead of ng-show to make the last-child style working -->
+  <div ng-if="hasPORights" class="row">
+    <div class="col-xs-12 option enabledLink">
+      <span title="Configuration" class="glyphicon glyphicon-wrench" ng-click="showConfiguration()"></span>
+    </div>
+  </div>
+</div>

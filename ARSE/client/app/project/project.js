@@ -6,11 +6,13 @@ angular.module('arseApp')
       .state('project', {
         url: '/projects',
         templateUrl: 'app/project/project.html',
-        controller: 'ProjectCtrl'
+        controller: 'ProjectCtrl',
+        authenticate: true
       })
       .state('project.new', {
         url: '/new',
         templateUrl: 'app/project/new.html',
-        controller: 'ProjectCtrl'
+        controller: 'ProjectCtrl',
+        authenticate: true
       });
   });

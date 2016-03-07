@@ -5,14 +5,16 @@
   <div class="modal-body">
     <div class="form-group">
       <label for="storyName">Name</label>
-      <input class="form-control" type="text" name="name" ng-model="story.name" id="storyName" placeholder="Name" required="true"/>
+      <input class="form-control" type="text" name="name" ng-model="story.name" id="storyName" placeholder="Name" required="true"
+      />
       <div ng-show="storyForm.$submitted || storyForm.name.$touched">
         <div ng-show="storyForm.name.$error.required" class="alert alert-warning" role="alert">Enter a name.</div>
       </div>
     </div>
     <div class="form-group">
       <label for="storyDescription">Description</label>
-      <textarea class="form-control" type="text" name="description" ng-model="story.description" id="storyDescription" placeholder="Description" required="true"/>
+      <textarea class="form-control" type="text" name="description" ng-model="story.description" id="storyDescription" placeholder="Description"
+      required="true"></textarea>
       <div ng-show="storyForm.$submitted || storyForm.description.$touched">
         <div ng-show="storyForm.description.$error.required" class="alert alert-warning" role="alert">Enter a description.</div>
       </div>
@@ -23,13 +25,23 @@
     </div>
     <div class="form-group">
       <label>Type</label>
-      <select class="form-control" name="type" ng-model="story.type" ng-options="type for type in storyTypes" ng-init="story.type = storyTypes[0]">
+      <select class="form-control" name="type" ng-model="story.type" ng-options="type for type in storyTypes" required="true">
       </select>
+      <div ng-show="storyForm.$submitted || storyForm.type.$touched">
+        <div ng-show="storyForm.type.$error.required" class="alert alert-warning" role="alert">Select a type.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Assignee</label>
+      <select class="form-control" name="assignee" ng-model="story.user" ng-options="participant.user as participant.user.username for participant in participants" required="true"></select>
+      <div ng-show="storyForm.$submitted || storyForm.assignee.$touched">
+        <div ng-show="storyForm.assignee.$error.required" class="alert alert-warning" role="alert">Select an assignee.</div>
+      </div>
     </div>
   </div>
   <div class="modal-footer">
     <button ng-show="!create" class="btn btn-primary" type="submit">Update</button>
     <button ng-show="create" class="btn btn-success" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Create Story</button>
     <button class="btn btn-warning" type="button" ng-click="close()">Cancel</button>
-  </div> 
+  </div>
 </form>

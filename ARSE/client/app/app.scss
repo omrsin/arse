@@ -17,13 +17,19 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 // Component styles are injected through grunt
 // injector
 @import 'backlog/backlog.scss';
+@import 'configuration/configuration.scss';
+@import 'directives/addStatus/addStatus.scss';
+@import 'directives/chatWidget/chatWidget.scss';
 @import 'directives/project/project.scss';
 @import 'directives/story/story.scss';
 @import 'directives/storyDetail/storyDetail.scss';
+@import 'directives/user/user.scss';
 @import 'project/project.scss';
 @import 'sprintBoard/sprintBoard.scss';
-@import '../components/footer/footer.scss';
+@import 'userManagement/userManagement.scss';
 @import '../components/modal/modal.scss';
+@import '../components/project-navbar-mobile/project-navbar-mobile.scss';
+@import '../components/project-navbar/project-navbar.scss';
 // endinjector
 
 /////////////
@@ -41,10 +47,14 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
     }
   }
   .actions {
-
+    .btn {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
   }
   .content {
     margin-top: 20px;
+    margin-bottom: 20px;
     .link:hover {
       text-decoration: underline;
       cursor: pointer;
@@ -66,18 +76,6 @@ ul {
   list-style-type: none;   
 }
 
-// bpi-actions should not be used anymore. Use different columns instead
-.bpi-actions {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.bpi-actions>li {
-  display: inline;
-
-}
-
 .custom-table {
   .table-header {
     div {
@@ -97,4 +95,40 @@ ul {
       background-color: #f9f9f9;
     }
   }
+}
+
+.story-type-0 {
+  background: #F2F199;
+}
+
+.story-type-1 {
+  background: #F2D8D0;
+}
+
+.story-type-2 {
+  background: #D0EAF2;
+}
+
+.story-type-3 {
+  background: #f29797;
+}
+
+.story-type-4 {
+  background: #baf297;
+}
+
+.story-type-5 {
+  background: #97e4f2;
+}
+
+.story-type-6 {
+  background: #97a8f2;
+}
+
+.story-type-7 {
+  background: #de97f2;
+}
+
+.story-type-8 {
+  background: #f297cc;
 }

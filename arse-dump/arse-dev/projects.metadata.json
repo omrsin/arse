@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":1,"key":{"_id":1},"name":"_id_","ns":"arse-dev.projects"},{"v":1,"key":{"participants":1},"name":"participants_1","ns":"arse-dev.projects","background":true}]}
