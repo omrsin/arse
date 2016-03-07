@@ -10,3 +10,5 @@
 .directory
 *-blx.bib
 *.run.xml
+
+!main.pdf
