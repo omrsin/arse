@@ -125,6 +125,7 @@ exports.close = function (req, res) {
           // add point to related sprint
           // get current sprint from project
           sprint.total_points += item.points;
+          sprint.closed_stories.push(item);
           project.backlog.pull(item);
         }
       });

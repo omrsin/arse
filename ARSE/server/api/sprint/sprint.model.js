@@ -21,7 +21,11 @@ var SprintSchema = new Schema({
   total_points: {
     type: Number,
     default: 0
-  }
+  },
+  closed_stories: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Story'
+  }]
 }, {strict: false});
 
 module.exports = mongoose.model('Sprint', SprintSchema);
