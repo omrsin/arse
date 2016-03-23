@@ -65,11 +65,17 @@ exports.show = function (req, res) {
         if(req.query.pastsprints){
           Project.populate(project, {
             path: 'past_sprints',
-            select: 'name start_date end_date total_points',
+            select: 'name start_date end_date total_points closed_stories',
             model: 'Sprint'
            }, function(err){
              if(err){ return handleError(res, err); }
-             return res.json(project);
+             Story.populate(project.past_sprints, {
+               path: 'closed_stories',
+               model: 'Story' 
+             }, function(err){
+               if(err){ return handleError(res, err); }
+               return res.json(project);
+             });
            });
         } else {
           return res.json(project);
